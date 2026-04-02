@@ -170,22 +170,32 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `削除` （遷移先: `/book/delete/{id}` へ GET または POST で遷移）
 
 ### 課題3.6：新規登録機能の実装（モックからDB保存へ）
-第2章で作成した登録モックを、実際にDBへ保存するように機能改修します。
+第2章で作成した機能を改修し、画面から入力された書籍データを実際にDBへ登録する一連のフローを完成させます。
 
-1. `BookController` の `/book/register` (POST) メソッドの中身を修正し、作成済みの `BookService.saveBook()` を呼び出して、新しい書籍の情報をDBに登録してください。
-2. 登録後は、遷移先を `book_confirm.html` とし、モック用の説明文を削除した上で、実際に登録された内容を画面に表示してください。
+1. **入力画面からの送信**
+   - 登録処理は、メニュー画面（`book_index.html`）の「書籍情報の登録」リンクから、入力画面（`book_form.html`）へ遷移することで開始します（※この遷移は第2章で作成済みです）。
+   - `book_form.html` のフォーム（ action: `/book/register`, method: POST ）から送信されたデータを受け取ります。
+2. **登録処理の実行**
+   - `BookController` の `/book/register` (POST) メソッドの中身を修正します。
+   - フォームから受け取った `BookForm` のデータを `Book` エンティティに移し替え、`BookService.saveBook()` を呼び出してDBに登録してください。
+   - 登録処理が完了したら、結果を表示するために `book_confirm.html` へ画面遷移させます。その際、登録した書籍情報を `Model` に格納してください。
+3. **登録完了画面の表示**
+   - `book_confirm.html` を改修します。第2章で記述した「（※実際のDB保存は次章で実装します）」といったモック用の説明文を削除してください。
+   - 「以下の内容で登録しました」というメッセージと共に、DBに登録された書籍のタイトル・著者名・価格を表示してください。
+   - 画面の下部に「メニューへ戻る」リンク（遷移先: `/book/index`）が配置されていることを確認してください。
 
 ### 課題3.7：更新機能と削除機能の実装
 詳細画面から呼び出される更新と削除の処理を実装します。
 
 1. **更新画面の表示**
    - `BookController` に `/book/update/{id}` を受け取る GET マッピングを追加してください。
-   - DBから `id` で書籍情報を取得し、その値を保持した更新用フォーム画面 `book_update.html` へ遷移させます。
-   - ※フォーム内で、対象の書籍のID（`id`）も `<input type="hidden">` 等を用いて一緒にPOST送信できるように定義しておきます。
-2. **更新の実行**
-   - BookForm に `id` フィールドを追加してください。
-   - `BookController` に `/book/update` 専用の POST マッピングを追加します。
-   - 送信されてきたID等の値を用いて `BookService.saveBook()` を呼び出します。JPAの仕様として、対象のIDが既にDBに存在する場合は UPDATE（更新） として働きます。処理完了後は、詳細画面や結果画面へ遷移させてください。
+   - DBから対象の `id` で書籍情報を取得し、その値を保持した更新用フォーム画面 `book_update.html` へ遷移させます。
+   - `book_update.html` を作成し、該当の書籍情報が入力欄にセットされた状態のフォームを作成してください。
+2. **更新の実行（動的URLの利用）**
+   - `BookForm` に `id` フィールドを追加してください。
+   - 更新用フォームの送信先（action）について、今回は `@PathVariable` を用いてIDを送信します。テキスト第5章の動的URLの書き方を参考に、`<form th:action="@{/book/update/{id}(id=${bookForm.id})}" method="post">` のように記述してください。
+   - `BookController` に `/book/update/{id}` を受け取る POST マッピングを追加します。引数で `@PathVariable` を使ってIDを受け取り、フォームからの値と共にエンティティにセットしてから `BookService.saveBook()` を呼び出します（IDが存在するためUPDATEとして働きます）。
+   - 処理完了後は、詳細画面や結果画面へ遷移させてください。
 3. **削除の実行**
-   - `BookController` に `/book/delete/{id}` を受け取るメソッドを追加し、Serviceの `deleteBook(id)` を呼び出します。
+   - `BookController` に `/book/delete/{id}` を受け取る GET または POST マッピングを追加し、Serviceの `deleteBook(id)` を呼び出します。
    - 削除完了後は、全件リスト（`/book/list`）へ**リダイレクト**するようにしてください。
