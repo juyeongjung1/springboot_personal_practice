@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.trainocate.book.form.BookForm;
 
@@ -51,7 +50,7 @@ public class BookController {
 	 * @return 検索結果モック画面
 	 */
 	@GetMapping("/search/title")
-	public String searchByTitle(@RequestParam String keyword, Model model) {
+	public String searchByTitle(String keyword, Model model) {
 		// 受け取ったキーワードをModelに格納し、画面で表示する
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("searchType", "title");
@@ -70,9 +69,7 @@ public class BookController {
 	 * @return 検索結果モック画面
 	 */
 	@GetMapping("/search/price")
-	public String searchByPrice(@RequestParam Integer minPrice,
-								@RequestParam Integer maxPrice,
-								Model model) {
+	public String searchByPrice(Integer minPrice, Integer maxPrice, Model model) {
 		// 受け取った価格帯をModelに格納し、画面で表示する
 		model.addAttribute("minPrice", minPrice);
 		model.addAttribute("maxPrice", maxPrice);

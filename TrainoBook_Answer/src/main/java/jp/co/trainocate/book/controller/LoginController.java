@@ -3,7 +3,6 @@ package jp.co.trainocate.book.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 【課題2.1】ログイン（トップ画面）の作成と画面遷移
@@ -34,8 +33,7 @@ public class LoginController {
 	 * @return 書籍管理メニュー画面
 	 */
 	@PostMapping("/login")
-	public String login(@RequestParam String userId,
-						@RequestParam String password) {
+	public String login(String userId, String password) {
 		// 第2章ではモックのため、認証チェックは行わない
 		// （第4章以降でDB連動の認証処理を実装予定）
 		return "book_index";
