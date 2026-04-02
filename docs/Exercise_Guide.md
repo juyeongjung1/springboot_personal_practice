@@ -139,21 +139,21 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 1. `jp.co.trainocate.book.service` パッケージを作成してください。
 2. 以下のメソッドを定義したインターフェース `BookService` を作成してください。
-   - `List<Book> findAllProducts()`
-   - `Book findProductById(Integer id)`
-   - `List<Book> findProductsByTitle(String title)`
-   - `List<Book> findProductsByPrice(Integer minPrice, Integer maxPrice)`
-   - `Book saveProduct(BookForm bookForm)`
-   - `void deleteProduct(Integer id)`
-3. `BookService` を実装した `BookServiceImpl` クラスを作成してください。
-   - クラスに `@Service` と `@RequiredArgsConstructor` (または `@Autowired`) を付けます。
-   - `BookRepository` をDIし、各メソッドの中でリポジトリの該当処理を呼び出すようにオーバーライド（実装）してください。
+   - `List<Book> findAllBooks()`
+   - `Book findBookById(Integer id)`
+   - `List<Book> findBooksByTitle(String title)`
+   - `List<Book> findBooksByPrice(Integer minPrice, Integer maxPrice)`
+   - `Book saveBook(BookForm bookForm)`
+   - `void deleteBook(Integer id)`
+3. `BookService` を実装した `BookServiceImpl` クラスを作成し、`@Service` アノテーションを付与してください。
+   - **依存性の注入**: データベース操作を行うため、`BookRepository` をこのクラス内で利用できるようにします。フィールドとして宣言し、`@Autowired` を付与する（または Lombokの `@RequiredArgsConstructor` と `final` 制約を併用する）ことで、Springに「依存性の注入」を行わせてください。
+   - **メソッドの実装（オーバーライド）**: インターフェースで定義した各メソッドの中身を書いていきます。このクラスはControllerとRepositoryの「橋渡し」となるため、取得した `BookRepository` が持つメソッド（`findAll()`, `findById()`, 課題3.2で定義した検索メソッド等）を呼び出し、その結果を return するように実装します。（登録処理 `saveBook` については、Formクラスの値をEntityにセットしてからRepositoryの `save()` を呼ぶ処理を記述してください）
 
 ### 課題3.4：全件一覧と検索モックのDB連動化
 第2章で作ったモック画面を、Serviceを経由してDBから取得するように修正します。
 
-1. `BookController` に `BookService` を `@Autowired` でDIしてください。
-2. `/book/list` メソッドを修正し、`BookService.findAllProducts()` を呼び出して全件リストを取得し、`Model` に渡します。
+1. `BookController` に `BookService` を「依存性の注入」してください。
+2. `/book/list` メソッドを修正し、`BookService.findAllBooks()` を呼び出して全件リストを取得し、`Model` に渡します。
 3. `/book/search/title` および `/book/search/price` メソッドを修正し、それぞれServiceから検索結果リストを取得して `Model` に渡します。
 4. `book_list.html` と `book_search_result.html` を改修し、Thymeleaf の `th:each` を用いて、書籍を一覧表（ID、書籍名、著者名、価格、ジャンル名）で表示するようにしてください。
    - **【重要（動的URL）】** 一覧の「書籍名」部分をリンクにし、クリックすると「詳細画面」へ飛ぶようにします。テキスト第5章を参考に、以下のような**動的URL**にしてください。
@@ -163,22 +163,29 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 書籍名をクリックしたときに表示される詳細画面を作成します。この画面から「更新」と「削除」を行えるようにします。
 
 1. `BookController` に、動的URL `/book/detail/{id}` を受け取る GET マッピングメソッドを作成してください。（`@PathVariable` を使います）
-2. Serviceの `findProductById(id)` を使って対象の書籍を1件取得し、`Model` に格納してください。
+2. Serviceの `findBookById(id)` を使って対象の書籍を1件取得し、`Model` に格納してください。
 3. 詳細画面 `book_detail.html` を作成し、ID、書籍名、著者名、価格、ジャンル名を表示してください。
 4. この画面内に以下の2つのリンク（ボタン）を配置してください。
    - `更新` （遷移先: `/book/update/{id}` へ GET メソッドで遷移）
    - `削除` （遷移先: `/book/delete/{id}` へ GET または POST で遷移）
 
-### 課題3.6：更新機能と削除機能の実装
-詳細画面から呼び出される更新と削除の実装を行います。
+### 課題3.6：新規登録機能の実装（モックからDB保存へ）
+第2章で作成した登録モックを、実際にDBへ保存するように機能改修します。
+
+1. `BookController` の `/book/register` (POST) メソッドの中身を修正し、作成済みの `BookService.saveBook()` を呼び出して、新しい書籍の情報をDBに登録してください。
+2. 登録後は、遷移先を `book_confirm.html` とし、モック用の説明文を削除した上で、実際に登録された内容を画面に表示してください。
+
+### 課題3.7：更新機能と削除機能の実装
+詳細画面から呼び出される更新と削除の処理を実装します。
 
 1. **更新画面の表示**
    - `BookController` に `/book/update/{id}` を受け取る GET マッピングを追加してください。
-   - DBから `id` で書籍を取得し、その値を保持した状態で入力・更新ができるフォーム画面 `book_update.html` へ遷移させます。
-   ※第3章の段階では、ジャンルの変更は考慮せず、タイトル・著者・価格の更新のみで構いません。
-2. **更新と登録の統合（saveメソッドの活用）**
-   - JPAの `save()` メソッドは、「オブジェクトにIDがセットされている場合はUPDATE、Nullの場合はINSERT」という動きをします。
-   - `/book/register`（または統合した `/book/save`）の POST マッピングで、フォームから `id` が送られてきたらそれを Entity にセットしてから `save()` を実行することで、登録・更新の両方を1つのメソッドで処理できます。
+   - DBから `id` で書籍情報を取得し、その値を保持した更新用フォーム画面 `book_update.html` へ遷移させます。
+   - ※フォーム内で、対象の書籍のID（`id`）も `<input type="hidden">` 等を用いて一緒にPOST送信できるように定義しておきます。
+2. **更新の実行**
+   - BookForm に `id` フィールドを追加してください。
+   - `BookController` に `/book/update` 専用の POST マッピングを追加します。
+   - 送信されてきたID等の値を用いて `BookService.saveBook()` を呼び出します。JPAの仕様として、対象のIDが既にDBに存在する場合は UPDATE（更新） として働きます。処理完了後は、詳細画面や結果画面へ遷移させてください。
 3. **削除の実行**
-   - `BookController` に `/book/delete/{id}` を受け取るメソッドを追加し、Serviceの `deleteProduct(id)` を呼び出します。
+   - `BookController` に `/book/delete/{id}` を受け取るメソッドを追加し、Serviceの `deleteBook(id)` を呼び出します。
    - 削除完了後は、全件リスト（`/book/list`）へ**リダイレクト**するようにしてください。
