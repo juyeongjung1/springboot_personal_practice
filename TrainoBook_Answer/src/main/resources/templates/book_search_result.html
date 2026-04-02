@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>検索結果</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+	<h1 class="mb-4">検索結果</h1>
+
+	<!--
+		【課題2.2 - ステップ7】
+		Controllerから Model に格納されたデータを Thymeleaf の ${} で表示する。
+		searchType の値に応じて、タイトル検索と価格帯検索の出力内容を切り替える。
+	-->
+
+	<!-- 出力する内容① タイトル検索のとき -->
+	<div th:if="${searchType == 'title'}" class="alert alert-success">
+		検索条件：タイトルに『<span th:text="${keyword}"></span>』が含まれる書籍
+	</div>
+
+	<!-- 出力する内容② 価格帯検索のとき -->
+	<div th:if="${searchType == 'price'}" class="alert alert-success">
+		検索条件：価格が『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円の書籍
+	</div>
+
+	<div class="alert alert-info">
+		※実際の検索結果一覧を表示するのは第3章で実装します。
+	</div>
+
+	<a th:href="@{/book/index}" class="btn btn-secondary">メニューに戻る</a>
+</div>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>書籍一覧</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+	<h1 class="mb-4">書籍一覧</h1>
+
+	<!--
+		【課題2.2 - ステップ3】
+		全書籍リスト画面のモック。
+		第2章では仮の文言のみ表示する。
+		（第3章でDB連動の書籍一覧表示を実装予定）
+	-->
+	<div class="alert alert-info">
+		書籍一覧画面（※本来はここに本の一覧が出ます。第3章で作成します）
+	</div>
+
+	<a th:href="@{/book/index}" class="btn btn-secondary">メニューに戻る</a>
+</div>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

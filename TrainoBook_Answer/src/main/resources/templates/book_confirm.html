@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>登録完了</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<h1 class="mb-4">登録完了</h1>
+			
+			<!--
+				【課題2.3 - ステップ6】
+				Controllerから Model に格納された BookForm の内容を表示する。
+				実際のDB登録処理は第3章で実装するため、ここではモックとして
+				受け取った値の表示のみ行う。
+			-->
+			<div class="alert alert-success">
+				以下の内容で登録を受け付けました（※実際のDB保存は次章で実装します）
+			</div>
+
+			<div class="card mb-4">
+				<div class="card-body">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th style="width: 30%">書籍名</th>
+								<td th:text="${bookForm.title}"></td>
+							</tr>
+							<tr>
+								<th>著者名</th>
+								<td th:text="${bookForm.author}"></td>
+							</tr>
+							<tr>
+								<th>価格</th>
+								<td th:text="${bookForm.price}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<a th:href="@{/book/index}" class="btn btn-secondary">メニューに戻る</a>
+		</div>
+	</div>
+</div>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

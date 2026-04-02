@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>書籍情報の登録</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<h1 class="mb-4">書籍情報の登録</h1>
+			<div class="card">
+				<div class="card-header">
+					<h5 class="mb-0">書籍情報を入力してください。</h5>
+				</div>
+				<div class="card-body">
+					<!--
+						【課題2.3 - ステップ3】
+						書籍登録用フォーム
+						・送信先（action）: /book/register
+						・送信方法（method）: POST
+						・入力項目: title, author, price（BookFormのフィールド名と一致させる）
+					-->
+					<form th:action="@{/book/register}" method="post">
+						<div class="mb-3">
+							<label for="title" class="form-label">書籍名</label>
+							<input type="text" class="form-control" id="title" name="title" required>
+						</div>
+						<div class="mb-3">
+							<label for="author" class="form-label">著者名</label>
+							<input type="text" class="form-control" id="author" name="author" required>
+						</div>
+						<div class="mb-3">
+							<label for="price" class="form-label">価格（円）</label>
+							<input type="number" class="form-control" id="price" name="price" required>
+						</div>
+						<div class="d-flex justify-content-between">
+							<a th:href="@{/book/index}" class="btn btn-secondary">戻る</a>
+							<button type="submit" class="btn btn-primary">登録する</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
