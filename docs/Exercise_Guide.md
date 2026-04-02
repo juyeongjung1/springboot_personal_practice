@@ -126,9 +126,19 @@
 ### 課題3.2：リポジトリインターフェースの作成
 エンティティに対するデータベース操作を行うRepositoryを定義しましょう。
 
+Repositoryにメソッドを定義する際には、「このシステムにはどんな機能が必要か」を考え、それに合ったメソッドを用意する必要があります。
+ここで、書籍管理メニュー画面（`book_index.html`）で作成した機能を振り返ってみましょう。
+
+- **全書籍リストの確認** → 全件取得が必要 → `findAll()` は `JpaRepository` に最初からあるので定義不要
+- **タイトルで検索** → キーワードがタイトルに**含まれる**書籍を検索する必要がある
+- **価格帯で検索** → 最低価格〜最高価格の**範囲内**の書籍を検索する必要がある
+- **書籍の登録** → `save()` は `JpaRepository` に最初からあるので定義不要
+
+上記を踏まえて、以下の手順でRepositoryを作成してください。
+
 1. `jp.co.trainocate.book.repository` パッケージを作成してください。
 2. `BookRepository` インターフェースを作成し、`JpaRepository<Book, Integer>` を継承させてください。
-3. 以下のメソッドを、Spring Data JPAの**メソッド命名規則**に従って定義してください（テキスト第3章参照）。
+3. 上記で整理した機能に必要なメソッドを、Spring Data JPAの**メソッド命名規則**に従って定義してください（テキスト第3章参照）。
    - タイトルに特定の文字列を含む書籍を検索するメソッド（`findByTitleContaining`）
    - 価格が指定範囲内の書籍を検索するメソッド（`findByPriceBetween`）
 4. `GenreRepository` インターフェースを作成し、`JpaRepository<Genre, Integer>` を継承させてください。
@@ -149,14 +159,10 @@
 2. `BookController` の `/book/search/price` メソッドを修正し、`BookRepository` の `findByPriceBetween` を呼び出して検索結果を取得してください。
 3. `book_search_result.html` を改修し、検索条件の文言に加え、検索結果のリストを `th:each` で一覧表示してください。
    - 表示項目は全件一覧と同じ（書籍ID、書籍名、著者名、価格、ジャンル名）にしてください。
-   - 検索結果が0件の場合には「該当する書籍が見つかりませんでした」と表示してください。
 
 ### 課題3.5：登録機能の実装（モックからDB保存へ）
 第2章でモック表示にしていた登録完了画面を、実際にDBに書籍データを保存するように改修します。
+※ジャンルの選択（外部参照テーブルとの連携）は第6章で実装するため、ここではタイトル・著者名・価格の3項目のみを登録します。
 
-1. 登録フォーム（`book_form.html`）に、ジャンルの選択欄を追加してください。
-   - `BookController` の `/book/form` メソッドで `GenreRepository` の `findAll()` を呼び出し、ジャンル一覧を `Model` に格納します。
-   - `book_form.html` に `<select>` タグでジャンルのプルダウンを追加し、`name`属性を `genreId` に設定してください。
-2. `BookForm` クラスに `genreId` (Integer) フィールドを追加してください。
-3. `BookController` の `/book/register` メソッドを修正し、`BookForm` から `Book` エンティティに値を詰め替えて、`BookRepository` の `save()` でDBに保存してください。
-4. `book_confirm.html` を改修し、「以下の内容で登録しました」というメッセージと共に、登録されたジャンル名も含めて表示してください。
+1. `BookController` の `/book/register` メソッドを修正し、`BookForm` から `Book` エンティティに値を詰め替えて、`BookRepository` の `save()` でDBに保存してください。
+2. `book_confirm.html` を改修し、モック文言を削除して「以下の内容で登録しました」というメッセージと共に、登録された書籍の情報を表示してください。
