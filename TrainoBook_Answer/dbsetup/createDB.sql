@@ -46,12 +46,12 @@ INSERT INTO book (title, author, price, genre_id) VALUES
 
 -- ユーザテーブル（第4章で使用）
 CREATE TABLE user (
-    emp_id INT(6) PRIMARY KEY,
+    user_id INT(6) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
-    emp_name VARCHAR(50) NOT NULL
+    user_name VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO user (emp_id, password, emp_name) VALUES
+INSERT INTO user (user_id, password, user_name) VALUES
 (100001, 'pass1234', '山田太郎'),
 (100002, 'pass2345', '鈴木花子'),
 (100003, 'pass3456', '田中一郎');
