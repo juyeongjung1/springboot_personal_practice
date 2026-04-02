@@ -16,26 +16,28 @@
 
 1. `jp.co.trainocate.book.controller` パッケージを作成し、`LoginController` クラスを作成してください。これに `@Controller` アノテーションを付与します。
 2. URL `http://localhost:8080/` にアクセスした際、`index.html` を返すように GET マッピングのメソッドを作成してください。
-3. `src/main/resources/templates` の中に `index.html` を作成し、ページタイトルを「ログイン（書籍管理システム）」としてください。
+3. `src/main/resources/templates` の中に `index.html` （ログイン画面のHTMLファイル）を作成し、ページタイトルを「ログイン（書籍管理システム）」としてください。
 4. `index.html` 内に、以下の構成でログイン用の `<form>` を作成してください。
    - 送信先（action）：`/login`
    - 送信方法（method）：`POST`
    - 入力項目：ユーザID（`name`属性を `userId` にする）、パスワード（`name`属性を `password` にする）
    - 送信ボタン：「ログイン」
 5. `LoginController` に `/login` を受け取る POST マッピングのメソッドを作成し、引数で `userId` と `password` を受け取るようにしてください（第2章では認証処理のモックとして、受け取るだけで次に進みます）。
-6. このメソッドの遷移先として `/book/index` （リダイレクト）または直接 `book_index.html` へ画面遷移するようにし、この後作成する「書籍管理メニュー画面」へ移動させます。
+6. このメソッドの遷移先として、リダイレクトはさせずに、直接 `book_index.html` へ画面遷移するようにし、この後作成する「書籍管理メニュー画面」へそのまま移動させます。
 
 ### 課題2.2：「書籍管理メニュー画面」の作成 (リンクと検索モック)
 ログイン成功後に表示される「書籍管理メニュー画面（`book_index.html`）」を作成し、他機能へのリンクや検索フォームを配置します。
 
 1. `BookController` クラスを作成（`@Controller`付与）し、`/book/index` に対するGETマッピングを用意して、画面 `book_index.html` を返すようにします。
-2. `book_index.html` を作成し、まず以下の2つのリンクを配置してください。
+2. `src/main/resources/templates` の中に `book_index.html` （メニュー画面のHTMLファイル）を作成し、まず以下の2つのリンクを配置してください。
    - ①「全書籍リストの確認」への遷移リンク
    - ②「書籍情報の登録」への遷移リンク
-   - **【ヒント】** Thymeleafを用いたリンクの作成は本格的には第5章で学びますが、以下の書き方を使用してください。
+   - **【ヒント】** Thymeleafを用いたリンクの作成方法は、5章を参照してください。書き方は以下のようになります。
      `<a th:href="@{/book/list}">全書籍リストの確認</a>`
 
-3. 同じく `book_index.html` の中に、以下の2つの検索用の `<form>` を作成してください。すべて `GET` メソッドで送信します。
+3. ①のリンク先として動作させるため、`BookController` に `/book/list` のGETマッピングを追加し、遷移先の `book_list.html` （書籍リスト画面のHTMLファイル）を作成してください。この画面はモックとして「書籍一覧画面（※本来はここに本の一覧が出ます。第3章で作成します）」といった文言のみ表示しておいてください。
+
+4. 再び `book_index.html` の中に戻り、以下の2つの検索用の `<form>` を作成してください。すべて `GET` メソッドで送信します。
    - **① 書籍名検索フォーム**：
      - 入力項目：テキストボックス（`name`属性を `keyword` にする）
      - 送信先（action）：`/book/search/title`
@@ -45,9 +47,9 @@
      - 送信先（action）：`/book/search/price`
      - 送信ボタン：「価格帯で検索」
 
-4. `BookController` に上記の検索用送信先（`/book/search/title`、`/book/search/price`）に対応するメソッドを作成してください。
-5. Controllerの引数でそれぞれ送信されたパラメータを受け取り、`Model` に格納してください。
-6. 遷移先の画面として `book_search_result.html` を作成し、以下のように受信データを表示してください（Thymeleafの `${}` を使用）。
+5. `BookController` に上記の検索用送信先（`/book/search/title`、`/book/search/price`）に対応するメソッドを作成してください。
+6. Controllerの引数でそれぞれ送信されたパラメータを受け取り、`Model` に格納してください。
+7. 遷移先の画面として、`src/main/resources/templates` の中に `book_search_result.html` （検索結果表示のHTMLファイル）を作成し、以下のように受信データを表示してください（Thymeleafの `${}` を使用）。
    - **出力する内容①のとき**：「検索条件：タイトルに『〇〇』が含まれる書籍」
    - **出力する内容②のとき**：「検索条件：価格が『〇〇』円〜『〇〇』円の書籍」
    ※実際の検索結果一覧を表示するのは第3章で実装します。
@@ -57,10 +59,10 @@
 
 1. `jp.co.trainocate.book.form` パッケージを作成し、`BookForm` クラスを作成してください。
 2. フィールドとして `title` (String)、`author` (String)、`price` (Integer) を用意し、Lombokの `@Data` を付けてください。
-3. `BookController` に `/book/form` 用の GET マッピングを作成し、遷移先のファイル `book_form.html` を作成して入力画面を作ってください。
+3. `BookController` に `/book/form` 用の GET マッピングを作成し、遷移先の `book_form.html` （書籍登録用HTMLファイル）を作成して入力画面を作ってください。
    - （※この画面は、課題2.2で作成した「書籍情報の登録」リンクから遷移してきます）
    - フォームの 送信先(action): `/book/register`、 method: `POST` 
    - 入力項目は、Formクラスのプロパティに合わせて `name`属性を `title`、`author`、`price` に設定してください。
 4. `BookController` に `/book/register` 向けの POST マッピングメソッドを作成してください。
 5. 引数に `BookForm` を指定してデータを受け取り、受け取ったFormオブジェクトをそのまま `Model` に格納してください。
-6. 遷移先画面 `book_confirm.html` を作成し、「以下の内容で登録を受け付けました（※実際のDB保存は次章で実装します）」というメッセージと共に、入力されたタイトル・著者名・価格を表示してください。
+6. 遷移先画面として `book_confirm.html` （登録完了画面のHTMLファイル）を作成し、「以下の内容で登録を受け付けました（※実際のDB保存は次章で実装します）」というメッセージと共に、入力されたタイトル・著者名・価格を表示してください。
