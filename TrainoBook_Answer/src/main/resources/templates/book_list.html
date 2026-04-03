@@ -11,16 +11,35 @@
 	<h1 class="mb-4">書籍一覧</h1>
 
 	<!--
-		【課題2.2 - ステップ3】
-		全書籍リスト画面のモック。
-		第2章では仮の文言のみ表示する。
-		（第3章でDB連動の書籍一覧表示を実装予定）
+		【課題3.4】DBから取得した書籍一覧を表示
 	-->
-	<div class="alert alert-info">
-		書籍一覧画面（※本来はここに本の一覧が出ます。第3章で作成します）
-	</div>
+	<table class="table table-striped table-hover border">
+		<thead class="table-dark">
+			<tr>
+				<th>ID</th>
+				<th>書籍名</th>
+				<th>著者名</th>
+				<th>価格</th>
+				<th>ジャンル名</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- コントローラーから渡された books リストをループして表示 -->
+			<tr th:each="book : ${books}">
+				<td th:text="${book.id}"></td>
+				<td>
+					<!-- 動的URL： 書籍詳細へのリンク -->
+					<a th:href="@{/book/detail/} + ${book.id}" th:text="${book.title}"></a>
+				</td>
+				<td th:text="${book.author}"></td>
+				<td th:text="${book.price} + ' 円'"></td>
+				<!-- ジャンル名はbookエンティティからgenreを辿って取得 -->
+				<td th:text="${book.genre != null ? book.genre.name : '不明'}"></td>
+			</tr>
+		</tbody>
+	</table>
 
-	<a th:href="@{/book/index}" class="btn btn-secondary">メニューに戻る</a>
+	<a th:href="@{/book/index}" class="btn btn-secondary mt-3">メニューに戻る</a>
 </div>
 <!-- Bootstrap JS -->
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>

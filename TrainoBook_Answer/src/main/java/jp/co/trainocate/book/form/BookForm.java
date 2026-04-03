@@ -14,6 +14,9 @@ import lombok.Data;
 @Data
 public class BookForm {
 
+	/** 書籍ID（更新時に使用） */
+	private Integer id;
+
 	/** 書籍タイトル（name属性: title） */
 	private String title;
 
@@ -22,4 +25,7 @@ public class BookForm {
 
 	/** 価格（name属性: price） */
 	private Integer price;
+
+	/** ジャンルID（設定用） */
+	private Integer genreId;
 }
