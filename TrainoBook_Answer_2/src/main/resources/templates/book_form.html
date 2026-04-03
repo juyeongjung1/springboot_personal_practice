@@ -7,7 +7,7 @@
 <body>
 	<h1>書籍情報の登録</h1>
 	<p>書籍情報を入力してください。</p>
-	<form action="/book/register" method="post">
+	<form th:action="@{/book/register}" method="post">
 		<div>
 			<label for="title">書籍名</label>
 			<input type="text" id="title" name="title" required>

@@ -11,7 +11,7 @@
 		【課題2.1 - ステップ4】
 		ログイン用フォーム
 	-->
-	<form action="/login" method="post">
+	<form th:action="@{/login}" method="post">
 		<div>
 			<label for="userId">ユーザID</label>
 			<input type="text" id="userId" name="userId" required>
