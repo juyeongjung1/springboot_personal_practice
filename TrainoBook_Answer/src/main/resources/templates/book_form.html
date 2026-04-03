@@ -18,8 +18,19 @@
 				<div class="card-body mt-3">
 					<!-- 【課題4.1追加】 th:object="${bookForm}" を追加 -->
 					<form th:action="@{/book/register}" method="post" th:object="${bookForm}">
+						
+						<!--
 							==============================================================
+							【課題2.3の解答】以下の3項目（title, author, price）を作成しました
+							（第4章で th:field による記述に置き換えています）
+							==============================================================
+							[以前のコード]
+							<div class="mb-3">
+								<label for="title" class="form-label fw-bold">書籍名</label>
+								<input type="text" class="form-control" id="title" name="title" required>
+							</div>
 						-->
+						
 						<div class="mb-3">
 							<label for="title" class="form-label fw-bold">書籍名</label>
 							<!-- 【課題4.1追加】 th:field を用いたバインドとエラー表示 -->
@@ -40,7 +51,16 @@
 						<!--
 							==============================================================
 							【課題3.6の解答】ジャンルID入力を追加しました
+							（第4章で th:field による記述に置き換えています）
 							==============================================================
+							[以前のコード]
+							<div class="mb-4">
+								<label for="genreId" class="form-label fw-bold">ジャンルID</label>
+								<input type="number" class="form-control" id="genreId" name="genreId" required>
+								<div class="form-text text-danger mt-1">
+									（参考）ジャンルID一覧： 1=プログラミング, 2=ビジネス, 3=小説, 4=科学, 5=自己啓発
+								</div>
+							</div>
 						-->
 						<div class="mb-4">
 							<label for="genreId" class="form-label fw-bold">ジャンルID</label>

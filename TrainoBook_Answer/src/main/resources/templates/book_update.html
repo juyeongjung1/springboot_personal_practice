@@ -30,6 +30,25 @@
 							<input type="text" class="form-control" th:field="*{id}" disabled>
 						</div>
 						
+						<!--
+							==============================================================
+							【課題3.7の解答】各入力項目（第4章で th:field による記述に置き換えています）
+							==============================================================
+							[以前のコード]
+							<div class="mb-3">
+								<label for="title" class="form-label fw-bold">書籍名</label>
+								<input type="text" class="form-control" id="title" name="title" th:value="${book.title}" required>
+							</div>
+							<div class="mb-3">
+								<label for="author" class="form-label fw-bold">著者名</label>
+								<input type="text" class="form-control" id="author" name="author" th:value="${book.author}" required>
+							</div>
+							<div class="mb-3">
+								<label for="price" class="form-label fw-bold">価格（円）</label>
+								<input type="number" class="form-control" id="price" name="price" th:value="${book.price}" required>
+							</div>
+						-->
+						
 						<div class="mb-3">
 							<label for="title" class="form-label fw-bold">書籍名</label>
 							<input type="text" class="form-control" id="title" th:field="*{title}">
@@ -46,7 +65,20 @@
 							<div th:errors="*{price}" class="text-danger mt-1 small"></div>
 						</div>
 						
-						<!-- ジャンルID入力（第3章用） -->
+						<!-- 
+							==============================================================
+							【課題3.7の解答】ジャンルID入力
+							（第4章で th:field による記述に置き換えています）
+							==============================================================
+							[以前のコード]
+							<div class="mb-4">
+								<label for="genreId" class="form-label fw-bold">ジャンルID</label>
+								<input type="number" class="form-control" id="genreId" name="genreId" th:value="${book.genreId}" required>
+								<div class="form-text text-danger mt-1">
+									...
+								</div>
+							</div>
+						-->
 						<div class="mb-4">
 							<label for="genreId" class="form-label fw-bold">ジャンルID</label>
 							<input type="number" class="form-control" id="genreId" th:field="*{genreId}">
