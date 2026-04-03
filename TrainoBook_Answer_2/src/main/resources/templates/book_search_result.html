@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>検索結果</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+	<h1 class="mb-4">検索結果</h1>
+
+	<!--
+		【課題2.2 - ステップ5】
+		Controllerから渡された searchType の値に応じてメッセージを切り替える
+	-->
+	<div th:if="${searchType == 'title'}" class="alert alert-info">
+		<strong>キーワード「<span th:text="${keyword}"></span>」</strong>での検索結果一覧です。（モック）
+	</div>
+
+	<div th:if="${searchType == 'price'}" class="alert alert-info">
+		価格が <strong><span th:text="${minPrice}"></span> 円 〜 <span th:text="${maxPrice}"></span> 円</strong> の検索結果一覧です。（モック）
+	</div>
+
+	<div class="mt-4">
+		<a th:href="@{/book/index}" class="btn btn-secondary">メニューに戻る</a>
+	</div>
+</div>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

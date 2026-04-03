@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>全書籍リスト</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+	<h1 class="mb-4">全書籍リスト</h1>
+	<p>ここは本来書籍一覧が表示される画面です。（現在はモックです）</p>
+	
+	<!-- 【課題2.2 - ステップ3】「メニューに戻る」リンク -->
+	<a th:href="@{/book/index}" class="btn btn-secondary mt-3">メニューに戻る</a>
+</div>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

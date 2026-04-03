@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>検索結果</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+	<h1 class="mb-4">検索結果</h1>
+
+	<!-- 出力する内容① タイトル検索のとき -->
+	<div th:if="${searchType == 'title'}" class="alert alert-success">
+		検索条件：タイトルに『<span th:text="${keyword}"></span>』が含まれる書籍
+	</div>
+
+	<!-- 出力する内容② 価格帯検索のとき -->
+	<div th:if="${searchType == 'price'}" class="alert alert-success">
+		検索条件：価格が『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円の書籍
+	</div>
+
+	<!--
+		==============================================================
+		【課題2.2の解答（モック）】第2章では以下のAlertのみを出力していました
+		==============================================================
+		<div class="alert alert-info">
+			※実際の検索結果一覧を表示するのは第3章で実装します。
+		</div>
+	-->
+
+	<!--
+		==============================================================
+		【課題3.4の解答（DB対応）】検索結果一覧
+		==============================================================
+	-->
+	<table class="table table-striped table-hover border">
+		<thead class="table-dark">
+			<tr>
+				<th>ID</th>
+				<th>書籍名</th>
+				<th>著者名</th>
+				<th>価格</th>
+				<th>ジャンル名</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="book : ${books}">
+				<td th:text="${book.id}"></td>
+				<td>
+					<a th:href="@{/book/detail/} + ${book.id}" th:text="${book.title}"></a>
+				</td>
+				<td th:text="${book.author}"></td>
+				<td th:text="${book.price} + ' 円'"></td>
+				<td th:text="${book.genre != null ? book.genre.name : '不明'}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- 0件ケアの表示 -->
+	<div th:if="${#lists.isEmpty(books)}" class="alert alert-warning mt-3">
+		該当する書籍は見つかりませんでした。
+	</div>
+
+	<a th:href="@{/book/index}" class="btn btn-secondary mt-3">メニューに戻る</a>
+</div>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
