@@ -195,6 +195,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `BookController` に `/book/update/{id}` を受け取る GET マッピングを追加してください。
    - DBから対象の `id` で書籍情報を取得し、その値を保持した更新用フォーム画面 `book_update.html` へ遷移させます。
    - `book_update.html` を作成し、該当の書籍情報が入力欄にセットされた状態のフォームを作成してください。
+   - ※課題3.6と同様に、ジャンルID（`genreId`）の入力欄と、入力を補助する「ジャンルID一覧（1=プログラミング等）」のテキスト表示も忘れずに配置してください。
 2. **更新の実行（動的URLの利用）**
    - `BookForm` に `id` フィールドを追加してください。
    - 更新用フォームの送信先（action）について、今回は `@PathVariable` を用いてIDをURLに含めて送信します。テキスト第5章にならい、`<form th:action="@{/book/update/} + ${bookForm.id}" method="post">` のように記述してください。
