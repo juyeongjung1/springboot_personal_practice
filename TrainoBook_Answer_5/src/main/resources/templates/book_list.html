@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>書籍一覧</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <h2>書籍一覧</h2>
+        <p>登録されている書籍の一覧です。書籍名をクリックすると詳細を確認できます。</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>書籍名</th>
+                    <th>著者名</th>
+                    <th>価格</th>
+                    <th>ジャンル名</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.id}"></td>
+                    <td>
+                        <a th:href="@{/book/detail/} + ${book.id}" th:text="${book.title}"></a>
+                    </td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.price} + ' 円'"></td>
+                    <td th:text="${book.genre != null ? book.genre.name : '不明'}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 2rem;">
+            <a th:href="@{/book/index}">メニューに戻る</a>
+        </div>
+    </main>
+</body>
+</html>

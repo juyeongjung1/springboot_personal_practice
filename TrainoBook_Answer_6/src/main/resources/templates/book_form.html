@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>書籍登録</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <h2>書籍情報の登録</h2>
+        <p>新しい書籍情報を入力してください。すべての項目が必須です。</p>
+
+        <!-- 【課題4.1追加】 th:object="${bookForm}" を追加 -->
+        <form th:action="@{/book/register}" method="post" th:object="${bookForm}">
+            
+            <div>
+                <label for="title">書籍名</label>
+                <!-- 【課題4.1追加】 th:field を用いたバインドとエラー表示 -->
+                <input type="text" id="title" th:field="*{title}" placeholder="例：Spring Boot実践ガイド">
+                <div th:errors="*{title}" class="error-msg"></div>
+            </div>
+            
+            <div>
+                <label for="author">著者名</label>
+                <input type="text" id="author" th:field="*{author}" placeholder="例：山田 太郎">
+                <div th:errors="*{author}" class="error-msg"></div>
+            </div>
+            
+            <div>
+                <label for="price">価格（円）</label>
+                <input type="number" id="price" th:field="*{price}" placeholder="例：3000">
+                <div th:errors="*{price}" class="error-msg"></div>
+            </div>
+            
+            <div>
+                <label for="genreId">ジャンル選択</label>
+                <!-- 【課題6.2改修】 数値入力からセレクトボックスによる動的選択に変更 -->
+                <select id="genreId" th:field="*{genreId}">
+                    <option value="">-- ジャンルを選択してください --</option>
+                    <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"></option>
+                </select>
+                <div th:errors="*{genreId}" class="error-msg"></div>
+            </div>
+            
+            <div style="display: flex; gap: 0.5rem; margin-top: 2rem;">
+                <a th:href="@{/book/index}">戻る</a>
+                <button type="submit">登録する</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

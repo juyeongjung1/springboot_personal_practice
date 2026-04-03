@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>書籍管理メニュー</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <div>
+            <h2>メニュー</h2>
+            <p>行いたい操作を選択してください。</p>
+            <div>
+                <a th:href="@{/book/list}">全書籍リストの確認</a>
+                <a th:href="@{/book/form}">書籍情報の登録</a>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+            <h3>書籍を検索する</h3>
+            <div>
+                <!-- 書籍名検索 -->
+                <section>
+                    <h4>書籍名で検索</h4>
+                    <form th:action="@{/book/search/title}" method="get">
+                        <div>
+                            <input type="text" name="keyword" placeholder="キーワードを入力">
+                        </div>
+                        <button type="submit">タイトルで検索</button>
+                    </form>
+                </section>
+
+                <!-- 価格帯検索 -->
+                <section>
+                    <h4>価格帯で検索</h4>
+                    <form th:action="@{/book/search/price}" method="get">
+                        <div>
+                            <input type="number" name="minPrice" placeholder="最低価格">
+                            <span>〜</span>
+                            <input type="number" name="maxPrice" placeholder="最高価格">
+                        </div>
+                        <button type="submit">価格帯で検索</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

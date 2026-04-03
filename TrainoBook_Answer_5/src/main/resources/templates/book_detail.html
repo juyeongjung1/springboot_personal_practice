@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>書籍詳細</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <h2>書籍詳細</h2>
+        
+        <table>
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td th:text="${book.id}"></td>
+                </tr>
+                <tr>
+                    <th>書籍名</th>
+                    <td th:text="${book.title}"></td>
+                </tr>
+                <tr>
+                    <th>著者名</th>
+                    <td th:text="${book.author}"></td>
+                </tr>
+                <tr>
+                    <th>価格</th>
+                    <td th:text="${book.price} + ' 円'"></td>
+                </tr>
+                <tr>
+                    <th>ジャンル名</th>
+                    <td th:text="${book.genre != null ? book.genre.name : '（未設定）'}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="display: flex; gap: 0.5rem; margin-top: 2rem;">
+            <a th:href="@{/book/list}">一覧に戻る</a>
+            
+            <!-- 更新画面への遷移（GET） -->
+            <form th:action="@{/book/update/} + ${book.id}" method="get">
+                <button type="submit">更新</button>
+            </form>
+            
+            <!-- 削除処理の実行（POST推奨） -->
+            <form th:action="@{/book/delete/} + ${book.id}" method="post">
+                <button type="submit" style="background-color: #ef4444;">削除</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
