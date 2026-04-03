@@ -52,11 +52,11 @@ public class LoginController {
 		// 【課題4.3の解答】DBでの認証処理と HttpSession によるセッション管理
 		// ==============================================================
 		
-		// 1. DBから対象のユーザIDを検索
-		User user = userRepository.findById(userId).orElse(null);
+		// 1. DBから対象のユーザIDとパスワードで検索
+		User user = userRepository.findByUserIdAndPassword(userId, password);
 
-		// 2. ユーザが存在し、パスワードが一致するかチェック
-		if (user != null && user.getPassword().equals(password)) {
+		// 2. ユーザが存在するかチェック（存在すればパスワードも一致している）
+		if (user != null) {
 			// 一致した場合：ログイン成功
 			// HttpSessionに「userName」というキーでユーザー名を保存（全画面で引き継がれる）
 			session.setAttribute("userName", user.getUserName());

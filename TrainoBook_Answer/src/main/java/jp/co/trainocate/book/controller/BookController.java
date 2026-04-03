@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -85,10 +85,10 @@ public class BookController {
 
     /**
      * 【課題4.1】登録時の入力チェック（Validation）
-     * @Validated を付けることで入力チェックが実行され、結果が BindingResult に格納されます。
+     * @Valid を付けることで入力チェックが実行され、結果が BindingResult に格納されます。
      */
     @PostMapping("/register")
-    public String register(@Validated BookForm bookForm, BindingResult result, Model model) {
+    public String register(@Valid BookForm bookForm, BindingResult result, Model model) {
         /*
         // ==============================================================
         // 【課題3.6の解答】第3章までは入力チェックなく、そのまま保存していました
@@ -141,7 +141,7 @@ public class BookController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Integer id, @Validated BookForm bookForm, BindingResult result, Model model) {
+    public String update(@PathVariable Integer id, @Valid BookForm bookForm, BindingResult result, Model model) {
         /*
         // ==============================================================
         // 【課題3.7の解答】第3章まではそのまま保存していました

@@ -213,18 +213,18 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 ユーザーが不正なデータを入力した際に、エラーメッセージと共に元の画面へ戻す処理を実装します。
 
 1. **フォームクラス (`BookForm`) へのアノテーション付与**
-   - 以下のフィールドに対して入力チェックのアノテーション（`javax.validation` あるいは `jakarta.validation`）を付与してください。
-     - `title`: 空白不可（`@NotBlank` など）
-     - `author`: 空白不可（`@NotBlank` など）
-     - `price`: 空白不可（`@NotNull`）、かつ 0 以上（`@Min(0)`など）
-     - `genreId`: 空白不可（`@NotNull`）
+   - 以下のフィールドに対して入力チェックのアノテーション（`javax.validation` あるいは `jakarta.validation`）と、エラーメッセージ（`message`属性）を付与してください。
+     - `title`: 空白不可（`@NotBlank`）。メッセージ：「書籍名を入力してください」
+     - `author`: 空白不可（`@NotBlank`）。メッセージ：「著者名を入力してください」
+     - `price`: 空白不可（`@NotNull` / メッセージ：「価格を入力してください」）、かつ 0 以上（`@Min(0)` / メッセージ：「価格は0以上で入力してください」）
+     - `genreId`: 空白不可（`@NotNull`）。メッセージ：「ジャンルIDを入力してください」
 2. **Controllerのエラー処理実装**
    - `BookController` の `/book/register` (POST) と `/book/update/{id}` (POST) メソッドを修正します。
-   - 引数の `BookForm` に `@Validated`（または `@Valid`）を付与し、その直後に `BindingResult result` を受け取るようにします。
+   - 引数の `BookForm` に `@Valid` を付与し、その直後に `BindingResult result` を受け取るようにします。
    - `result.hasErrors()` が `true` の場合、元の入力画面（テンプレート）の名前を `return` する処理を記述してください。
 3. **HTMLでのエラー表示**
    - `book_form.html` と `book_update.html` を修正します。
-   - `<form>` 要素に `th:object="${bookForm}"` （アップデート用の場合は `${book}` や別Form名に注意）を設定し、各入力欄（`title` など）のタグ周辺に `<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></span>` などのエラーメッセージ要素を追加してください。
+   - `<form>` 要素に `th:object="${bookForm}"` を設定し、各入力欄（`title` など）の付近に `<div th:errors="*{title}" class="text-danger"></div>` というエラー表示用の要素を追加してください。
 
 ### 課題4.2：ユーザー管理用のEntityとRepository作成
 データベースに存在する `user` テーブルを利用してログイン認証を行うための準備をします。
@@ -233,19 +233,20 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `jp.co.trainocate.book.entity.User` クラスを作成してください。
    - DBの `user` テーブル（カラム: `user_id`, `password`, `user_name`）と一致するようにフィールドを定義し、アノテーション（`@Entity`, `@Table`, `@Id` など）を付与します。
 2. **`UserRepository` の作成**
-   - `JpaRepository` を継承したインターフェースを作成します（主キーは Integer 等に合わせてください）。
+   - `JpaRepository` を継承したインターフェースを作成します（主キーは Integer に合わせてください）。
+   - ログイン認証で利用するため、ユーザIDとパスワードの両方が一致するデータを検索するメソッド `User findByUserIdAndPassword(Integer userId, String password);` を追加してください。
 
 ### 課題4.3：ログイン認証とセッション（HttpSession）管理
 `HttpSession` を直接操作して、ログイン状態を管理します。
 
 1. **`LoginController` の改修（認証処理の実装）**
-   - `/login` に対するPOSTメソッドを変更し、フォームからの `userId`, `password` を受け取ります（`@RequestParam` は使わず引数名バインドを利用してください）。引数に `HttpSession session` および `Model model` も追加します。
-   - `UserRepository` を DI して、受け取った `userId` でユーザーを検索します。
-   - ユーザーが存在し、かつパスワードが一致した場合：
-     - `session.setAttribute("userName", user.getUserName())` 等を用いて、セッションにユーザー名を格納します。
+   - `/login` に対するPOSTメソッドを変更し、フォームからの `userId`, `password` を引数名で直接受け取ります。引数に `HttpSession session` および `Model model` も追加します。
+   - `UserRepository` を DI し、作成した `findByUserIdAndPassword(userId, password)` を呼び出してDBを検索します。
+   - 戻り値としてユーザーが見つかった場合（ログイン成功）：
+     - `session.setAttribute("userName", user.getUserName())` を用いて、セッションにユーザー名を格納します。
      - `/book/index` へ画面遷移させます。
-   - ユーザーが存在しない、またはパスワードが不一致の場合：
-     - `model.addAttribute("error", "ユーザーIDまたはパスワードが違います")` を設定し、`index.html`（ログイン画面）へ戻します。
+   - 戻り値が `null` の場合（ログイン失敗）：
+     - `model.addAttribute("error", "ユーザーIDまたはパスワードが違います")` を設定し、`index.html`（ログイン画面）を `return` して再表示させます。
 2. **HTMLでのセッション情報表示**
    - `book_index.html` や `book_list.html` などの主要な画面上部に、「ようこそ、〇〇さん」と表示する領域を追加してください。
    - Thymeleaf では、セッションの属性に `${session.userName}` のようにアクセスできます。
