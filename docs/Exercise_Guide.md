@@ -204,3 +204,50 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 3. **削除の実行**
    - `BookController` に `/book/delete/{id}` を受け取るマッピングを追加し、Serviceの `deleteBook(id)` を呼び出します。
    - 削除完了後は、全件リスト（`/book/list`）へ**リダイレクト**するようにしてください。
+
+## 第4章：入力チェックとログイン認証（セッション管理）
+
+本章では、第3章で作成したCRUDアプリに対して、**値の入力チェック（バリデーション）**と、**DBを利用したユーザー認証およびセッション** の仕組みを導入します。
+
+### 課題4.1：入力チェック（Validation）の実装
+ユーザーが不正なデータを入力した際に、エラーメッセージと共に元の画面へ戻す処理を実装します。
+
+1. **フォームクラス (`BookForm`) へのアノテーション付与**
+   - 以下のフィールドに対して入力チェックのアノテーション（`javax.validation` あるいは `jakarta.validation`）を付与してください。
+     - `title`: 空白不可（`@NotBlank` など）
+     - `author`: 空白不可（`@NotBlank` など）
+     - `price`: 空白不可（`@NotNull`）、かつ 0 以上（`@Min(0)`など）
+     - `genreId`: 空白不可（`@NotNull`）
+2. **Controllerのエラー処理実装**
+   - `BookController` の `/book/register` (POST) と `/book/update/{id}` (POST) メソッドを修正します。
+   - 引数の `BookForm` に `@Validated`（または `@Valid`）を付与し、その直後に `BindingResult result` を受け取るようにします。
+   - `result.hasErrors()` が `true` の場合、元の入力画面（テンプレート）の名前を `return` する処理を記述してください。
+3. **HTMLでのエラー表示**
+   - `book_form.html` と `book_update.html` を修正します。
+   - `<form>` 要素に `th:object="${bookForm}"` （アップデート用の場合は `${book}` や別Form名に注意）を設定し、各入力欄（`title` など）のタグ周辺に `<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></span>` などのエラーメッセージ要素を追加してください。
+
+### 課題4.2：ユーザー管理用のEntityとRepository作成
+データベースに存在する `user` テーブルを利用してログイン認証を行うための準備をします。
+
+1. **`User` エンティティの作成**
+   - `jp.co.trainocate.book.entity.User` クラスを作成してください。
+   - DBの `user` テーブル（カラム: `user_id`, `password`, `user_name`）と一致するようにフィールドを定義し、アノテーション（`@Entity`, `@Table`, `@Id` など）を付与します。
+2. **`UserRepository` の作成**
+   - `JpaRepository` を継承したインターフェースを作成します（主キーは Integer 等に合わせてください）。
+
+### 課題4.3：ログイン認証とセッション（HttpSession）管理
+`HttpSession` を直接操作して、ログイン状態を管理します。
+
+1. **`LoginController` の改修（認証処理の実装）**
+   - `/login` に対するPOSTメソッドを変更し、フォームからの `userId`, `password` を受け取ります（`@RequestParam` は使わず引数名バインドを利用してください）。引数に `HttpSession session` および `Model model` も追加します。
+   - `UserRepository` を DI して、受け取った `userId` でユーザーを検索します。
+   - ユーザーが存在し、かつパスワードが一致した場合：
+     - `session.setAttribute("userName", user.getUserName())` 等を用いて、セッションにユーザー名を格納します。
+     - `/book/index` へ画面遷移させます。
+   - ユーザーが存在しない、またはパスワードが不一致の場合：
+     - `model.addAttribute("error", "ユーザーIDまたはパスワードが違います")` を設定し、`index.html`（ログイン画面）へ戻します。
+2. **HTMLでのセッション情報表示**
+   - `book_index.html` や `book_list.html` などの主要な画面上部に、「ようこそ、〇〇さん」と表示する領域を追加してください。
+   - Thymeleaf では、セッションの属性に `${session.userName}` のようにアクセスできます。
+3. **ログイン画面の改修**
+   - `index.html` 内に、認証エラー時に `model` から渡された `error` メッセージを赤字などで表示するようにしてください。
