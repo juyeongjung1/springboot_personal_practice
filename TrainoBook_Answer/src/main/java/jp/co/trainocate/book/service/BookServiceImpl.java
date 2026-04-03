@@ -7,11 +7,20 @@ import jp.co.trainocate.book.form.BookForm;
 import jp.co.trainocate.book.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 【課題3.3】BookServiceの実装クラス。
+ * 
+ * @Serviceアノテーションを付けることで、SpringのDIコンテナに登録されます。
+ */
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    // 依存性の注入
+    /**
+     * 【課題3.3】依存性の注入（DI）
+     * データベース操作を行うため、BookRepositoryをフィールドとして宣言します。
+     * @RequiredArgsConstructor（Lombok）とfinalにより自動的にDIされます。
+     */
     private final BookRepository bookRepository;
 
     @Override
@@ -34,6 +43,9 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByPriceBetween(minPrice, maxPrice);
     }
 
+    /**
+     * 【課題3.6, 3.7】登録および更新処理
+     */
     @Override
     public Book saveBook(BookForm bookForm) {
         Book book = new Book();
