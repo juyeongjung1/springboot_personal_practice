@@ -156,8 +156,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 2. `/book/list` メソッドを修正し、`BookService.findAllBooks()` を呼び出して全件リストを取得し、`Model` に渡します。
 3. `/book/search/title` および `/book/search/price` メソッドを修正し、それぞれServiceから検索結果リストを取得して `Model` に渡します。
 4. `book_list.html` と `book_search_result.html` を改修し、Thymeleaf の `th:each` を用いて、書籍を一覧表（ID、書籍名、著者名、価格、ジャンル名）で表示するようにしてください。
-   - **【重要（動的URL）】** 一覧の「書籍名」部分をリンクにし、クリックすると「詳細画面」へ飛ぶようにします。テキスト第5章を参考に、以下のような**動的URL**にしてください。
-     `<a th:href="@{/book/detail/{id}(id=${book.id})}" th:text="${book.title}"></a>`
+   - **【重要（動的URL）】** 一覧の「書籍名」部分をリンクにし、クリックすると「詳細画面」へ飛ぶようにします。テキスト第5章のサンプルを参考に、以下のような**動的URL**にしてください。
+     `<a th:href="@{/book/detail/} + ${book.id}" th:text="${book.title}"></a>`
 
 ### 課題3.5：書籍詳細画面の実装（更新・削除の起点）
 書籍名をクリックしたときに表示される詳細画面を作成します。この画面から「更新」と「削除」を行えるようにします。
@@ -165,23 +165,24 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 1. `BookController` に、動的URL `/book/detail/{id}` を受け取る GET マッピングメソッドを作成してください。（`@PathVariable` を使います）
 2. Serviceの `findBookById(id)` を使って対象の書籍を1件取得し、`Model` に格納してください。
 3. 詳細画面 `book_detail.html` を作成し、ID、書籍名、著者名、価格、ジャンル名を表示してください。
-4. この画面内に以下の2つのリンク（ボタン）を配置してください。
-   - `更新` （遷移先: `/book/update/{id}` へ GET メソッドで遷移）
-   - `削除` （遷移先: `/book/delete/{id}` へ GET または POST で遷移）
+4. この画面内に以下の2つのリンク（フォームのボタン）を配置してください。
+   - `更新` （遷移先: `/book/update/{id}` へ遷移するフォーム `<form th:action="@{/book/update/} + ${book.id}">`）
+   - `削除` （遷移先: `/book/delete/{id}` へ遷移するフォーム `<form th:action="@{/book/delete/} + ${book.id}">`）
 
 ### 課題3.6：新規登録機能の実装（モックからDB保存へ）
 第2章で作成した機能を改修し、画面から入力された書籍データを実際にDBへ登録する一連のフローを完成させます。
 
 1. **入力画面からの送信**
-   - 登録処理は、メニュー画面（`book_index.html`）の「書籍情報の登録」リンクから、入力画面（`book_form.html`）へ遷移することで開始します（※この遷移は第2章で作成済みです）。
-   - `book_form.html` のフォーム（ action: `/book/register`, method: POST ）から送信されたデータを受け取ります。
+   - 登録処理は、メニュー画面（`book_index.html`）の「書籍情報の登録」リンクから、入力画面（`book_form.html`）へ遷移することで開始します。
+   - `BookForm` クラスに `Integer genreId` フィールドを追加してください。
+   - `book_form.html` のフォーム（ action: `/book/register`, method: POST ）に入力項目を追加し、送信データを受け取る準備をします。
+   - **【ヒント】** 外部参照しているジャンルデータについて、DBから一覧を取得してプルダウン（select要素）で選ばせる方法は、**第6章**で学習します。今回は簡易的に `genreId` を手入力する数値入力欄（`<input type="number" name="genreId">` など）として作成しておきましょう。
 2. **登録処理の実行**
    - `BookController` の `/book/register` (POST) メソッドの中身を修正します。
    - フォームから受け取った `BookForm` のデータを `Book` エンティティに移し替え、`BookService.saveBook()` を呼び出してDBに登録してください。
    - 登録処理が完了したら、結果を表示するために `book_confirm.html` へ画面遷移させます。その際、登録した書籍情報を `Model` に格納してください。
 3. **登録完了画面の表示**
-   - `book_confirm.html` を改修します。第2章で記述した「（※実際のDB保存は次章で実装します）」といったモック用の説明文を削除してください。
-   - 「以下の内容で登録しました」というメッセージと共に、DBに登録された書籍のタイトル・著者名・価格を表示してください。
+   - `book_confirm.html` を改修します。第2章で記述したモック用の説明文を削除し、「以下の内容で登録しました」というメッセージと共に、DBに登録された書籍情報（タイトル・著者名・価格・ジャンルID等）を表示してください。
    - 画面の下部に「メニューへ戻る」リンク（遷移先: `/book/index`）が配置されていることを確認してください。
 
 ### 課題3.7：更新機能と削除機能の実装
@@ -193,9 +194,9 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `book_update.html` を作成し、該当の書籍情報が入力欄にセットされた状態のフォームを作成してください。
 2. **更新の実行（動的URLの利用）**
    - `BookForm` に `id` フィールドを追加してください。
-   - 更新用フォームの送信先（action）について、今回は `@PathVariable` を用いてIDを送信します。テキスト第5章の動的URLの書き方を参考に、`<form th:action="@{/book/update/{id}(id=${bookForm.id})}" method="post">` のように記述してください。
+   - 更新用フォームの送信先（action）について、今回は `@PathVariable` を用いてIDをURLに含めて送信します。テキスト第5章にならい、`<form th:action="@{/book/update/} + ${bookForm.id}" method="post">` のように記述してください。
    - `BookController` に `/book/update/{id}` を受け取る POST マッピングを追加します。引数で `@PathVariable` を使ってIDを受け取り、フォームからの値と共にエンティティにセットしてから `BookService.saveBook()` を呼び出します（IDが存在するためUPDATEとして働きます）。
    - 処理完了後は、詳細画面や結果画面へ遷移させてください。
 3. **削除の実行**
-   - `BookController` に `/book/delete/{id}` を受け取る GET または POST マッピングを追加し、Serviceの `deleteBook(id)` を呼び出します。
+   - `BookController` に `/book/delete/{id}` を受け取るマッピングを追加し、Serviceの `deleteBook(id)` を呼び出します。
    - 削除完了後は、全件リスト（`/book/list`）へ**リダイレクト**するようにしてください。
