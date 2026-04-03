@@ -177,6 +177,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `BookForm` クラスに `Integer genreId` フィールドを追加してください。
    - `book_form.html` のフォーム（ action: `/book/register`, method: POST ）に入力項目を追加し、送信データを受け取る準備をします。
    - **【ヒント】** 外部参照しているジャンルデータについて、DBから一覧を取得してプルダウン（select要素）で選ばせる方法は、**第6章**で学習します。今回は簡易的に `genreId` を手入力する数値入力欄（`<input type="number" name="genreId">` など）として作成しておきましょう。
+   - 数値入力欄のそばには、以下のようなテキストを固定値で表示して、受講者が「どの数値を入力すればよいか」迷わないように工夫してください。
+     **（参考）ジャンルID一覧： 1=プログラミング, 2=ビジネス, 3=小説, 4=科学, 5=自己啓発**
 2. **登録処理の実行**
    - `BookController` の `/book/register` (POST) メソッドの中身を修正します。
    - フォームから受け取った `BookForm` のデータを `Book` エンティティに移し替え、`BookService.saveBook()` を呼び出してDBに登録してください。
