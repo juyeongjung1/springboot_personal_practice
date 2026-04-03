@@ -16,23 +16,25 @@
 					<h5 class="mb-0">書籍情報を入力してください。</h5>
 				</div>
 				<div class="card-body mt-3">
-					<form th:action="@{/book/register}" method="post">
-						<!--
-							==============================================================
-							【課題2.3の解答】以下の3項目（title, author, price）を作成しました
+					<!-- 【課題4.1追加】 th:object="${bookForm}" を追加 -->
+					<form th:action="@{/book/register}" method="post" th:object="${bookForm}">
 							==============================================================
 						-->
 						<div class="mb-3">
 							<label for="title" class="form-label fw-bold">書籍名</label>
-							<input type="text" class="form-control" id="title" name="title" required>
+							<!-- 【課題4.1追加】 th:field を用いたバインドとエラー表示 -->
+							<input type="text" class="form-control" id="title" th:field="*{title}">
+							<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger mt-1 small"></div>
 						</div>
 						<div class="mb-3">
 							<label for="author" class="form-label fw-bold">著者名</label>
-							<input type="text" class="form-control" id="author" name="author" required>
+							<input type="text" class="form-control" id="author" th:field="*{author}">
+							<div th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text-danger mt-1 small"></div>
 						</div>
 						<div class="mb-3">
 							<label for="price" class="form-label fw-bold">価格（円）</label>
-							<input type="number" class="form-control" id="price" name="price" required>
+							<input type="number" class="form-control" id="price" th:field="*{price}">
+							<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger mt-1 small"></div>
 						</div>
 						
 						<!--
@@ -42,8 +44,9 @@
 						-->
 						<div class="mb-4">
 							<label for="genreId" class="form-label fw-bold">ジャンルID</label>
-							<input type="number" class="form-control" id="genreId" name="genreId" required>
-							<div class="form-text text-danger mt-1">
+							<input type="number" class="form-control" id="genreId" th:field="*{genreId}">
+							<div th:if="${#fields.hasErrors('genreId')}" th:errors="*{genreId}" class="text-danger mt-1 small"></div>
+							<div class="form-text text-muted mt-1">
 								（参考）ジャンルID一覧： 1=プログラミング, 2=ビジネス, 3=小説, 4=科学, 5=自己啓発
 							</div>
 						</div>

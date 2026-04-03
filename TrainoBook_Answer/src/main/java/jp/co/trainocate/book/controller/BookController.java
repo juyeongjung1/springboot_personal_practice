@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,59 +17,30 @@ import jp.co.trainocate.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 書籍管理の各種画面遷移とCRUD操作を担当するController。
+ * 【課題2.2, 2.3】【課題3.4 〜 3.7】【課題4.1】
+ * 書籍管理の各種画面遷移とCRUD操作、および入力チェックを担当するController。
  */
 @Controller
 @RequestMapping("/book")
 @RequiredArgsConstructor
 public class BookController {
 
-    /**
-     * 【課題3.4追加】BookServiceの依存性の注入（DI）
-     */
     private final BookService bookService;
 
-    /**
-     * 【課題2.2実装】メニュー画面の表示
-     */
     @GetMapping("/index")
     public String bookIndex() {
         return "book_index";
     }
 
-    /**
-     * 全件一覧の表示
-     */
     @GetMapping("/list")
     public String bookList(Model model) {
-        /*
-        // --- 【課題2.2の解答（モック）】 ---
-        // 第2章では画面遷移のみの実装でした
-        // return "book_list";
-        // -----------------------------------
-        */
-
-        // --- 【課題3.4の解答（DB対応）】 ---
         List<Book> bookList = bookService.findAllBooks();
         model.addAttribute("books", bookList); 
         return "book_list";
     }
 
-    /**
-     * タイトル検索
-     */
     @GetMapping("/search/title")
     public String searchByTitle(String keyword, Model model) {
-        /*
-        // --- 【課題2.2の解答（モック）】 ---
-        // 第2章ではキーワードをModelに詰めるだけでした
-        // model.addAttribute("keyword", keyword);
-        // model.addAttribute("searchType", "title");
-        // return "book_search_result";
-        // -----------------------------------
-        */
-
-        // --- 【課題3.4の解答（DB対応）】 ---
         List<Book> bookList = bookService.findBooksByTitle(keyword);
         model.addAttribute("books", bookList);
         model.addAttribute("searchType", "title");
@@ -75,21 +48,8 @@ public class BookController {
         return "book_search_result";
     }
 
-    /**
-     * 価格検索
-     */
     @GetMapping("/search/price")
     public String searchByPrice(Integer minPrice, Integer maxPrice, Model model) {
-        /*
-        // --- 【課題2.2の解答（モック）】 ---
-        // model.addAttribute("minPrice", minPrice);
-        // model.addAttribute("maxPrice", maxPrice);
-        // model.addAttribute("searchType", "price");
-        // return "book_search_result";
-        // -----------------------------------
-        */
-
-        // --- 【課題3.4の解答（DB対応）】 ---
         List<Book> bookList = bookService.findBooksByPrice(minPrice, maxPrice);
         model.addAttribute("books", bookList);
         model.addAttribute("searchType", "price");
@@ -98,9 +58,6 @@ public class BookController {
         return "book_search_result";
     }
 
-    /**
-     * 【課題3.5追加】詳細画面の表示（動的URL）
-     */
     @GetMapping("/detail/{id}")
     public String bookDetail(@PathVariable Integer id, Model model) {
         Book book = bookService.findBookById(id);
@@ -108,57 +65,108 @@ public class BookController {
         return "book_detail";
     }
 
-    /**
-     * 【課題2.3実装】新規登録フォームの表示
-     */
     @GetMapping("/form")
-    public String bookForm() {
+    public String bookForm(Model model) {
+        /*
+        // ==============================================================
+        // 【課題2.3の解答】第2章, 3章では単純に画面を返すだけでした
+        // ==============================================================
+        // return "book_form";
+        */
+
+        // ==============================================================
+        // 【課題4.1の解答】入力チェック（Validation）追加への対応
+        // 画面側で th:object="${bookForm}" を使用するため、初期表示の時点で
+        // 空の Form オブジェクトを Model に渡しておく必要があります。
+        // ==============================================================
+        model.addAttribute("bookForm", new BookForm());
         return "book_form";
     }
 
     /**
-     * 新規登録の実行
+     * 【課題4.1】登録時の入力チェック（Validation）
+     * @Validated を付けることで入力チェックが実行され、結果が BindingResult に格納されます。
      */
     @PostMapping("/register")
-    public String register(BookForm bookForm, Model model) {
+    public String register(@Validated BookForm bookForm, BindingResult result, Model model) {
         /*
-        // --- 【課題2.3の解答（モック）】 ---
-        // 第2章ではフォームの値をそのまま確認画面に出力していました
-        // model.addAttribute("bookForm", bookForm);
+        // ==============================================================
+        // 【課題3.6の解答】第3章までは入力チェックなく、そのまま保存していました
+        // ==============================================================
+        // Book book = bookService.saveBook(bookForm);
+        // model.addAttribute("book", book);
         // return "book_confirm";
-        // -----------------------------------
         */
 
-        // --- 【課題3.6の解答（DB保存）】 ---
+        // ==============================================================
+        // 【課題4.1の解答】BindingResult によるエラー判定
+        // ==============================================================
+        if (result.hasErrors()) {
+            // エラーがある場合は登録を行わず、元のフォーム画面を再表示する
+            // （このとき、元の入力内容とエラー情報は自動的に Model に保持されます）
+            return "book_form";
+        }
+
+        // エラーがない場合のみ保存処理を実行
         Book book = bookService.saveBook(bookForm);
         model.addAttribute("book", book);
         return "book_confirm";
     }
 
-    /**
-     * 【課題3.7追加】更新フォームの表示
-     */
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable Integer id, Model model) {
         Book book = bookService.findBookById(id);
-        model.addAttribute("book", book);
+        
+        /*
+        // ==============================================================
+        // 【課題3.7の解答】第3章では Book をそのまま Model に渡していました
+        // ==============================================================
+        // model.addAttribute("book", book);
+        */
+
+        // ==============================================================
+        // 【課題4.1の解答】入力チェックエラーによる再表示を考慮し、
+        // 画面の th:object と整合性を合わせるため BookForm に詰め替えて渡します
+        // ==============================================================
+        BookForm bookForm = new BookForm();
+        bookForm.setId(book.getId());
+        bookForm.setTitle(book.getTitle());
+        bookForm.setAuthor(book.getAuthor());
+        bookForm.setPrice(book.getPrice());
+        bookForm.setGenreId(book.getGenreId());
+        
+        model.addAttribute("bookForm", bookForm);
+
         return "book_update";
     }
 
-    /**
-     * 【課題3.7追加】更新の実行（動的URLの利用）
-     */
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Integer id, BookForm bookForm, Model model) {
+    public String update(@PathVariable Integer id, @Validated BookForm bookForm, BindingResult result, Model model) {
+        /*
+        // ==============================================================
+        // 【課題3.7の解答】第3章まではそのまま保存していました
+        // ==============================================================
+        // bookForm.setId(id);
+        // Book book = bookService.saveBook(bookForm);
+        // model.addAttribute("book", book);
+        // return "book_confirm"; 
+        */
+
+        // ==============================================================
+        // 【課題4.1の解答】更新時の入力チェック処理
+        // ==============================================================
+        if (result.hasErrors()) {
+            // PathVariableのIDをFormにセットし直しておく（URLパラメーターとの整合用）
+            bookForm.setId(id);
+            return "book_update";
+        }
+
         bookForm.setId(id);
         Book book = bookService.saveBook(bookForm);
         model.addAttribute("book", book);
         return "book_confirm"; 
     }
 
-    /**
-     * 【課題3.7追加】削除の実行
-     */
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         bookService.deleteBook(id);

@@ -16,14 +16,14 @@
 					<h5 class="mb-0">ログイン</h5>
 				</div>
 				<div class="card-body">
+					<!-- 【課題4.3追加】 認証エラー時のメッセージ表示 -->
+					<div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+
 					<!--
 						【課題2.1 - ステップ4】
 						ログイン用フォーム
-						・送信先（action）: /login
-						・送信方法（method）: POST
-						・入力項目: userId, password
 					-->
-					<form action="/login" method="post">
+					<form th:action="@{/login}" method="post">
 						<div class="mb-3">
 							<label for="userId" class="form-label">ユーザID</label>
 							<input type="text" class="form-control" id="userId" name="userId" required>
