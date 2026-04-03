@@ -3,43 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <title>ログイン（書籍管理システム）</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div class="container mt-5">
-	<div class="row justify-content-center">
-		<div class="col-md-6">
-			<h1 class="text-center mb-4">書籍管理システム</h1>
-			<div class="card">
-				<div class="card-header">
-					<h5 class="mb-0">ログイン</h5>
-				</div>
-				<div class="card-body">
-					<!-- 【課題4.3追加】 認証エラー時のメッセージ表示 -->
-					<div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+	<h1>書籍管理システム</h1>
+	<h2>ログイン</h2>
+	<!-- 【課題4.3追加】 認証エラー時のメッセージ表示 -->
+	<div th:if="${error}" th:text="${error}"></div>
 
-					<!--
-						【課題2.1 - ステップ4】
-						ログイン用フォーム
-					-->
-					<form th:action="@{/login}" method="post">
-						<div class="mb-3">
-							<label for="userId" class="form-label">ユーザID</label>
-							<input type="text" class="form-control" id="userId" name="userId" required>
-						</div>
-						<div class="mb-3">
-							<label for="password" class="form-label">パスワード</label>
-							<input type="password" class="form-control" id="password" name="password" required>
-						</div>
-						<button type="submit" class="btn btn-primary w-100">ログイン</button>
-					</form>
-				</div>
-			</div>
+	<!--
+		【課題2.1 - ステップ4】
+		ログイン用フォーム
+	-->
+	<form th:action="@{/login}" method="post">
+		<div>
+			<label for="userId">ユーザID</label>
+			<input type="text" id="userId" name="userId" required>
 		</div>
-	</div>
-</div>
-<!-- Bootstrap JS -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<div>
+			<label for="password">パスワード</label>
+			<input type="password" id="password" name="password" required>
+		</div>
+		<button type="submit">ログイン</button>
+	</form>
 </body>
 </html>

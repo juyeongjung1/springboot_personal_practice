@@ -3,19 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>書籍管理メニュー</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div class="container mt-5">
 	<!-- 【課題4.3追加】 セッション情報の表示とログアウト -->
-	<div class="d-flex justify-content-between align-items-end mb-4">
-		<h1 class="mb-0">書籍管理メニュー</h1>
+	<div>
+		<h1>書籍管理メニュー</h1>
 		<div>
-			<span th:if="${session.userName != null}" class="me-3 fw-bold">
+			<span th:if="${session.userName != null}">
 				ようこそ、<span th:text="${session.userName}"></span> さん
 			</span>
-			<a th:href="@{/logout}" class="btn btn-sm btn-outline-danger">ログアウト</a>
+			<a th:href="@{/logout}">ログアウト</a>
 		</div>
 	</div>
 	<hr>
@@ -25,13 +22,13 @@
 		メニューへのリンクを配置する。
 		Thymeleafのリンク記法「th:href="@{URL}"」を使用する（5章参照）。
 	-->
-	<div class="mb-4">
-		<h4>メニュー</h4>
-		<ul class="list-group">
-			<li class="list-group-item">
+	<div>
+		<h3>メニュー</h3>
+		<ul>
+			<li>
 				<a th:href="@{/book/list}">全書籍リストの確認</a>
 			</li>
-			<li class="list-group-item">
+			<li>
 				<a th:href="@{/book/form}">書籍情報の登録</a>
 			</li>
 		</ul>
@@ -45,15 +42,11 @@
 		・入力項目: keyword（テキストボックス）
 		・送信先: /book/search/title
 	-->
-	<div class="mb-4">
-		<h4>書籍名で検索</h4>
-		<form th:action="@{/book/search/title}" method="get" class="row g-3">
-			<div class="col-auto">
-				<input type="text" class="form-control" name="keyword" placeholder="キーワードを入力">
-			</div>
-			<div class="col-auto">
-				<button type="submit" class="btn btn-outline-primary">タイトルで検索</button>
-			</div>
+	<div>
+		<h3>書籍名で検索</h3>
+		<form th:action="@{/book/search/title}" method="get">
+			<input type="text" name="keyword" placeholder="キーワードを入力">
+			<button type="submit">タイトルで検索</button>
 		</form>
 	</div>
 
@@ -63,26 +56,14 @@
 		・入力項目: minPrice（最低価格）, maxPrice（最高価格）
 		・送信先: /book/search/price
 	-->
-	<div class="mb-4">
-		<h4>価格帯で検索</h4>
-		<form th:action="@{/book/search/price}" method="get" class="row g-3 align-items-center">
-			<div class="col-auto">
-				<input type="number" class="form-control" name="minPrice" placeholder="最低価格">
-			</div>
-			<div class="col-auto">
-				<span>〜</span>
-			</div>
-			<div class="col-auto">
-				<input type="number" class="form-control" name="maxPrice" placeholder="最高価格">
-			</div>
-			<div class="col-auto">
-				<button type="submit" class="btn btn-outline-primary">価格帯で検索</button>
-			</div>
+	<div>
+		<h3>価格帯で検索</h3>
+		<form th:action="@{/book/search/price}" method="get">
+			<input type="number" name="minPrice" placeholder="最低価格">
+			〜
+			<input type="number" name="maxPrice" placeholder="最高価格">
+			<button type="submit">価格帯で検索</button>
 		</form>
 	</div>
-
-</div>
-<!-- Bootstrap JS -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

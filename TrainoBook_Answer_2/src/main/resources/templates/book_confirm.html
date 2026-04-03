@@ -3,35 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>登録・更新完了</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div class="container mt-5">
-	<div class="alert alert-success text-center" role="alert">
-		<h4 class="alert-heading mb-3">登録（または更新）が完了しました！</h4>
-		<p class="mb-0">以下の内容で保存処理を受け付けました。</p>
-	</div>
+	<h1>登録（または更新）が完了しました！</h1>
+	<p>以下の内容で保存処理を受け付けました。</p>
 	
-	<div class="card shadow-sm mt-4 mx-auto" style="max-width: 600px;">
-		<div class="card-header bg-success text-white">
-			<h5 class="mb-0">保存内容</h5>
-		</div>
-		<div class="card-body">
-			<!-- Formから受け取った内容を表示 -->
-			<ul class="list-group list-group-flush text-center">
-				<li class="list-group-item"><strong>書籍名：</strong> <span th:text="${bookForm.title}"></span></li>
-				<li class="list-group-item"><strong>著者名：</strong> <span th:text="${bookForm.author}"></span></li>
-				<li class="list-group-item"><strong>価格：</strong> <span th:text="${bookForm.price}"></span> 円</li>
-			</ul>
-			
-			<div class="text-center mt-4">
-				<a th:href="@{/book/index}" class="btn btn-primary">メニューに戻る</a>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Bootstrap JS -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<h3>保存内容</h3>
+	<ul>
+		<li><strong>書籍名：</strong> <span th:text="${bookForm.title}"></span></li>
+		<li><strong>著者名：</strong> <span th:text="${bookForm.author}"></span></li>
+		<li><strong>価格：</strong> <span th:text="${bookForm.price}"></span> 円</li>
+	</ul>
+	
+	<p>
+		<a th:href="@{/book/index}">メニューに戻る</a>
+	</p>
 </body>
 </html>

@@ -3,71 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>登録・更新完了</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div class="container mt-5">
-	<div class="row justify-content-center">
-		<div class="col-md-8">
-			<h1 class="mb-4">処理完了</h1>
-			
-			<div class="alert alert-success">
-				以下の内容で書籍データを保存しました。
-			</div>
+	<h1>処理完了</h1>
+	<p>以下の内容で書籍データを保存しました。</p>
 
-			<!--
-				==============================================================
-				【課題2.3の解答（モック）】第2章ではFormを受け取って表示していました
-				==============================================================
-				<table class="table">
-					<tbody>
-						<tr><th>書籍名</th><td th:text="${bookForm.title}"></td></tr>
-						<tr><th>著者名</th><td th:text="${bookForm.author}"></td></tr>
-						<tr><th>価格</th><td th:text="${bookForm.price}"></td></tr>
-					</tbody>
-				</table>
-			-->
+	<!--
+		==============================================================
+		【課題3.6の解答（DB対応）】DBに保存されたBookエンティティを表示しています
+		==============================================================
+	-->
+	<table border="1">
+		<tbody>
+			<tr>
+				<th>ID</th>
+				<td th:text="${book.id}"></td>
+			</tr>
+			<tr>
+				<th>書籍名</th>
+				<td th:text="${book.title}"></td>
+			</tr>
+			<tr>
+				<th>著者名</th>
+				<td th:text="${book.author}"></td>
+			</tr>
+			<tr>
+				<th>価格</th>
+				<td th:text="${book.price} + ' 円'"></td>
+			</tr>
+			<tr>
+				<th>ジャンルID</th>
+				<td th:text="${book.genreId}"></td>
+			</tr>
+		</tbody>
+	</table>
 
-			<!--
-				==============================================================
-				【課題3.6の解答（DB対応）】DBに保存されたBookエンティティを表示しています
-				==============================================================
-			-->
-			<div class="card mb-4 shadow-sm">
-				<div class="card-body">
-					<table class="table table-bordered mb-0">
-						<tbody>
-							<tr>
-								<th class="bg-light" style="width: 30%">ID</th>
-								<td th:text="${book.id}"></td>
-							</tr>
-							<tr>
-								<th class="bg-light">書籍名</th>
-								<td th:text="${book.title}"></td>
-							</tr>
-							<tr>
-								<th class="bg-light">著者名</th>
-								<td th:text="${book.author}"></td>
-							</tr>
-							<tr>
-								<th class="bg-light">価格</th>
-								<td th:text="${book.price} + ' 円'"></td>
-							</tr>
-							<tr>
-								<th class="bg-light">ジャンルID</th>
-								<td th:text="${book.genreId}"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<a th:href="@{/book/index}" class="btn btn-secondary">メニューに戻る</a>
-		</div>
-	</div>
-</div>
-<!-- Bootstrap JS -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<p>
+		<a th:href="@{/book/index}">メニューに戻る</a>
+	</p>
 </body>
 </html>

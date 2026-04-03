@@ -3,63 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>書籍情報の更新</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<div class="container mt-5">
-	<div class="row justify-content-center">
-		<div class="col-md-8">
-			<h1 class="mb-4">書籍情報の更新</h1>
-			<div class="card shadow-sm">
-				<div class="card-header bg-success text-white">
-					<h5 class="mb-0">変更内容を入力してください。</h5>
-				</div>
-				<div class="card-body mt-3">
-					<!--
-						【課題3.7の解答】
-						送信先（action）: /book/update/{id} (POST)
-					-->
-					<form th:action="@{/book/update/} + ${book.id}" method="post">
-						
-						<div class="mb-3">
-							<label class="form-label fw-bold">ID（変更不可）</label>
-							<input type="text" class="form-control" th:value="${book.id}" disabled>
-						</div>
-						
-						<div class="mb-3">
-							<label for="title" class="form-label fw-bold">書籍名</label>
-							<input type="text" class="form-control" id="title" name="title" th:value="${book.title}" required>
-						</div>
-						<div class="mb-3">
-							<label for="author" class="form-label fw-bold">著者名</label>
-							<input type="text" class="form-control" id="author" name="author" th:value="${book.author}" required>
-						</div>
-						<div class="mb-3">
-							<label for="price" class="form-label fw-bold">価格（円）</label>
-							<input type="number" class="form-control" id="price" name="price" th:value="${book.price}" required>
-						</div>
-						
-						<!-- ジャンルID入力（第3章用） -->
-						<div class="mb-4">
-							<label for="genreId" class="form-label fw-bold">ジャンルID</label>
-							<input type="number" class="form-control" id="genreId" name="genreId" th:value="${book.genreId}" required>
-							<div class="form-text text-danger mt-1">
-								（参考）ジャンルID一覧： 1=プログラミング, 2=ビジネス, 3=小説, 4=科学, 5=自己啓発
-							</div>
-						</div>
-						
-						<div class="d-flex justify-content-between mt-4">
-							<a th:href="@{/book/detail/} + ${book.id}" class="btn btn-secondary px-4">詳細に戻る</a>
-							<button type="submit" class="btn btn-success px-4">更新する</button>
-						</div>
-					</form>
-				</div>
-			</div>
+	<h1>書籍情報の更新</h1>
+	<p>変更内容を入力してください。</p>
+	<!--
+		【課題3.7の解答】
+		送信先（action）: /book/update/{id} (POST)
+	-->
+	<form th:action="@{/book/update/} + ${book.id}" method="post">
+		
+		<div>
+			<label>ID（変更不可）</label>
+			<input type="text" th:value="${book.id}" disabled>
 		</div>
-	</div>
-</div>
-<!-- Bootstrap JS -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		
+		<div>
+			<label for="title">書籍名</label>
+			<input type="text" id="title" name="title" th:value="${book.title}" required>
+		</div>
+		<div>
+			<label for="author">著者名</label>
+			<input type="text" id="author" name="author" th:value="${book.author}" required>
+		</div>
+		<div>
+			<label for="price">価格（円）</label>
+			<input type="number" id="price" name="price" th:value="${book.price}" required>
+		</div>
+		
+		<!-- ジャンルID入力（第3章用） -->
+		<div>
+			<label for="genreId">ジャンルID</label>
+			<input type="number" id="genreId" name="genreId" th:value="${book.genreId}" required>
+			<p>
+				（参考）ジャンルID一覧： 1=プログラミング, 2=ビジネス, 3=小説, 4=科学, 5=自己啓発
+			</p>
+		</div>
+		
+		<div>
+			<a th:href="@{/book/detail/} + ${book.id}">詳細に戻る</a>
+			<button type="submit">更新する</button>
+		</div>
+	</form>
 </body>
 </html>
