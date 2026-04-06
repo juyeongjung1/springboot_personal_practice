@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>ログイン</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h2>ログイン</h2>
+                <p>ユーザIDとパスワードを入力してログインしてください。</p>
+                
+                <!-- 【課題4.3追加】 認証エラー時のメッセージ表示 -->
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                <!-- 【課題2.1 - ステップ4】 ログイン用フォーム -->
+                <form th:action="@{/login}" method="post">
+                    <div class="mb-3">
+                        <label for="userId" class="form-label">ユーザID</label>
+                        <input type="text" id="userId" name="userId" class="form-control" required placeholder="123456">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">パスワード</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">ログイン</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
