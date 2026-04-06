@@ -34,7 +34,7 @@
             </tbody>
         </table>
 
-        <div style="display: flex; gap: 0.5rem; margin-top: 2rem;">
+        <div>
             <a th:href="@{/book/list}">一覧に戻る</a>
             
             <!-- 更新画面への遷移（GET） -->
@@ -44,7 +44,7 @@
             
             <!-- 削除処理の実行（POST推奨） -->
             <form th:action="@{/book/delete/} + ${book.id}" method="post">
-                <button type="submit" style="background-color: #ef4444;">削除</button>
+                <button type="submit">削除</button>
             </form>
         </div>
     </main>

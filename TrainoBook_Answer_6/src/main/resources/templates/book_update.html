@@ -45,7 +45,7 @@
                 <div th:errors="*{genreId}" class="error-msg"></div>
             </div>
             
-            <div style="display: flex; gap: 0.5rem; margin-top: 2rem;">
+            <div>
                 <a th:href="@{/book/detail/} + ${bookForm.id}">詳細に戻る</a>
                 <button type="submit">更新する</button>
             </div>

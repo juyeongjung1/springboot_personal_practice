@@ -10,7 +10,7 @@
         <h2>検索結果</h2>
 
         <!-- 検索条件の表示 -->
-        <div style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;">
+        <div>
             検索条件：
             タイトル『<span th:text="${keyword}"></span>』 / 
             価格『<span th:text="${minPrice}"></span>』〜『<span th:text="${maxPrice}"></span>』
@@ -39,7 +39,9 @@
             </tbody>
         </table>
 
-        <div style="margin-top: 2rem;">
+        <!-- 0件ケアの表示（第6章で実装） -->
+
+        <div>
             <a th:href="@{/book/index}">メニューに戻る</a>
         </div>
     </main>

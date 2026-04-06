@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+        <div th:if="${session.userName != null}">
             <h3>書籍を検索する</h3>
             <div>
                 <!-- 書籍名検索 -->

@@ -35,11 +35,11 @@
         </table>
 
         <!-- 【課題6.1追加】 検索結果が0件の場合のメッセージ表示 -->
-        <div th:if="${#lists.isEmpty(books)}" style="padding: 1rem; background-color: #fffbeb; color: #92400e; border-radius: 0.5rem; margin-bottom: 2rem;">
+        <div th:if="${#lists.isEmpty(books)}">
             登録されている書籍はありません。
         </div>
 
-        <div style="margin-top: 2rem;">
+        <div>
             <a th:href="@{/book/index}">メニューに戻る</a>
         </div>
     </main>

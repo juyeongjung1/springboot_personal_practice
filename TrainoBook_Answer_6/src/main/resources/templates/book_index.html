@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+        <div th:if="${session.userName != null}">
             <h3>書籍を検索する</h3>
             <div>
                 <!-- 書籍名検索 -->
@@ -44,13 +44,13 @@
                 </section>
 
                 <!-- 【課題6.3追加】複合検索（ジャンル名 ＋ 上限価格） -->
-                <section style="grid-column: span 2; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed #e2e8f0;">
+                <section>
                     <h4>ジャンル名と価格で検索（JPQL活用）</h4>
                     <form th:action="@{/book/search/complex}" method="get">
-                        <div style="display: flex; gap: 1rem; align-items: center;">
-                            <input type="text" name="genreName" placeholder="ジャンル名（例：プロ）" style="flex: 2;">
-                            <input type="number" name="maxPrice" placeholder="上限価格" style="flex: 1;">
-                            <button type="submit" style="margin: 0;">複合検索</button>
+                        <div>
+                            <input type="text" name="genreName" placeholder="ジャンル名（例：プロ）">
+                            <input type="number" name="maxPrice" placeholder="上限価格">
+                            <button type="submit">複合検索</button>
                         </div>
                     </form>
                 </section>
