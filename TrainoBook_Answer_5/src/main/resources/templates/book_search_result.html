@@ -11,18 +11,12 @@
 
         <!-- 検索条件の表示 -->
         <div style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;">
-            <!-- 出力する内容① タイトル検索のとき -->
-            <div th:if="${searchType == 'title'}">
-                <strong>検索条件：</strong>タイトルに『<span th:text="${keyword}"></span>』が含まれる書籍
-            </div>
-
-            <!-- 出力する内容② 価格帯検索のとき -->
-            <div th:if="${searchType == 'price'}">
-                <strong>検索条件：</strong>価格が『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円の書籍
-            </div>
+            検索条件：
+            タイトル『<span th:text="${keyword}"></span>』 / 
+            価格『<span th:text="${minPrice}"></span>』〜『<span th:text="${maxPrice}"></span>』
         </div>
 
-        <table th:if="${!#lists.isEmpty(books)}">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -44,11 +38,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!-- 0件ケアの表示 -->
-        <div th:if="${#lists.isEmpty(books)}" style="padding: 1rem; background-color: #fffbeb; color: #92400e; border-radius: 0.5rem; margin-bottom: 1.5rem;">
-            該当する書籍は見つかりませんでした。
-        </div>
 
         <div style="margin-top: 2rem;">
             <a th:href="@{/book/index}">メニューに戻る</a>
