@@ -1,6 +1,6 @@
-# 書籍管理システム 全体設計書（進化のプロセス）
+# 書籍管理システム 全体設計書
 
-本ドキュメントは、演習を通してシステムがどのように進化していくかを可視化したものです。各章のマイルストーンごとに、画面遷移とデザインの変化を網羅的に確認できます。
+本ドキュメントは、演習を通してシステムをどのように構築していくかをまとめた正式な設計書です。各章のマイルストーンごとに、画面遷移と最終的な画面イメージを確認できます。
 
 ---
 
@@ -20,7 +20,7 @@ graph LR
     Confirm -- メニューに戻る --> Menu
 ```
 
-### 主要画面（高視認性表示）
+### 主要画面
 | ログイン画面 | メニュー画面（検索フォームあり） |
 | :---: | :---: |
 | ![Login](images/ch2_login_page_zoom1_5_1775531127831.png) | ![Menu](images/ch2_menu_page_zoom1_5_1775531151398.png) |
@@ -38,7 +38,7 @@ graph LR
 ## 第3章：Spring Data JPA (DB連携) 
 **テーマ：データの永続化（DBとの接続）**
 
-モックデータを卒業し、MySQLデータベースと連携します。第2章で作成した検索機能も、実際にDBからデータを取得するように進化します。
+モックデータを卒業し、MySQLデータベースと連携します。第2章で作成した検索機能も、実際にDBからデータを取得するように実装します。
 
 ### 画面遷移図
 ```mermaid
@@ -57,7 +57,7 @@ graph LR
 ### 主要画面
 | メニュー画面（検索フォームあり） | 書籍一覧画面 |
 | :---: | :---: |
-| ![Menu Fixed](images/ch3_menu_screen_fixed_1775532678571.png) | ![List](images/ch3_list_png_1775531302697.png) |
+| ![Menu Fixed](images/ch3_menu_screen_fixed_1775532678571.png) | ![List](images/ch3_book_list_plain_1775540092670.png) |
 
 | 書籍詳細画面 | 登録・更新完了画面 |
 | :---: | :---: |
@@ -65,7 +65,7 @@ graph LR
 
 | 更新フォーム | 検索結果画面 |
 | :---: | :---: |
-| ![Update](images/ch3_update_png_1775531339324.png) | ![Search Results](images/ch3_search_result_png_1775531340508.png) |
+| ![Update](images/ch3_update_png_1775531339324.png) | ![Search Results](images/ch3_search_result_plain_1775540104659.png) |
 
 ---
 
@@ -131,14 +131,14 @@ graph LR
 ### 主要画面
 | ジャンル選択（結合表示） | 検索結果（シンプル表示） |
 | :---: | :---: |
-| ![Genre Select](images/ch6_genre_select_box_1775530168540.png) | ![Search Results](images/ch6_search_results_no_criteria_1775530169992.png) |
+| ![Genre Select](images/ch6_genre_select_box_1775530168540.png) | ![Search Results](images/ch6_search_result_no_criteria_1775540253533.png) |
 
 ---
 
-## 第7章：Bootstrapによるスタイリング（完成形）
-**テーマ：モダンなUIデザインの体験**
+## 第7章：Bootstrapによるスタイリング（完成形態）
+**テーマ：モダンなUIデザインの導入**
 
-人気フレームワーク「Bootstrap 5」を導入し、プレミアムな外観へと一新します。
+人気フレームワーク「Bootstrap 5」を導入し、デザインを刷新します。
 
 ### 画面遷移図
 ```mermaid
@@ -148,10 +148,10 @@ graph LR
     Menu --> Form[入力カード]
 ```
 
-### 主要画面（最終形態）
-| メニュー（カードデザイン） | 登録フォーム（Bootstrap適用） |
+### 主要画面
+| メニュー（カードデザイン） | 検索結果画面 |
 | :---: | :---: |
-| ![Final Menu](images/ch7_index_menu_1775530275046.png) | ![Final Form](images/ch7_registration_form_final_1775530316545.png) |
+| ![Final Menu](images/ch7_index_menu_1775530275046.png) | ![Final Search Results](images/ch7_search_result_bootstrap_1775540370341.png) |
 
 ---
 
