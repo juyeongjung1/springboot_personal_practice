@@ -24,33 +24,24 @@
 
         <hr>
 
-        <div th:if="${session.userName != null}">
-            <h3>書籍を検索する</h3>
-            <div>
-                <!-- 書籍名検索 -->
-                <section>
-                    <h4>書籍名で検索</h4>
-                    <form th:action="@{/book/search/title}" method="get">
-                        <div>
-                            <input type="text" name="keyword" placeholder="キーワードを入力">
-                        </div>
-                        <button type="submit">タイトルで検索</button>
-                    </form>
-                </section>
+        <div>
+            <h3>書籍名で検索</h3>
+            <form th:action="@{/book/search/title}" method="get">
+                <input type="text" name="keyword" placeholder="キーワードを入力">
+                <button type="submit">タイトルで検索</button>
+            </form>
+        </div>
 
-                <!-- 価格帯検索 -->
-                <section>
-                    <h4>価格帯で検索</h4>
-                    <form th:action="@{/book/search/price}" method="get">
-                        <div>
-                            <input type="number" name="minPrice" placeholder="最低価格">
-                            <span>〜</span>
-                            <input type="number" name="maxPrice" placeholder="最高価格">
-                        </div>
-                        <button type="submit">価格帯で検索</button>
-                    </form>
-                </section>
-            </div>
+        <hr>
+
+        <div>
+            <h3>価格帯で検索</h3>
+            <form th:action="@{/book/search/price}" method="get">
+                <input type="number" name="minPrice" placeholder="最低価格">
+                <span>〜</span>
+                <input type="number" name="maxPrice" placeholder="最高価格">
+                <button type="submit">価格帯で検索</button>
+            </form>
         </div>
     </main>
 </body>
