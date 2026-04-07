@@ -7,14 +7,22 @@
 </head>
 <body>
     <main layout:fragment="content">
+        <h1>書籍管理メニュー</h1>
+        <hr>
+
         <div>
-            <h2>メニュー</h2>
-            <p>行いたい操作を選択してください。</p>
-            <div>
-                <a th:href="@{/book/list}">全書籍リストの確認</a>
-                <a th:href="@{/book/form}">書籍情報の登録</a>
-            </div>
+            <h3>メニュー</h3>
+            <ul>
+                <li>
+                    <a th:href="@{/book/list}">全書籍リストの確認</a>
+                </li>
+                <li>
+                    <a th:href="@{/book/form}">書籍情報の登録</a>
+                </li>
+            </ul>
         </div>
+
+        <hr>
 
         <div th:if="${session.userName != null}">
             <h3>書籍を検索する</h3>

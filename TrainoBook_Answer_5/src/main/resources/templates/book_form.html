@@ -7,8 +7,9 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <h2>書籍情報の登録</h2>
-        <p>新しい書籍情報を入力してください。すべての項目が必須です。</p>
+        <h1>書籍情報の登録</h1>
+        <hr>
+        <p>書籍情報を入力してください。</p>
 
         <!-- 【課題4.1追加】 th:object="${bookForm}" を追加 -->
         <form th:action="@{/book/register}" method="post" th:object="${bookForm}">
