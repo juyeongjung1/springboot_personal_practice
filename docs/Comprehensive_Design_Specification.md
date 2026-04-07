@@ -21,20 +21,24 @@ graph LR
 ```
 
 ### 主要画面（高視認性表示）
-| ログイン画面 | メニュー画面 |
+| ログイン画面 | メニュー画面（検索フォームあり） |
 | :---: | :---: |
 | ![Login](images/ch2_login_page_zoom1_5_1775531127831.png) | ![Menu](images/ch2_menu_page_zoom1_5_1775531151398.png) |
 
-| 書籍一覧画面 | 登録確認画面 |
+| 書籍登録フォーム | 登録確認画面 |
 | :---: | :---: |
-| ![List](images/ch2_list_page_zoom1_5_1775531152394.png) | ![Confirm](images/ch2_confirmation_page_zoom1_5_1775531182266.png) |
+| ![Registration Form](images/ch2_registration_form_1775532568369.png) | ![Confirm](images/ch2_confirmation_page_zoom1_5_1775531182266.png) |
+
+| 書籍一覧画面 | 検索結果（表示例） |
+| :---: | :---: |
+| ![List](images/ch2_list_page_zoom1_5_1775531152394.png) | ![Search Result Mock](images/ch2_search_result_mock_zoom1_5_1775531187711.png) |
 
 ---
 
 ## 第3章：Spring Data JPA (DB連携) 
 **テーマ：データの永続化（DBとの接続）**
 
-モックデータを卒業し、MySQLデータベースと連携します。登録したデータが実際にDBに保存され、一覧や詳細画面で表示される「アプリケーションの骨格」が完成します。
+モックデータを卒業し、MySQLデータベースと連携します。第2章で作成した検索機能も、実際にDBからデータを取得するように進化します。
 
 ### 画面遷移図
 ```mermaid
@@ -51,9 +55,9 @@ graph LR
 ```
 
 ### 主要画面
-| メニュー画面 | 書籍一覧画面 |
+| メニュー画面（検索フォームあり） | 書籍一覧画面 |
 | :---: | :---: |
-| ![Menu](images/ch3_menu_png_1775531301489.png) | ![List](images/ch3_list_png_1775531302697.png) |
+| ![Menu Fixed](images/ch3_menu_screen_fixed_1775532678571.png) | ![List](images/ch3_list_png_1775531302697.png) |
 
 | 書籍詳細画面 | 登録・更新完了画面 |
 | :---: | :---: |
