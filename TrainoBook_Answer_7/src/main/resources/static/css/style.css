@@ -58,7 +58,8 @@ header a {
     color: white;
 }
 
-/* Main Content Area Styling (Automatic for elements inside main) */
+/* Main Content Area Styling (Automatic for elements inside main)
+   ※第7章では Bootstrap のレイアウトを使用するため、以下の設定はコメントアウトしています。
 main {
     max-width: 1000px;
     margin: 0 auto;
@@ -68,6 +69,7 @@ main {
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
+*/
 
 h2, h3 {
     margin-bottom: 1.5rem;
