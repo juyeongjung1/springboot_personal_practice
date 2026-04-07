@@ -407,6 +407,8 @@ Webアプリケーションとしての完成度を高めます。検索結果�
 ### 課題7.1： Bootstrap の導入と既存CSSの排除
 Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の準備をします。
 
+**【対象ファイル】**： `templates/layout/layout.html`
+
 1. 共通レイアウト（`layout.html`）の `<head>` タグ内に、Bootstrap の CSS を読み込む記述を追加してください。
 2. **【重要】** これまでデザインを担当していた `style.css` の読み込み（`<link rel="stylesheet" th:href="@{/css/style.css}">`）を**削除**してください。
    - **【解説】** これにより、独自CSSの設定（第5章で作成したもの）との干渉がなくなり、Bootstrap 本来の挙動とデザインを純粋に体験できるようになります。
@@ -418,17 +420,32 @@ Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の
 ### 課題7.2： ボタンのデザイン統一
 画面内のリンクや送信ボタンに Bootstrap のボタンクラスを適用します。
 
+**【対象ファイル】**： 全ての HTML ファイル (`index.html`, `book_index.html`, `book_list.html`, `book_detail.html`, `book_confirm.html`, `book_form.html`, `book_update.html`, `book_search_result.html`)
+
 1. システム内の各画面にある全ての `<a>` タグや `<button>` タグに `btn` クラスを付与してください。
 2. 動作や役割に応じて `btn-primary` (登録・ログイン)、`btn-secondary` (戻る)、`btn-danger` (削除) などを使い分けてください。
+   - 詳細は冒頭の「早見表」を参照しましょう。
 
 ### 課題7.3： フォーム部品の整形
-入力項目を Bootstrap のスタイルに変更し、余白（`mb-3`）やラベル（`form-label`）、入力欄（`form-control`）を整えます。エラーメッセージの表示には `text-danger` クラスを適用して赤字にします。
+入力項目を Bootstrap のスタイルに変更し、余白（`mb-3`）やラベル（`form-label`）、入力欄（`form-control`）を整えます。
+
+**【対象ファイル】**： `index.html`, `book_index.html`, `book_form.html`, `book_update.html`, `book_search_result.html`
+
+1. 各入力画面のフォーム部品を、Bootstrap のルール（`mb-3`, `form-label`, `form-control`, `form-select`）に従って書き換えてください。
+2. エラーメッセージの表示箇所には `text-danger` クラスを適用し、赤字で表示されるようにします。
 
 ### 課題7.4： テーブル（書籍一覧）の整形
 書籍リストや検索結果のテーブルに `table`, `table-striped`, `table-hover` を適用し、`<thead>` には `table-dark` を指定してください。
 
+**【対象ファイル】**： `book_list.html`, `book_search_result.html`, `book_detail.html`, `book_confirm.html`
+
+1. 各画面の `<table>` タグに、Bootstrap のテーブル関連クラスを付与してください。
+2. `<thead>` タグを `table-dark` クラスで囲み、ヘッダー部分を強調しましょう。
+
 ### 課題7.5： 全体のレイアウト刷新
 最後に、Bootstrap の Navbar やコンテナを使用して、システム全体の枠組みをプロフェッショナルな外観に整えます。
+
+**【対象ファイル】**： `templates/layout/layout.html`, `index.html`, `book_index.html`, `book_form.html`, `book_update.html`
 
 1. **共通レイアウト（layout.html）の修正**
    ヘッダー、ナビゲーション、フッターを Bootstrap のクラスで書き換え、メインコンテンツを `container` で包みます。
@@ -455,7 +472,7 @@ Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の
    ```
 
 2. **グリッドシステム（配置制御）による画面の整形**
-   `row` と `col` クラスを使い、ログインフォームを中央に寄せたり、検索フォームを横並びに配置したりして、バランスを整えます。
+   `row` と `col` クラスを使い、ログインフォームを中央に寄せたり、検索フォームを横並びに配置したりして、バランスを整えましょう（ログイン画面、登録・更新画面、メニュー画面等）。
 
 3. **【最終確認】**
    全ての画面が Bootstrap によって美しく整えられ、ブラウザの幅を変えても崩れないレスポンシブなデザインになっていることを確認して、全演習完了です！お疲れ様でした！
