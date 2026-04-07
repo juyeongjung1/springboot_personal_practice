@@ -370,14 +370,12 @@ Webアプリケーションとしての完成度を高めます。検索結果�
 本章では、既存の「書籍管理システム」に Bootstrap を導入し、プロフェッショナルな外観のWebアプリケーションへとアップグレードします。
 学習のステップとして、まずはボタンやフォームといった小さな部品から改善し、最後に全体のレイアウト（グリッドシステム）を整えていきます。
 
-### 課題7.1： Bootstrapの導入準備
-システム全体で Bootstrap を利用できるように、共通レイアウトファイル（`layout.html`）を修正しましょう。
+### 課題7.1： Bootstrap の導入と既存CSSの排除
+Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の準備をします。
 
-1. `src/main/resources/templates/layout/layout.html` を開きます。
-2. `<head>` タグ内に、Bootstrap の CSS を読み込む記述を追加してください。
-   ```html
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   ```
+1. 共通レイアウト（`layout.html`）の `<head>` タグ内に、Bootstrap の CSS を読み込む記述を追加してください。
+2. **【重要】** これまでデザインを担当していた `style.css` の読み込み（`<link rel="stylesheet" th:href="@{/css/style.css}">`）を**削除**してください。
+   - **【解説】** これにより、独自CSSの設定（第5章で作成したもの）との干渉がなくなり、Bootstrap 本来の挙動とデザインを純粋に体験できるようになります。
 3. `<body>` タグの末尾（`</body>` の直前）に、Bootstrap の JavaScript を読み込む記述を追加してください。
    ```html
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -386,57 +384,44 @@ Webアプリケーションとしての完成度を高めます。検索結果�
 ### 課題7.2： ボタンのデザイン統一
 画面内のリンクや送信ボタンに Bootstrap のボタンクラスを適用します。
 
-1. システム内の各画面（ログイン、メニュー、一覧、詳細、登録、更新、検索結果）にある全ての `<a>` タグや `<button>` タグに `btn` クラスを付与してください。
-2. 動作や役割に応じて、以下のクラスを使い分けてください。
-   - **主要な操作（登録、ログイン、詳細）**： `btn-primary`
-   - **戻る、メニューに戻るリンク**： `btn-secondary`
-   - **削除ボタン**： `btn-danger`
-   - **更新ボタン**： `btn-success` または `btn-outline-primary`
-3. **【確認項目】** 全ての画面から「ただの青いリンクテキスト」が消え、視認性の高いボタン表示になっていることを確認しましょう。
+1. システム内の各画面にある全ての `<a>` タグや `<button>` タグに `btn` クラスを付与してください。
+2. 動作や役割に応じて `btn-primary` (登録・ログイン)、`btn-secondary` (戻る)、`btn-danger` (削除) などを使い分けてください。
 
 ### 課題7.3： フォーム部品の整形
-入力項目（テキストボックス等）を Bootstrap のスタイルに変更し、余白を整えます。
-
-1. `index.html` (ログイン)、`book_form.html` (登録)、`book_update.html` (更新)、および `book_index.html` (検索) のフォームを修正します。
-2. 各入力項目（`<input>`, `<select>`）を、一つの `<div>` で囲い、そこに `mb-3`（下方向の余白）クラスを付与してください。
-3. 各 `<label>` タグに `form-label` クラスを、入力タグ（`<input>`, `<select>`）に `form-control` クラスを付与してください。
-4. **【確認項目】** 入力欄が画面横幅いっぱいに広がり（後ほどグリッドで調整します）、モダンなフォーム構成になっていることを確認しましょう。
+入力項目を Bootstrap のスタイルに変更し、余白（`mb-3`）やラベル（`form-label`）、入力欄（`form-control`）を整えます。エラーメッセージの表示には `text-danger` クラスを適用して赤字にします。
 
 ### 課題7.4： テーブル（書籍一覧）の整形
-書籍リストや検索結果の見た目を Bootstrap のテーブルクラスで整えます。
+書籍リストや検索結果のテーブルに `table`, `table-striped`, `table-hover` を適用し、`<thead>` には `table-dark` を指定してください。
 
-1. `book_list.html` および `book_search_result.html` の `<table>` タグを修正します。
-2. 以下のクラスを適用してください。
-   - `table`： Bootstrapのテーブル基本スタイル
-   - `table-striped`： 行ごとに背景色を変える（縞模様）
-   - `table-hover`： マウスホバー時に行を強調する
-3. `<thead>` タグに `table-dark` を指定して、見出し部分を強調してみてください。
+### 課題7.5： 全体のレイアウト刷新
+最後に、Bootstrap の Navbar やコンテナを使用して、システム全体の枠組みをプロフェッショナルな外観に整えます。
 
-### 課題7.5： 全体のレイアウトと設定の競合解消
-最後に、5章で作成した `style.css` のレイアウト設定と Bootstrap の設定が重ならないよう調整し、全体の配置バランスを整えます。
-
-1. **既存CSSのレイアウト設定を無効化**
-   - `src/main/resources/static/css/style.css` を開き、`main` セレクタ（62行目〜70行目付近）の定義全体をコメントアウト（または削除）してください。
-   - **【解説】** これにより、独自に設定した「最大幅 1000px」や「枠線」などの制約がなくなり、Bootstrap のレスポンシブなレイアウト機能が正しく働くようになります。
-
-2. **共通レイアウト（layout.html）の修正**
-   - `layout.html` のコンテンツ表示部分を以下のように修正します。`main` タグ自体に Bootstrap のユーティリティクラス（パディング、背景白、角丸、影）を付与することで、5章のデザインをさらに洗練させた「カード型」の配置を再現します。
+1. **共通レイアウト（layout.html）の修正**
+   ヘッダー、ナビゲーション、フッターを Bootstrap のクラスで書き換え、メインコンテンツを `container` で包みます。
    ```html
-   <div class="container my-5">
-       <!-- mainタグ自体に背景色や余白のクラスを付与 -->
-       <main layout:fragment="content" class="p-4 bg-white rounded shadow-sm">
-           <!-- コンテンツがここに挿入される -->
-       </main>
-   </div>
+   <body class="bg-light">
+       <header>
+           <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+               <div class="container">
+                   <a class="navbar-brand fw-bold" th:href="@{/book/index}">TrainoBook</a>
+                   <!-- ここに「ようこそ、〇〇さん」やログアウトボタンを配置 -->
+               </div>
+           </nav>
+       </header>
+       <div class="container my-5">
+           <!-- mainタグ自体に背景色や余白のクラスを付与 -->
+           <main layout:fragment="content" class="p-4 bg-white rounded shadow-sm">
+               <!-- 各画面の中身がここに挿入される -->
+           </main>
+       </div>
+       <footer class="py-4 bg-white border-top text-center text-secondary">
+           <p class="mb-0">&copy; 2026 Trainocate Book Management System</p>
+       </footer>
+   </body>
    ```
 
-3. **グリッドシステム（配置制御）による画面の整形**
-   Bootstrap の「グリッドシステム（12分割）」を使い、コンテンツが広がりすぎないよう調整します。
+2. **グリッドシステム（配置制御）による画面の整形**
+   `row` と `col` クラスを使い、ログインフォームを中央に寄せたり、検索フォームを横並びに配置したりして、バランスを整えます。
 
-   - **ログイン画面 (`index.html`)**: `row` と `col-md-6 mx-auto`（中央寄せ）を使い、フォームを画面中央に適度な幅で配置してください。
-   - **メニュー画面 (`book_index.html`)**: 3種類の検索フォームを `row` と `col-md-4` を使い、PC環境では横に3つ並ぶようにレイアウトしてください。
-   - **登録・更新画面**: 入力フォームを `row` と `col-md-8 mx-auto` で囲むと、中央に寄って情報が読みやすくなります。
-
-4. **【最終確認】**
-   全ての画面が Bootstrap によって美しく整えられ、ブラウザの幅を変えても崩れないレスポンシブなデザインになっていることを確認して、演習完了となります！
-   お疲れ様でした！
+3. **【最終確認】**
+   全ての画面が Bootstrap によって美しく整えられ、ブラウザの幅を変えても崩れないレスポンシブなデザインになっていることを確認して、全演習完了です！お疲れ様でした！

@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">TrainoBook</title>
+    <title>TrainoBook</title>
     <!-- 共通CSSの読み込み -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <!-- 各ページ個別のCSSやJSが必要な場合のためのフック -->
-    <th:block layout:fragment="extra-head"></th:block>
 </head>
 <body>
     <header>
