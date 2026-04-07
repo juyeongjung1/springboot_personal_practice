@@ -101,7 +101,7 @@ graph TD
 graph TD
     Component[共通レイアウト定義] --> PageA[書籍一覧]
     Component --> PageB[登録フォーム]
-    subgraph Shared Layout
+    subgraph 共通レイアウト
         Header[ヘッダーパーツ]
         Footer[フッターパーツ]
     end
@@ -124,14 +124,16 @@ graph TD
 graph LR
     Menu --> SearchTitle[タイトル検索]
     Menu --> SearchPrice[価格帯検索]
+    Menu --> SearchComplex[複合検索<br/>(ジャンル × 上限価格)]
     SearchTitle --> Results[検索結果一覧]
     SearchPrice --> Results
+    SearchComplex --> Results
 ```
 
 ### 主要画面
-| ジャンル選択（結合表示） | 検索結果（シンプル表示） |
+| マスタデータの取得とセレクトメニューへの適用 | 検索結果（0件時の画面） |
 | :---: | :---: |
-| ![Genre Select](images/ch6_genre_select_box_1775530168540.png) | ![Search Results](images/ch6_search_result_no_criteria_1775540253533.png) |
+| ![Genre Select](images/ch6_book_form_genre_v2_1775544161501.png) | ![Search No Results](images/ch6_search_no_hits_1775541235013.png) |
 
 ---
 
@@ -173,8 +175,8 @@ erDiagram
         string name
     }
     USERS {
-        string user_id PK
+        int emp_id PK
         string password
-        string user_name
+        string emp_name
     }
 ```
