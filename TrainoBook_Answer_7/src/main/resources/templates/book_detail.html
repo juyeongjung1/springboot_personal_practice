@@ -11,9 +11,11 @@
             <div class="col-md-8 mx-auto">
                 <h2 class="mb-4">書籍詳細</h2>
                 
+                <!-- table-bordered: 格子状の枠線を引く -->
                 <table class="table table-bordered shadow-sm mb-4">
                     <tbody>
                         <tr>
+                            <!-- bg-light: セルの背景を薄いグレーにする、w-25: 幅を25%にする -->
                             <th class="bg-light w-25">ID</th>
                             <td th:text="${book.id}"></td>
                         </tr>
@@ -36,10 +38,12 @@
                     </tbody>
                 </table>
 
+                <!-- d-flex: ボタンを横並びにする、gap-2: ボタン間の隙間 -->
                 <div class="d-flex gap-2 align-items-center">
                     <a th:href="@{/book/list}" class="btn btn-secondary">一覧に戻る</a>
                     
                     <!-- 更新画面への遷移（GET） -->
+                    <!-- d-inline: フォームをブロック要素からインライン要素にし、横並びを崩さないようにする -->
                     <form th:action="@{/book/update/} + ${book.id}" method="get" class="d-inline">
                         <button type="submit" class="btn btn-success">更新</button>
                     </form>
