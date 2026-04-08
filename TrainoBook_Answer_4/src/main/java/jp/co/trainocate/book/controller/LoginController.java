@@ -33,6 +33,9 @@ public class LoginController {
 	/**
 	 * ログインフォームからPOSTされたユーザIDとパスワードを受け取る。
 	 * 
+	 * 【補足】セキュリティの観点からは本来バリデーション（入力チェック）が必要ですが、
+	 * 演習時間の都合上、本講座では書籍の登録・更新画面のみに実装し、ここでは省略しています。
+	 * 
 	 * @param userId   ユーザID（name属性: userId）
 	 * @param password パスワード（name属性: password）
 	 * @param session  セッション情報を操作するためのオブジェクト

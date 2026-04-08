@@ -87,7 +87,7 @@ graph TD
 ### 主要画面
 | ログインエラー表示 | バリデーションエラー（赤字表示） | 認証成功後のメニュー画面 |
 | :---: | :---: | :---: |
-| ![Login Error](images/ch4_login_error_1775531487990.png) | ![Validation Error](images/ch4_validation_errors_1775531544781.png) | ![Ch4 Menu With Session](images/ch4_book_index_design_check.png) |
+| ![Login Error](images/ch4_login_error_zoom1_5.png) | ![Validation Error](images/ch4_validation_errors_zoom1_5.png) | ![Ch4 Menu With Session](images/ch4_book_index_zoom1_5.png) |
 
 ---
 
