@@ -324,7 +324,6 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 1. `layout.html` 内のヘッダー部分を修正します。
 2. `th:if="${session.userName == null}"` を使用して、未ログイン時は「ログイン」リンクを表示します。
 3. `th:if="${session.userName != null}"` を使用して、ログイン済みなら「ようこそ表示 ＋ ログアウトボタン」を表示するように制御してください。
-   - これにより、ログイン状態に応じたUIの切り替え（Type 1の `th:if` 活用）を体験します。
 
 ---
 

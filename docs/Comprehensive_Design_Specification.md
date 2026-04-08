@@ -118,10 +118,10 @@ graph TD
 
 ---
 
-## 第6章：リレーション（1対多）と検索機能
-**テーマ：テーブル結合と動的クエリ**
+## 第6章：高度なデータ連携とユーザー体験の向上
+**テーマ：動的な項目取得（ジャンル連携）と0件制御・JPQL検索**
 
-「ジャンル」テーブルとの結合により、書籍にジャンル名を付与します。また、キーワード検索機能を実装します。
+検索結果が0件の場合のメッセージ表示（0件制御）や、DBから取得したジャンル一覧をセレクトボックスとしてフォームに動的に反映させる機能を実装します。また、Repository層でJPQLを活用し、ジャンル名と価格による高度な複合検索を可能にします。
 
 ### 画面遷移図
 ```mermaid
@@ -135,9 +135,13 @@ graph LR
 ```
 
 ### 主要画面
-| マスタデータの取得とセレクトメニューへの適用 | 検索結果（0件時の画面） |
+| マスタデータの取得とセレクトメニューへの適用 | 検索結果（0件時の表示制御） |
 | :---: | :---: |
-| ![Genre Select](images/ch6_book_form_genre_v2_1775544161501.png) | ![Search No Results](images/ch6_search_no_hits_1775541235013.png) |
+| ![Genre Select](images/ch6_book_form_genre_zoom1_5.png) | ![Search No Results](images/ch6_search_no_hits_zoom1_5.png) |
+
+| JPQLによる複数条件の複合検索結果 |
+| :---: |
+| ![JPQL Search Result](images/ch6_jpql_search_result_zoom1_5.png) |
 
 ---
 
