@@ -1,5 +1,0 @@
-- [x] JDK 17 のインストール (winget)
-- [x] インストールの確認 (java -version)
-- [x] Maven を使用したビルド (mvnw install)
-- [x] アプリケーションの起動 (mvnw spring-boot:run)
-- [x] 画面の検証 (browser)
