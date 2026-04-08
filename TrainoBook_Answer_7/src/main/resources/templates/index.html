@@ -16,7 +16,7 @@
                 
                 <!-- 【課題4.3追加】 認証エラー時のメッセージ表示 -->
                 <!-- alert: 警告枠の基本、alert-danger: 赤色の警告スタイル -->
-                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                <div th:if="${error}" class="alert alert-danger mb-3" th:text="${error}"></div>
 
                 <!-- 【課題2.1 - ステップ4】 ログイン用フォーム -->
                 <form th:action="@{/login}" method="post">
