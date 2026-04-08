@@ -8,10 +8,8 @@
 <body>
     <main layout:fragment="content">
         <h1>書籍一覧</h1>
-        <hr>
-        <p>登録されている書籍の一覧です。書籍名をクリックすると詳細を確認できます。</p>
 
-        <table>
+        <table border="1">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -34,9 +32,9 @@
             </tbody>
         </table>
 
-        <div>
+        <p>
             <a th:href="@{/book/index}">メニューに戻る</a>
-        </div>
+        </p>
     </main>
 </body>
 </html>

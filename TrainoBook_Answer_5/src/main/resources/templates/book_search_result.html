@@ -8,11 +8,10 @@
 <body>
     <main layout:fragment="content">
         <h1>検索結果</h1>
-        <hr>
 
         <!-- 検索条件の表示 -->
 
-        <table>
+        <table border="1">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -37,9 +36,9 @@
 
         <!-- 0件ケアの表示（第6章で実装） -->
 
-        <div>
+        <p>
             <a th:href="@{/book/index}">メニューに戻る</a>
-        </div>
+        </p>
     </main>
 </body>
 </html>
