@@ -1,53 +1,53 @@
-# Spring Boot 個人演習プロジェクト
+# TrainoBook：Spring Boot 総合演習 - 書籍管理システム -
 
-## 概要
-「Spring Boot入門」テキストを受講した後の理解度アップのための個人演習プロジェクトです。  
-テキスト内で学習した内容を基に、ゼロから自力で作成するための演習問題と、その解答サンプルが含まれています。
+## 🚀 はじめに
+本プロジェクトは、Thymeleaf、Spring Data JPA、Spring Security、そして Bootstrap 5 を用いた本格的な Web アプリケーション開発を学ぶための総合演習教材です。
+「書籍管理システム」の構築を通じて、Spring Boot の基本から実践的なスタイリングまでを段階的に習得できます。
 
-## プロジェクト構成
+---
 
-### データベースセットアップ
-| フォルダ | 説明 |
-|---|---|
-| `Spring_Sample_DBSET` | テキストサンプル用DB（`spring_sample`）のセットアップスクリプト |
-| `Spring_Enshu_DBSET` | 演習用DB（`spring_exercise`）のセットアップスクリプト |
+## 📚 学習リソース（まずはこちらを確認してください）
 
-### テキストサンプル （`spring_answer_*`）
-テキスト内の各章に対応するSpring Bootサンプルコードです。  
-**DB**: `spring_sample`（product, category, userテーブル）
+演習を進めるにあたっての「地図」と「羅針盤」となるドキュメントです。
 
-| フォルダ | 章 | 主な学習内容 |
-|---|---|---|
-| `spring_answer_2` | 第2章 | Controller基礎、リクエストマッピング（GET/POST）、フォーム送信 |
-| `spring_answer_3` | 第3章 | Spring Data JPA（CRUD操作）、Repository、Entity、検索メソッド |
-| `spring_answer_4` | 第4章 | ログイン認証、セッション管理、バリデーション |
-| `spring_answer_5` | 第5章 | Serviceレイヤー（ビジネスロジック分離）、Thymeleaf Layout |
-| `spring_answer_6` | 第6章 | テーブル結合（@ManyToOne / @OneToMany）、カテゴリ別検索 |
-| `spring_answer_7` | 第7章 | Bootstrap統合、UI改善、総合演習 |
+1.  **[演習ガイド](docs/Exercise_Guide.md)**
+    各章の課題内容、実装のヒント、テキストとの対応関係がまとめられています。
+2.  **[書籍管理システム 全体設計書](docs/Comprehensive_Design_Specification.md)**
+    各チャプター終了後の完成イメージ（スクリーンショット）や画面遷移図、技術的な構成が網羅されています。
 
-### 演習問題 解答 （`enshu_answer_*`）
-テキストの各章に対応する演習問題の解答コードです。  
-**DB**: `spring_exercise`（employee, locationテーブル）
+---
 
-| フォルダ | 章 | 主な学習内容 |
-|---|---|---|
-| `enshu_answer_2` | 第2章 | BMI計算アプリ（Controller基礎、フォーム処理） |
-| `enshu_answer_3` | 第3章 | 社員CRUD操作（Spring Data JPA） |
-| `enshu_answer_4` | 第4章 | ログイン認証、バリデーション |
-| `enshu_answer_5` | 第5章 | Thymeleaf Layout、Service分離 |
-| `enshu_answer_6` | 第6章 | 社員-勤務地テーブル結合（@ManyToOne / @OneToMany） |
-| `enshu_answer_7` | 第7章 | Bootstrap統合、UI改善 |
+## 📂 プロジェクト構成
 
-## 技術スタック
-- **Java**: 17
-- **Spring Boot**: 3.1.5 ～ 3.3.7
-- **テンプレートエンジン**: Thymeleaf
-- **ORM**: Spring Data JPA
-- **データベース**: MySQL
-- **ビルドツール**: Maven
-- **その他**: Lombok, ModelMapper, Bootstrap, Bean Validation
+受講生用のスターターキットと、学習のベンチマークとなる各章の回答コードが含まれています。
 
-## データベースセットアップ方法
-1. MySQLを起動
-2. サンプル用DB: `Spring_Sample_DBSET/dbset.bat` を実行
-3. 演習用DB: `Spring_Enshu_DBSET/dbset.bat` を実行
+### 1. メイン演習（TrainoBook シリーズ）
+-   **`TrainoBook`**：[受講生用] ここから実装を開始します（スターターキット）。
+-   **`TrainoBook_Answer_2 ～ 7`**：[回答コード] 各チャプターの実装完了済みコードです。
+
+### 2. データベースセットアップ
+-   **`Spring_Enshu_DBSET`**：本演習で使用するデータベース（`spring_exercise`）の構築スクリプトが含まれています。
+
+### 3. その他（参考用）
+-   `enshu_answer_*` / `spring_answer_*`：各章の機能を単体で確認するための参考用コードです。
+
+---
+
+## 🛠 技術スタック
+-   **Java**: 17
+-   **Spring Boot**: 4.0.3
+-   **テンプレートエンジン**: Thymeleaf / Thymeleaf Layout Dialect
+-   **ORM**: Spring Data JPA
+-   **データベース**: MySQL
+-   **CSSフレームワーク**: Bootstrap 5
+-   **ビルドツール**: Maven
+
+---
+
+## 🏁 クイックアクセス
+実装を始める前に MySQL を起動し、`Spring_Enshu_DBSET/dbset.bat` を実行してデータベースをセットアップしてください。
+
+各章の回答を確認する場合は、該当フォルダに移動して以下のコマンドを実行します。
+```powershell
+./mvnw spring-boot:run
+```
