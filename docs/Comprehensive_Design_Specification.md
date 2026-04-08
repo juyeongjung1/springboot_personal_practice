@@ -21,15 +21,15 @@ graph LR
 ```
 
 ### 主要画面
-| ログイン画面 | メニュー画面（検索フォームあり） |
+| ログイン画面（モック：DB認証なしでの遷移テスト） | メニュー画面（モック：主要機能への導線確認） |
 | :---: | :---: |
 | ![Login](images/ch2_login_page_zoom1_5_1775531127831.png) | ![Menu](images/ch2_menu_page_zoom1_5_1775531151398.png) |
 
-| 書籍登録フォーム | 登録確認画面 |
+| 登録フォーム（入力値の受け渡しテスト用） | 登録内容の確認画面（入力値と遷移の妥当性確認） |
 | :---: | :---: |
 | ![Registration Form](images/ch2_registration_form_1775532568369.png) | ![Confirm](images/ch2_confirmation_page_zoom1_5_1775531182266.png) |
 
-| 書籍一覧画面 | 検索結果（表示例） |
+| 書籍一覧（モックデータによる一覧表示の確認） | 検索結果画面（固定データによる表示レイアウトの確認） |
 | :---: | :---: |
 | ![List](images/ch2_list_page_zoom1_5_1775531152394.png) | ![Search Result Mock](images/ch2_search_result_mock_zoom1_5_1775531187711.png) |
 
@@ -55,15 +55,15 @@ graph LR
 ```
 
 ### 主要画面
-| メニュー画面（検索フォームあり） | 書籍一覧画面 |
+| メニュー画面（DBからデータを取得する検索機能の実装） | 書籍一覧（MySQLから取得したデータの表示確認） |
 | :---: | :---: |
 | ![Menu Fixed](images/ch3_menu_screen_fixed_1775532678571.png) | ![List](images/ch3_book_list_plain_1775540092670.png) |
 
-| 書籍詳細画面 | 登録・更新完了画面 |
+| 個別情報の詳細表示（DBからの特定ID取得の検証） | 登録・更新完了画面（DB書き換えの成功報告） |
 | :---: | :---: |
 | ![Detail](images/ch3_detail_png_1775531308770.png) | ![Confirm](images/ch3_confirm_png_1775531334365.png) |
 
-| 更新フォーム | 検索結果画面 |
+| 編集フォーム（DB情報の初期表示・変更確認） | タイトル検索結果（DBの部分一致検索の確認） |
 | :---: | :---: |
 | ![Update](images/ch3_update_png_1775531339324.png) | ![Search Results](images/ch3_search_result_plain_1775540104659.png) |
 
@@ -85,7 +85,7 @@ graph TD
 ```
 
 ### 主要画面
-| ログインエラー表示 | バリデーションエラー（赤字表示） | 認証成功後のメニュー画面 |
+| ログイン認証失敗（意図したエラーメッセージの表出） | 入力チェックエラー（アノテーションによる不備検知） | メニュー画面（セッションから取得したユーザー情報の表示） |
 | :---: | :---: | :---: |
 | ![Login Error](images/ch4_login_error_zoom1_5.png) | ![Validation Error](images/ch4_validation_errors_zoom1_5.png) | ![Ch4 Menu With Session](images/ch4_book_index_zoom1_5.png) |
 
@@ -108,11 +108,11 @@ graph TD
 ```
 
 ### 主要画面
-| ログイン画面（未ログイン時） | 書籍一覧（ログイン後） |
+| ログイン画面（共通レイアウト適用：未ログイン状態） | 書籍一覧（共通レイアウト適用：ログイン中ヘッダー表示） |
 | :---: | :---: |
 | ![Ch5 Login](images/ch5_login_page_design_check.png) | ![Ch5 List](images/ch5_book_list_design_check.png) |
 
-| 書籍登録（ログイン後） |
+| 登録・更新画面（共通レイアウトによる画面デザインの統一） |
 | :---: |
 | ![Ch5 Form](images/ch5_book_form_design_check.png) |
 
@@ -135,11 +135,11 @@ graph LR
 ```
 
 ### 主要画面
-| マスタデータの取得とセレクトメニューへの適用 | 検索結果（0件時の表示制御） |
+| 登録フォーム（DBから動的に抽出したジャンル選択） | 検索結果（該当データなし：UX向上のための0件案内） |
 | :---: | :---: |
 | ![Genre Select](images/ch6_book_form_genre_zoom1_5.png) | ![Search No Results](images/ch6_search_no_hits_zoom1_5.png) |
 
-| JPQLによる複数条件の複合検索フォーム | JPQLによる複数条件の複合検索結果 |
+| 複合検索フォーム（ジャンル名：プログラミング、上限価格：5000を指定） | JPQLによる複合検索結果（ジャンル：プログラミング、上限価格：5000） |
 | :---: | :---: |
 | ![JPQL Search Form](images/ch6_jpql_search_form_zoom1_5.png) | ![JPQL Search Result](images/ch6_jpql_search_result_zoom1_5.png) |
 
