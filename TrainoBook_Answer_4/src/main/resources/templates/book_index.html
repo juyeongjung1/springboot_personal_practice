@@ -9,7 +9,7 @@
 	<div>
 		<h1>書籍管理メニュー</h1>
 		<div>
-			<span th:if="${session.userName != null}">
+			<span>
 				ようこそ、<span th:text="${session.userName}"></span> さん
 			</span>
 			<a th:href="@{/logout}">ログアウト</a>

@@ -240,21 +240,18 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `JpaRepository` を継承したインターフェースを作成します（主キーは Integer に合わせてください）。
    - ログイン認証で利用するため、ユーザIDとパスワードの両方が一致するデータを検索するメソッド `User findByUserIdAndPassword(Integer userId, String password);` を追加してください。
 
-### 課題4.3：ログイン認証とセッション（HttpSession）管理
-`HttpSession` を直接操作して、ログイン状態を管理します。
-
-1. **`LoginController` の改修（認証処理の実装）**
-   - `/login` に対するPOSTメソッドを変更し、フォームからの `userId`, `password` を引数名で直接受け取ります。引数に `HttpSession session` および `Model model` も追加します。
-   - `UserRepository` を DI し、作成した `findByUserIdAndPassword(userId, password)` を呼び出してDBを検索します。
-   - 戻り値としてユーザーが見つかった場合（ログイン成功）：
-     - `session.setAttribute("userName", user.getUserName())` を用いて、セッションにユーザー名を格納します。
-     - `/book/index` へ画面遷移させます。
-   - 戻り値が `null` の場合（ログイン失敗）：
-     - `model.addAttribute("error", "ユーザーIDまたはパスワードが違います")` を設定し、`index.html`（ログイン画面）を `return` して再表示させます。
-2. **HTMLでのセッション情報表示**
+2. **HTMLでのセッション情報表示とログアウトリンク**
    - `book_index.html` や `book_list.html` などの主要な画面上部に、「ようこそ、〇〇さん」と表示する領域を追加してください。
-   - Thymeleaf では、セッションの属性に `${session.userName}` のようにアクセスできます。
-3. **ログイン画面の改修**
+   - そのすぐ横に、ログアウト画面（`/logout`）へのリンクを配置してください。
+   - **【ヒント1】** Thymeleaf では、セッションの属性に `${session.userName}` のようにアクセスできます。
+   - **【ヒント2】** 第4章ではまだ条件分岐（`th:if`）を使いません。ログインしていない状態でも「ようこそ、 さん」と表示されたり、ログアウトリンクが見えたりしても問題ありません。まずは要素を並べて配置すること（例：`<span>` や `<a>` を並べる）を優先してください。
+
+3. **LoginController の改修（認証とログアウトの実装）**
+   - `/login` に対するPOSTメソッドを変更し、`UserRepository` を使ってDB認証を行います。ログイン成功時は `session.setAttribute("userName", user.getUserName())` でセッションに値を保持してください。
+   - 新たに、ログアウト用（`/logout`）のGETマッピングメソッドを作成してください。
+   - 引数で `HttpSession` を受け取り、`session.invalidate()` を実行してセッションを破棄した後、ログイン画面（`redirect:/`）へリダイレクトさせてください。
+
+4. **ログイン画面の改修**
    - `index.html` 内に、認証エラー時に `model` から渡された `error` メッセージを赤字などで表示するようにしてください。
 
 ---
@@ -313,7 +310,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 1. ログイン画面（`http://localhost:8080/`）からログインし、全画面でレイアウトが統一されていることを確認してください。
 2. ヘッダーにログインユーザ名が正しく表示され続け、機能が正しく動作することを確認してください。
 
-### 課題5.5：【追加】ログイン・ログアウトボタンの切り替え（th:ifの活用）
+### 課題5.5：ログイン・ログアウトボタンの切り替え（th:ifの活用）
 これまでは固定で「ログアウト」ボタンが表示されていましたが、ログイン状態に応じて適切に表示を切り替えるようにします。
 
 1. `layout.html` 内のヘッダー部分を修正します。

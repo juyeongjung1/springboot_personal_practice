@@ -85,9 +85,9 @@ graph TD
 ```
 
 ### 主要画面
-| ログインエラー表示 | バリデーションエラー（赤字表示） |
-| :---: | :---: |
-| ![Login Error](images/ch4_login_error_1775531487990.png) | ![Validation Error](images/ch4_validation_errors_1775531544781.png) |
+| ログインエラー表示 | バリデーションエラー（赤字表示） | 認証成功後のメニュー画面 |
+| :---: | :---: | :---: |
+| ![Login Error](images/ch4_login_error_1775531487990.png) | ![Validation Error](images/ch4_validation_errors_1775531544781.png) | ![Ch4 Menu With Session](images/ch4_book_index_design_check.png) |
 
 ---
 
@@ -108,9 +108,13 @@ graph TD
 ```
 
 ### 主要画面
-| 共通レイアウト適用後の書籍一覧 |
+| ログイン画面（未ログイン時） | 書籍一覧（ログイン後） |
+| :---: | :---: |
+| ![Ch5 Login](images/ch5_login_page_design_check.png) | ![Ch5 List](images/ch5_book_list_design_check.png) |
+
+| 書籍登録（ログイン後） |
 | :---: |
-| ![Common Layout](images/ch5_layout_header_content_1775530050363.png) |
+| ![Ch5 Form](images/ch5_book_form_design_check.png) |
 
 ---
 
@@ -175,8 +179,8 @@ erDiagram
         string name
     }
     USERS {
-        int emp_id PK
+        int user_id PK
         string password
-        string emp_name
+        string user_name
     }
 ```
