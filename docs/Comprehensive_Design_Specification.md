@@ -128,7 +128,7 @@ graph TD
 graph LR
     Menu --> SearchTitle[タイトル検索]
     Menu --> SearchPrice[価格帯検索]
-    Menu --> SearchComplex[複合検索<br/>(ジャンル × 上限価格)]
+    Menu --> SearchComplex["複合検索<br/>(ジャンル × 上限価格)"]
     SearchTitle --> Results[検索結果一覧]
     SearchPrice --> Results
     SearchComplex --> Results
@@ -139,9 +139,9 @@ graph LR
 | :---: | :---: |
 | ![Genre Select](images/ch6_book_form_genre_zoom1_5.png) | ![Search No Results](images/ch6_search_no_hits_zoom1_5.png) |
 
-| JPQLによる複数条件の複合検索結果 |
-| :---: |
-| ![JPQL Search Result](images/ch6_jpql_search_result_zoom1_5.png) |
+| JPQLによる複数条件の複合検索フォーム | JPQLによる複数条件の複合検索結果 |
+| :---: | :---: |
+| ![JPQL Search Form](images/ch6_jpql_search_form_zoom1_5.png) | ![JPQL Search Result](images/ch6_jpql_search_result_zoom1_5.png) |
 
 ---
 
