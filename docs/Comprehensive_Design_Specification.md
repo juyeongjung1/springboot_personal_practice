@@ -146,22 +146,41 @@ graph LR
 ---
 
 ## 第7章：Bootstrapによるスタイリング（完成形態）
-**テーマ：モダンなUIデザインの導入**
+**テーマ：モダンなUIデザインの導入とUXの完成**
 
-人気フレームワーク「Bootstrap 5」を導入し、デザインを刷新します。
+人気フレームワーク「Bootstrap 5」を導入し、デザインをプロフェッショナルな外観へ刷新しました。共通レイアウト（NavbarやContainer）の適用により、一貫性のあるレスポンシブなユーザー体験を提供します。
 
 ### 画面遷移図
 ```mermaid
 graph LR
-    Login[Bootstrapログイン] --> Menu[カード型メニュー]
-    Menu --> List[ストライプテーブル]
-    Menu --> Form[入力カード]
+    Login[Bootstrapログイン] -- 認証成功 --> Menu[カード型メニュー]
+    Menu -- 全書籍リストの確認 --> List[ストライプテーブル]
+    Menu -- 検索 --> Search[検索結果]
+    Menu -- 新規登録 --> Form[入力カード]
+    List -- 選択 --> Detail[書籍詳細画面]
+    Detail -- 編集 --> Update[編集カード]
+    Form -- 完了 --> Confirm[成功アラート表示]
+    Update -- 完了 --> Confirm
+    Confirm -- 戻る --> Menu
 ```
 
 ### 主要画面
-| メニュー（カードデザイン） | 検索結果画面 |
+
+| ログイン画面（グリッドシステムによる中央配置とalert表示の統合） | メニュー画面（cardクラスとg-4による機能のカード型レイアウト） |
 | :---: | :---: |
-| ![Final Menu](images/ch7_index_menu_1775530275046.png) | ![Final Search Results](images/ch7_search_result_bootstrap_1775540370341.png) |
+| ![Final Login](images/ch7_login_standard.png) | ![Final Menu](images/ch7_menu_standard.png) |
+
+| 書籍一覧画面（table-striped、table-hover、table-darkの適用による視認性向上） | 書籍詳細画面（container内での整理されたデータ表示とアクションボタン） |
+| :---: | :---: |
+| ![Final List](images/ch7_list_standard.png) | ![Final Detail](images/ch7_detail_standard.png) |
+
+| 書籍登録フォーム（form-controlとform-selectによるモダンな入力体験） | 書籍更新フォーム（既存データの編集とレイアウトの完全な統一） |
+| :---: | :---: |
+| ![Final Form](images/ch7_form_standard.png) | ![Final Update](images/ch7_update_standard.png) |
+
+| 登録・更新完了画面（操作の成功を知らせる明示的な通知レイアウト） | 検索結果画面（該当なし：alert-infoクラスによる親切な0件案内） |
+| :---: | :---: |
+| ![Final Confirm](images/ch7_confirm_standard.png) | ![Final No Results](images/ch7_search_no_hits_standard.png) |
 
 ---
 
