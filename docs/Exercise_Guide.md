@@ -255,6 +255,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 2. **LoginController の改修（認証とログアウトの実装）**
    - `/login` に対するPOSTメソッドを変更し、`UserRepository` を使ってDB認証を行います。ログイン成功時は `session.setAttribute("userName", user.getUserName())` でセッションに値を保持してください。
+   - **認証失敗時**は、`model.addAttribute("error", "ユーザーIDまたはパスワードが違います")` を実行してエラーメッセージをセットし、ログイン画面（`return "index";`）を再表示するようにしてください。
    - 新たに、ログアウト用（`/logout`）のGETマッピングメソッドを作成してください。
    - 引数で `HttpSession` を受け取り、`session.invalidate()` を実行してセッションを破棄した後、ログイン画面（`redirect:/`）へリダイレクトさせてください。
 
