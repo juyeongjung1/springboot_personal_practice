@@ -1,3 +1,12 @@
+<div align="center" style="margin-top: 100px; margin-bottom: 200px;">
+  <img src="images/trainocate_logo.png" width="350">
+  <br><br><br>
+  <h1 style="border: none; font-size: 2.5em;">Spring Boot 個人演習ガイド</h1>
+  <h2 style="color: #666;">書籍管理システム</h2>
+  <br><br><br><br><br><br>
+</div>
+<div style="page-break-before: always;"></div>
+
 # Spring Boot 個人演習ガイド：書籍管理システム
 
 ## はじめに
