@@ -23,6 +23,8 @@
 
 ---
 
+<div style="page-break-before: always;"></div>
+
 ## 準備：演習環境のセットアップ
 演習を始める前に、配布された演習資料（zipファイル）を解凍し、以下の手順で開発環境を整えてください。
 
@@ -38,6 +40,8 @@
 3. 黒い画面（コマンドプロンプト）が開き、演習用データベースの構築が開始されます。正常に終了したことを確認して画面を閉じます。
 
 ---
+
+<div style="page-break-before: always;"></div>
 
 ## 演習2： Spring Web アプリケーション（画面遷移とデータ通信）
 
@@ -100,6 +104,8 @@
 6. 遷移先画面として `book_confirm.html` （登録完了画面のHTMLファイル）を作成し、「以下の内容で登録を受け付けました（※実際のDB保存は次章で実装します）」というメッセージと共に、入力されたタイトル・著者名・価格を表示してください。
 
 ---
+
+<div style="page-break-before: always;"></div>
 
 ## 演習3：Spring Data JPA（データベースとの連携）
 
@@ -238,6 +244,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `BookController` に `/book/delete/{id}` を受け取るマッピングを追加し、Serviceの `deleteBook(id)` を呼び出します。
    - 削除完了後は、全件リスト（`/book/list`）へ**リダイレクト**するようにしてください。
 
+<div style="page-break-before: always;"></div>
+
 ## 第4章：入力チェックとログイン認証（セッション管理）
 
 本章では、第3章で作成したCRUDアプリに対して、**値の入力チェック（バリデーション）**と、**DBを利用したユーザー認証およびセッション** の仕組みを導入します。
@@ -292,6 +300,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `index.html` 内に、認証エラー時に `model` から渡された `error` メッセージを赤字などで表示するようにしてください。
 
 ---
+
+<div style="page-break-before: always;"></div>
 
 ## 演習5：共通レイアウトの適用とデザインの統一（Thymeleaf Layout Dialect）
 
@@ -356,6 +366,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 ---
 
+<div style="page-break-before: always;"></div>
+
 ## 演習6：高度なデータ連携とユーザー体験の向上（動的な項目取得と0件制御）
 
 **【学習のねらい】**
@@ -407,6 +419,8 @@ Webアプリケーションとしての完成度を高めます。検索結果�
 - 画面遷移時に正しく現在のジャンルが初期選択（selected）されることを確認しましょう。
 
 ---
+
+<div style="page-break-before: always;"></div>
 
 ## 第7章： デザインの洗練（Bootstrapの導入）
 
