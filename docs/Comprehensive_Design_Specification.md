@@ -33,6 +33,8 @@ graph LR
     Confirm -- メニューに戻る --> Menu
 ```
 
+<div style="page-break-before: always;"></div>
+
 ### 主要画面
 
 | ログイン画面（モック：DB認証なしでの遷移テスト） | メニュー画面（モック：主要機能への導線確認） |
@@ -72,6 +74,8 @@ graph LR
     Confirm -- メニューに戻る --> Menu
 ```
 
+<div style="page-break-before: always;"></div>
+
 ### 主要画面
 
 | メニュー画面（DBからデータを取得する検索機能の実装） | 書籍一覧（MySQLから取得したデータの表示確認） |
@@ -107,6 +111,8 @@ graph TD
     Form -- 正常入力 --> Confirm[登録・更新完了]
 ```
 
+<div style="page-break-before: always;"></div>
+
 ### 主要画面
 
 | ログイン認証失敗（意図したエラーメッセージの表出） | 入力チェックエラー（アノテーションによる不備検知） | メニュー画面（セッションから取得したユーザー情報の表示） |
@@ -134,6 +140,8 @@ graph TD
         Footer[フッターパーツ]
     end
 ```
+
+<div style="page-break-before: always;"></div>
 
 ### 主要画面
 
@@ -166,6 +174,8 @@ graph LR
     SearchPrice --> Results
     SearchComplex --> Results
 ```
+
+<div style="page-break-before: always;"></div>
 
 ### 主要画面
 
@@ -201,6 +211,8 @@ graph LR
     Update -- 完了 --> Confirm
     Confirm -- 戻る --> Menu
 ```
+
+<div style="page-break-before: always;"></div>
 
 ### 主要画面
 
