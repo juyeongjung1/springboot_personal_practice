@@ -71,7 +71,10 @@
 
 <div style="page-break-before: always;"></div>
 
-# Spring Boot 個人演習ガイド<br>書籍管理システム
+<div align="center" style="margin-bottom: 30px;">
+  <h1 style="border: none; font-size: 1.8em; color: #1a365d; margin-bottom: 5px;">Spring Boot 個人演習ガイド</h1>
+  <span style="font-size: 1.2em; color: #666;">書籍管理システム</span>
+</div>
 
 ## はじめに
 本演習は、Spring Boot入門の研修終了翌日に、1日かけて取り組む総合演習です。

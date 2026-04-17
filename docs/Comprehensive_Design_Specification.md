@@ -51,7 +51,10 @@
 
 <div style="page-break-before: always;"></div>
 
-# 書籍管理システム 補足資料<br><span style="font-size: 0.7em; font-weight: normal;">（画面遷移・イメージ図・ER図）</span>
+<div align="center" style="margin-bottom: 30px;">
+  <h1 style="border: none; font-size: 1.8em; color: #1a365d; margin-bottom: 5px;">書籍管理システム 補足資料</h1>
+  <span style="font-size: 1.2em; color: #666;">（画面遷移・イメージ図・ER図）</span>
+</div>
 
 本ドキュメントは、個人演習の補足資料です。演習を進めるにあたり、各章ごとの最終的な完成形（画面遷移や各画面のイメージ図）とデータベースの構造（ER図）を確認するためのリファレンスとして活用してください。
 
