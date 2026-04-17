@@ -1,3 +1,17 @@
+<style>
+  @media print {
+    @page {
+      margin-top: 15mm;
+      margin-bottom: 15mm;
+      @top-center {
+        content: "- " counter(page) " -";
+        font-family: sans-serif;
+        font-size: 10pt;
+        color: #666;
+      }
+    }
+  }
+</style>
 <div align="center" style="margin-top: 100px; margin-bottom: 200px;">
   <img src="images/trainocate_logo.png" width="350">
   <br><br><br>
