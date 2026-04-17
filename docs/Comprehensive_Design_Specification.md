@@ -3,7 +3,7 @@
     @page {
       margin-top: 15mm;
       margin-bottom: 15mm;
-      @top-center {
+      @bottom-center {
         content: "- " counter(page) " -";
         font-family: sans-serif;
         font-size: 10pt;
