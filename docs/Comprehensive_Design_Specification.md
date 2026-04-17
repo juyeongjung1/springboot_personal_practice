@@ -19,15 +19,15 @@
 <div align="center" style="margin-top: 100px; margin-bottom: 200px;">
   <img src="images/trainocate_logo.png" width="350">
   <br><br><br>
-  <h1 style="border: none; font-size: 2.5em; color: #1a365d;">書籍管理システム</h1>
-  <h2 style="color: #666; font-weight: 300;">全体設計書</h2>
+  <h1 style="border: none; font-size: 2.5em; color: #1a365d;">書籍管理システム 補足資料</h1>
+  <h2 style="color: #666; font-weight: 300;">画面遷移・イメージ図・ER図</h2>
   <br><br><br><br><br><br>
 </div>
 <div style="page-break-before: always;"></div>
 
-# 書籍管理システム 全体設計書
+# 書籍管理システム 補足資料（画面遷移・イメージ図・ER図）
 
-本ドキュメントは、演習を通してシステムをどのように構築していくかをまとめた正式な設計書です。各章のマイルストーンごとに、画面遷移と最終的な画面イメージを確認できます。
+本ドキュメントは、個人演習の補足資料です。演習を進めるにあたり、各章ごとの最終的な完成形（画面遷移や各画面のイメージ図）とデータベースの構造（ER図）を確認するためのリファレンスとして活用してください。
 
 ---
 
