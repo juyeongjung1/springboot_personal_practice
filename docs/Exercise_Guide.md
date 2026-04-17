@@ -64,6 +64,10 @@
 5. `LoginController` に `/login` を受け取る <span style="color: #28a745; font-weight: bold;">POST マッピング</span> のメソッドを作成し、引数で `userId` と `password` を受け取るようにしてください（第2章では認証処理のモックとして、受け取るだけで次に進みます）。
 6. このメソッドの遷移先として、リダイレクトはさせずに、直接 `book_index.html` へ画面遷移するようにし、この後作成する「書籍管理メニュー画面」へそのまま移動させます。
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題2.2：「書籍管理メニュー画面」の作成 (リンクと検索モック)
 ログイン成功後に表示される「書籍管理メニュー画面（`book_index.html`）」を作成し、他機能へのリンクや検索フォームを配置します。
 
@@ -93,6 +97,10 @@
 7. 遷移先の画面として、`src/main/resources/templates` の中に `book_search_result.html` （検索結果表示のHTMLファイル）を作成してください。本章ではモックとして、Controllerから渡されたパラメータを表示するだけに留めます。
    - **【出力例】** 「タイトルキーワード：${keyword}」や「価格：${minPrice}円〜${maxPrice}円」など、受け取った値が画面に出ればOKです。
    *(※実際の検索結果一覧を表示したり、高度な表示制御を行ったりするのは、後の章（第3章、第6章）で行います)*
+
+---
+
+<div style="page-break-before: always;"></div>
 
 ### 課題2.3：「書籍登録」のモック作成 (POST通信とFormクラス)
 画面のリンクから登録画面へ遷移し、Formクラスを使って一括でデータを受け取る練習をします。
@@ -152,6 +160,10 @@
   <code>book</code> テーブルの <code>genre_id</code> は、<code>genre</code> テーブルの <code>id</code> を参照する<strong>外部キー</strong>です。エンティティ定義時にJPAのリレーションアノテーション（<code>@ManyToOne</code> / <code>@OneToMany</code>）を使って関連付ける必要があります（テキスト <strong>第6章</strong> 参照）。
 </div>
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題3.1：エンティティクラスの作成
 データベースのテーブルに対応するEntityクラスを作成しましょう。
 
@@ -171,6 +183,10 @@
      上記のように「ジャンルオブジェクト」と「ジャンルID（数値）」の両方を同じテーブルの <code>genre_id</code> カラムにマッピングすると、登録や更新の際に「どちらの値を優先して保存すればいいのか」が分からずエラーになります。これを防ぐため、<code>@JoinColumn</code> 側に <code>insertable = false, updatable = false</code> を追記して、<strong>「ジャンルオブジェクトの側は読み取り専用」</strong>であることを明示してください。（例：<code>@JoinColumn(name = "genre_id", insertable = false, updatable = false)</code>）
    </div>
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題3.2：リポジトリインターフェースの作成
 エンティティに対するデータベース操作を行うRepositoryを定義しましょう。
 これから実装する機能（全件取得、キーワード検索、価格帯検索、IDでの1件検索、登録・更新・削除）を踏まえ、リポジトリを作成します。
@@ -182,6 +198,10 @@
    - 価格が指定範囲内の書籍を検索するメソッド（`findByPriceBetween`）
    *(※全件取得(findAll)、IDでの1件取得(findById)、保存(save)、削除(deleteById)はJpaRepositoryに標準で存在するため自作不要です)*
 4. `GenreRepository` インターフェース（`JpaRepository<Genre, Integer>`を継承）を作成してください。
+
+---
+
+<div style="page-break-before: always;"></div>
 
 ### 課題3.3：Service層の作成
 RepositoryをControllerから直接呼ばず、Service層を介してアクセスするようにします。
@@ -199,6 +219,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - **依存性の注入**: データベース操作を行うため、`BookRepository` をこのクラス内で利用できるようにします。フィールドとして宣言し、`@Autowired` を付与する（または Lombokの `@RequiredArgsConstructor` と `final` 制約を併用する）ことで、Springに「依存性の注入」を行わせてください。
    - **メソッドの実装（オーバーライド）**: インターフェースで定義した各メソッドの中身を書いていきます。このクラスはControllerとRepositoryの「橋渡し」となるため、取得した `BookRepository` が持つメソッド（`findAll()`, `findById()`, 課題3.2で定義した検索メソッド等）を呼び出し、その結果を return するように実装します。（登録処理 `saveBook` については、Formクラスの値をEntityにセットしてからRepositoryの `save()` を呼ぶ処理を記述してください）
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題3.4：全件一覧と検索モックのDB連動化
 第2章で作ったモック画面を、Serviceを経由してDBから取得するように修正します。
 
@@ -210,6 +234,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - **【重要（動的URL）】** 一覧の「書籍名」部分をリンクにし、クリックすると「詳細画面」へ飛ぶようにします。テキスト第5章のサンプルを参考に、以下のような**動的URL**にしてください。
      `<a th:href="@{/book/detail/} + ${book.id}" th:text="${book.title}"></a>`
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題3.5：書籍詳細画面の実装（更新・削除の起点）
 書籍名をクリックしたときに表示される詳細画面を作成します。この画面から「更新」と「削除」を行えるようにします。
 
@@ -219,6 +247,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 4. この画面内に以下の2つのリンク（フォームのボタン）を配置してください。
    - **更新** （遷移先: `/book/update/{id}` へ遷移するフォーム `<form th:action="@{/book/update/} + ${book.id}">`）
    - **削除** （遷移先: `/book/delete/{id}` へ遷移するフォーム `<form th:action="@{/book/delete/} + ${book.id}">`）
+
+---
+
+<div style="page-break-before: always;"></div>
 
 ### 課題3.6：新規登録機能の実装（モックからDB保存へ）
 第2章で作成した機能を改修し、画面から入力された書籍データを実際にDBへ登録する一連のフローを完成させます。
@@ -241,6 +273,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 3. **登録完了画面の表示**
    - `book_confirm.html` を改修します。第2章で記述したモック用の説明文を削除し、「以下の内容で登録しました」というメッセージと共に、DBに登録された書籍情報（タイトル・著者名・価格・ジャンルID等）を表示してください。
    - 画面の下部に「メニューへ戻る」リンク（遷移先: `/book/index`）が配置されていることを確認してください。
+
+---
+
+<div style="page-break-before: always;"></div>
 
 ### 課題3.7：更新機能と削除機能の実装
 詳細画面から呼び出される更新と削除の処理を実装します。
@@ -294,6 +330,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `book_form.html` と `book_update.html` を修正します。
    - `<form>` 要素に `th:object="${bookForm}"` を設定し、各入力欄（`title` など）の付近に `<div th:errors="*{title}" class="text-danger"></div>` というエラー表示用の要素を追加してください。
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題4.2：ユーザー管理用のEntityとRepository作成
 データベースに存在する `user` テーブルを利用してログイン認証を行うための準備をします。
 
@@ -303,6 +343,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 2. **`UserRepository` の作成**
    - `JpaRepository` を継承したインターフェースを作成します（主キーは Integer に合わせてください）。
    - ログイン認証で利用するため、ユーザIDとパスワードの両方が一致するデータを検索するメソッド `User findByUserIdAndPassword(Integer userId, String password);` を追加してください。
+
+---
+
+<div style="page-break-before: always;"></div>
 
 ### 課題4.3：ログイン・ログアウト機能の追加
 セッションを用いたログイン認証と、ログアウト機能を実装します。第4章ではまだ条件分岐（`th:if`）を使いませんので、ログイン状態に関わらず要素を並べて配置すること（例：`<span>` や `<a>` を並べる）を優先してください。
@@ -353,6 +397,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - **【解説】** `layout.html` はシステム全体の「枠組み」です。ヘッダーには「ようこそ、〇〇さん」といったセッション情報の表示も含まれています。
    - **【確認】** `layout.html` 内に、各画面の中身が挿入されるための領域 `<main layout:fragment="content">` が定義されていることを確認してください。
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題5.3：全画面へのレイアウト適用（リファクタリング）
 作成済みの全HTML画面（8画面分）を、共通レイアウトを「継承」する形に書き換えます。
 
@@ -382,6 +430,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 1. ログイン画面（`http://localhost:8080/`）からログインし、全画面でレイアウトが統一されていることを確認してください。
 2. ヘッダーにログインユーザ名が正しく表示され続け、機能が正しく動作することを確認してください。
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題5.5：ログイン・ログアウトボタンの切り替え（th:ifの活用）
 これまでは固定で「ログアウト」ボタンが表示されていましたが、ログイン状態に応じて適切に表示を切り替えるようにします。
 
@@ -409,6 +461,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - **【ヒント】** Thymeleaf の `th:if="${#lists.isEmpty(books)}"` を使用すると、リストが空の時だけ要素を表示できます。
    - **【表示例】** 第5章で用意された CSS のスタイルなどを利用して、ユーザーに分かりやすく表示しましょう。
 
+---
+
+<div style="page-break-before: always;"></div>
+
 ### 課題6.2：登録画面での動的なジャンル選択（GenreServiceの作成）
 これまではジャンルIDを数字で手入力していましたが、DBから取得したジャンル名の一覧をセレクトボックス（プルダウン）で選べるようにします。
 
@@ -426,6 +482,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
          <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"></option>
      </select>
      ```
+
+---
+
+<div style="page-break-before: always;"></div>
 
 ### 課題6.3：【発展】JPQLを用いた複合検索の実装
 単純な「名前だけ」の検索ではなく、複数の条件を組み合わせた複雑な検索を、Repository層に自分でクエリを書いて実装します。
@@ -498,6 +558,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 ---
 
+<div style="page-break-before: always;"></div>
+
 ### 課題7.1： Bootstrap の導入と既存CSSの排除
 Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の準備をします。
 
@@ -535,6 +597,10 @@ Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の
 
 1. 各画面の `<table>` タグに、Bootstrap のテーブル関連クラスを付与してください。
 2. `<thead>` タグを `table-dark` クラスで囲み、ヘッダー部分を強調しましょう。
+
+---
+
+<div style="page-break-before: always;"></div>
 
 ### 課題7.5： 全体のレイアウト刷新
 最後に、Bootstrap の Navbar やコンテナを使用して、システム全体の枠組みをプロフェッショナルな外観に整えます。
