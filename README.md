@@ -35,7 +35,7 @@
 
 ## 🛠 技術スタック
 -   **Java**: 17
--   **Spring Boot**: 4.0.3
+-   **Spring Boot**: 4.0.2
 -   **テンプレートエンジン**: Thymeleaf / Thymeleaf Layout Dialect
 -   **ORM**: Spring Data JPA
 -   **データベース**: MySQL
