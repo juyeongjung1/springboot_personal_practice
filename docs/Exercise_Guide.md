@@ -382,7 +382,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 </div>
 
 1. **フォームクラス (`BookForm`) へのアノテーション付与**
-   - 以下のフィールドに対して入力チェックのアノテーション（`javax.validation` あるいは `jakarta.validation`）と、エラーメッセージ（`message`属性）を付与してください。
+   - 以下のフィールドに対して入力チェックのアノテーション（`jakarta.validation.constraints.*`）と、エラーメッセージ（`message`属性）を付与してください。
      - `title`: 空白不可（`@NotBlank`）。<span style="color: #dc3545;">メッセージ：「書籍名を入力してください」</span>
      - `author`: 空白不可（`@NotBlank`）。<span style="color: #dc3545;">メッセージ：「著者名を入力してください」</span>
      - `price`: 空白不可（`@NotNull` / メッセージ：「価格を入力してください」）、かつ 0 以上（`@Min(0)` / メッセージ：「価格は0以上で入力してください」）

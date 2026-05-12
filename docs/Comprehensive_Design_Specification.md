@@ -275,7 +275,7 @@ graph LR
 | :---: | :---: |
 | ![Final Form](images/ch7_form_standard.png) | ![Final Update](images/ch7_update_standard.png) |
 
-| 登録・更新完了画面（操作の成功を知らせる明示的な通知レイアウト） | 検索結果画面（該当なし：alert-infoクラスによる親切な0件案内） |
+| 登録・更新完了画面（操作の成功を知らせる明示的な通知レイアウト） | 検索結果画面（該当なし：alert-warningクラスによる親切な0件案内） |
 | :---: | :---: |
 | ![Final Confirm](images/ch7_confirm_standard.png) | ![Final No Results](images/ch7_search_no_hits_standard.png) |
 
@@ -288,19 +288,19 @@ graph LR
 
 ```mermaid
 erDiagram
-    BOOKS ||--o{ GENRES : "belongs to"
-    BOOKS {
+    book ||--o{ genre : "belongs to"
+    book {
         int id PK
         string title
         string author
         int price
         int genre_id FK
     }
-    GENRES {
+    genre {
         int id PK
         string name
     }
-    USERS {
+    user {
         int user_id PK
         string password
         string user_name
