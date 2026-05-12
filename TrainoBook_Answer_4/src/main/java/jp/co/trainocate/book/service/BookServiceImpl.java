@@ -40,7 +40,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findBooksByPrice(Integer minPrice, Integer maxPrice) {
-        return bookRepository.findByPriceBetween(minPrice, maxPrice);
+        // 【B-4対応】最低価格・最高価格が未入力の場合のフォールバック処理
+        // 両方未指定なら全件、片方のみ指定なら 0 円〜 / 〜 上限なし として検索
+        if (minPrice == null && maxPrice == null) {
+            return bookRepository.findAll();
+        }
+        Integer min = (minPrice != null) ? minPrice : 0;
+        Integer max = (maxPrice != null) ? maxPrice : Integer.MAX_VALUE;
+        return bookRepository.findByPriceBetween(min, max);
     }
 
     /**

@@ -115,7 +115,7 @@ public class BookController {
         return "book_confirm"; 
     }
 
-    @RequestMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         bookService.deleteBook(id);
         return "redirect:/book/list";

@@ -40,6 +40,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
      * @param maxPrice 上限価格
      * @return 条件を満たす書籍のリスト
      */
-    @Query("SELECT b FROM Book b JOIN b.genre g WHERE g.name LIKE %:genreName% AND b.price <= :maxPrice")
+    @Query("SELECT b FROM Book b JOIN b.genre g WHERE g.name LIKE CONCAT('%', :genreName, '%') AND b.price <= :maxPrice")
     List<Book> findByGenreNameContainingAndMaxPrice(@Param("genreName") String genreName, @Param("maxPrice") Integer maxPrice);
 }

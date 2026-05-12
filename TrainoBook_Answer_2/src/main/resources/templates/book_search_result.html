@@ -8,6 +8,10 @@
 	<h1>検索結果</h1>
 
 	<!-- 【課題2.2】 Controllerから渡されたパラメータを表示するだけのモック -->
+	<p>
+		検索条件（モック）：タイトルキーワード『<span th:text="${keyword}"></span>』 /
+		価格帯『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円
+	</p>
 
 	<p>
 		<a th:href="@{/book/index}">メニューに戻る</a>

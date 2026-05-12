@@ -3,8 +3,10 @@ package jp.co.trainocate.book.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import jp.co.trainocate.book.entity.Book;
+import jp.co.trainocate.book.entity.Genre;
 import jp.co.trainocate.book.form.BookForm;
 import jp.co.trainocate.book.repository.BookRepository;
+import jp.co.trainocate.book.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -23,6 +25,13 @@ public class BookServiceImpl implements BookService {
      */
     private final BookRepository bookRepository;
 
+    /**
+     * 【B-3対応】saveBook() で book.genre を手動セットするために使用。
+     * Spring Data JPA の save() は book.genre を null のままにしてしまうため、
+     * 別途 GenreRepository から Genre エンティティを取得して設定する。
+     */
+    private final GenreRepository genreRepository;
+
     @Override
     public List<Book> findAllBooks() {
         return bookRepository.findAll();
@@ -40,7 +49,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findBooksByPrice(Integer minPrice, Integer maxPrice) {
-        return bookRepository.findByPriceBetween(minPrice, maxPrice);
+        // 【B-4対応】最低価格・最高価格が未入力の場合のフォールバック処理
+        // 両方未指定なら全件、片方のみ指定なら 0 円〜 / 〜 上限なし として検索
+        if (minPrice == null && maxPrice == null) {
+            return bookRepository.findAll();
+        }
+        Integer min = (minPrice != null) ? minPrice : 0;
+        Integer max = (maxPrice != null) ? maxPrice : Integer.MAX_VALUE;
+        return bookRepository.findByPriceBetween(min, max);
     }
 
     /**
@@ -70,7 +86,18 @@ public class BookServiceImpl implements BookService {
         book.setGenreId(bookForm.getGenreId());
         
         // 登録・更新の実行。IDが存在すればUPDATE、無ければINSERTになる
-        return bookRepository.save(book);
+        Book saved = bookRepository.save(book);
+
+        // 【B-3対応】save() の戻り値は book.genre が null のまま返るため、
+        // GenreRepository から Genre エンティティを取得して手動でセットする。
+        // これにより book_confirm.html の ${book.genre.name} が正しく表示される。
+        // （JPA L1 キャッシュにより findById では再ロードされず、refresh は
+        //  TX が必要なためこの方式を採用）
+        if (saved.getGenreId() != null) {
+            Genre genre = genreRepository.findById(saved.getGenreId()).orElse(null);
+            saved.setGenre(genre);
+        }
+        return saved;
     }
 
     @Override
