@@ -343,7 +343,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 2. **登録処理の実行**
    - `BookController` の `/book/register` (POST) メソッドの中身を修正します。
-   - フォームから受け取った `BookForm` のデータを `Book` エンティティに移し替え、`BookService.saveBook()` を呼び出してDBに登録してください。
+   - フォームから受け取った `BookForm` をそのまま引数に渡して `BookService.saveBook()` を呼び出し、DBに登録してください（エンティティへの移し替えはService側で行います）。
    - 登録処理が完了したら、結果を表示するために `book_confirm.html` へ画面遷移させます。その際、登録した書籍情報を `Model` に格納してください。
 
 3. **登録完了画面の表示**
@@ -366,7 +366,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 2. **更新の実行（動的URLの利用）**
    - `BookForm` に `id` フィールドを追加してください。
    - 更新用フォームの送信先（action）について、今回は `@PathVariable` を用いてIDをURLに含めて送信します。テキスト第5章にならい、`<form th:action="@{/book/update/} + ${bookForm.id}" method="post">` のように記述してください。
-   - `BookController` に `/book/update/{id}` を受け取る POST マッピングを追加します。引数で `@PathVariable` を使ってIDを受け取り、フォームからの値と共にエンティティにセットしてから `BookService.saveBook()` を呼び出します（IDが存在するためUPDATEとして働きます）。
+   - `BookController` に `/book/update/{id}` を受け取る POST マッピングを追加します。引数で `@PathVariable` を使ってIDを受け取り、フォームからの値（`BookForm`）にIDをセットした上で `BookService.saveBook()` を呼び出します（エンティティへの移し替えはService側で行われ、IDが存在するためUPDATEとして働きます）。
    - 処理完了後は、詳細画面や結果画面へ遷移させてください。
 
 3. **削除の実行**
