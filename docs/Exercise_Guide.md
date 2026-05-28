@@ -170,9 +170,19 @@
 
 5. `BookController` に上記の検索用送信先（`/book/search/title`、`/book/search/price`）に対応するメソッドを作成してください。
 6. Controllerの引数でそれぞれ送信されたパラメータを受け取り、`Model` に格納してください。
-7. 遷移先の画面として、`src/main/resources/templates` の中に `book_search_result.html` （検索結果表示のHTMLファイル）を作成してください。本章ではモックとして、Controllerから渡されたパラメータを表示するだけに留めます。
-   - **【出力例】** 「タイトルキーワード：${keyword}」や「価格：${minPrice}円〜${maxPrice}円」など、受け取った値が画面に出ればOKです。
-   *(※実際の検索結果一覧を表示したり、高度な表示制御を行ったりするのは、後の章（第3章、第6章）で行います)*
+7. 遷移先の画面として、`src/main/resources/templates` の中に `book_search_result.html` （検索結果表示のHTMLファイル）を作成してください。
+   **【注意】** この画面は、後の章（第3章や第6章）でデータベースと連携した「本格的な検索結果一覧画面」にしっかりと作り替えます。そのため、今回は複雑なテーブル表示などは行わず、Controllerからパラメータが正しく届いているかを確認するための**「一時的な簡易画面（モック）」**として作成します。
+
+   そのため、今回は極めて単純な形で構いませんので、HTML内に `th:text` 属性を用いて以下のように記述し、受け取ったパラメータをそのまま画面に出力してください。
+
+   - **HTMLの記述例**:
+     ```html
+     タイトルキーワード『<span th:text="${keyword}"></span>』 / 
+     価格帯『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円
+     ```
+   - **画面での出力例（例：「Java」で検索し、価格は指定しなかった場合）**:
+     「タイトルキーワード『Java』 / 価格帯『』円〜『』円」
+     のように、入力した値が画面にそのまま表示されればOKです（Thymeleafの仕様により、未指定（`null`）の価格は自動的に空文字となり、例外エラーは発生しません）。
 
 ---
 
@@ -343,8 +353,9 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 2. **登録処理の実行**
    - `BookController` の `/book/register` (POST) メソッドの中身を修正します。
-   - フォームから受け取った `BookForm` をそのまま引数に渡して `BookService.saveBook()` を呼び出し、DBに登録してください（エンティティへの移し替えはService側で行います）。
-   - 登録処理が完了したら、結果を表示するために `book_confirm.html` へ画面遷移させます。その際、登録した書籍情報を `Model` に格納してください。
+   - フォームから受け取った `BookForm` をそのまま引数に渡して `BookService.saveBook(bookForm)` を呼び出し、DBに登録してください。
+   - **【ポイント】** ControllerからServiceへはFormをそのまま渡し、エンティティへの移し替えはService側で行います。また、登録完了後に保存後の新しいEntityが返り値として返されます。
+   - 登録処理が完了したら、結果を表示するために `book_confirm.html` へ画面遷移させます。その際、Serviceの返り値である登録済みの書籍情報を `Model` に格納してください。
 
 3. **登録完了画面の表示**
    - `book_confirm.html` を改修します。第2章で記述したモック用の説明文を削除し、「以下の内容で登録しました」というメッセージと共に、DBに登録された書籍情報（タイトル・著者名・価格・ジャンルID等）を表示してください。
@@ -366,7 +377,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 2. **更新の実行（動的URLの利用）**
    - `BookForm` に `id` フィールドを追加してください。
    - 更新用フォームの送信先（action）について、今回は `@PathVariable` を用いてIDをURLに含めて送信します。テキスト第5章にならい、`<form th:action="@{/book/update/} + ${bookForm.id}" method="post">` のように記述してください。
-   - `BookController` に `/book/update/{id}` を受け取る POST マッピングを追加します。引数で `@PathVariable` を使ってIDを受け取り、フォームからの値（`BookForm`）にIDをセットした上で `BookService.saveBook()` を呼び出します（エンティティへの移し替えはService側で行われ、IDが存在するためUPDATEとして働きます）。
+   - `BookController` に `/book/update/{id}` を受け取る POST マッピングを追加します。引数で `@PathVariable` を使ってIDを受け取り、フォームからの値（`BookForm`）にIDをセットした上で `BookService.saveBook(bookForm)` を呼び出します。
+   - **【ポイント】** 新規登録と同様に、エンティティへの移し替えはService側で行われ、IDが存在するためUPDATEとして処理された新しいEntityが返り値として返されます。
    - 処理完了後は、詳細画面や結果画面へ遷移させてください。
 
 3. **削除の実行**
