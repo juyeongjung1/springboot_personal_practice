@@ -494,11 +494,11 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 1. **テンプレートの宣言修正**
    - 各HTMLの `<html>` タグを、以下のように修正してください。
-     ```html
-     <html xmlns:th="http://www.thymeleaf.org"
-           xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-           layout:decorate="~{layout/layout}">
-     ```
+```html
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+```
    - `layout:decorate` は、「このファイルは `layout/layout.html` を親（型紙）として使います」という宣言です。
 
 2. **コンテンツの埋め込み**
