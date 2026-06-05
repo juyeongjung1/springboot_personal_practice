@@ -98,6 +98,28 @@ def normalize_tables(md_text: str) -> str:
 
     return '\n'.join(new_lines)
 
+def normalize_nested_lists(md_text: str) -> str:
+    lines = md_text.split('\n')
+    new_lines = []
+    in_nested_list = False
+
+    def is_nested_list(line: str) -> bool:
+        return bool(re.match(r'^\s{2,}-\s+', line))
+
+    for line in lines:
+        nested_list = is_nested_list(line)
+
+        if nested_list and not in_nested_list and new_lines and new_lines[-1].strip():
+            new_lines.append('')
+
+        if not nested_list and in_nested_list and line.strip():
+            new_lines.append('')
+
+        new_lines.append(line)
+        in_nested_list = nested_list
+
+    return '\n'.join(new_lines)
+
 def remove_css_page_footer(css: str) -> str:
     return re.sub(r'@bottom-center\s*\{[^{}]*\}', '', css, flags=re.DOTALL)
 
@@ -393,6 +415,7 @@ def convert_md_to_pdf(md_path: str) -> None:
     # GitHubアラートを置換
     md_content = process_github_alerts(md_content)
     md_content = normalize_tables(md_content)
+    md_content = normalize_nested_lists(md_content)
 
     # Mermaidコードブロックを <pre class="mermaid"> に置換
     def replace_mermaid(match):

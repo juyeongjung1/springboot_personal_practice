@@ -191,7 +191,10 @@
 6. Controllerの引数でそれぞれ送信されたパラメータを受け取り、`Model` に格納してください。
 7. 遷移先の画面として、`src/main/resources/templates` の中に `book_search_result.html` （検索結果表示のHTMLファイル）を作成してください。
 
-   **【注意】** この画面は、後の章（第3章や第6章）でデータベースと連携した「本格的な検索結果一覧画面」にしっかりと作り替えます。そのため、今回は複雑なテーブル表示などは行わず、Controllerからパラメータが正しく届いているかを確認するための**「一時的な簡易画面（モック）」**として作成します。
+   <div style="background-color: #f8ffff; border-left: 5px solid #17a2b8; padding: 10px; margin-top: 10px; margin-bottom: 16px;">
+     <strong>【注意】</strong><br>
+     この画面は、後の章（第3章や第6章）でデータベースと連携した「本格的な検索結果一覧画面」にしっかりと作り替えます。そのため、今回は複雑なテーブル表示などは行わず、Controllerからパラメータが正しく届いているかを確認するための<strong>「一時的な簡易画面（モック）」</strong>として作成します。
+   </div>
 
    そのため、今回は極めて単純な形で構いませんので、HTML内に `th:text` 属性を用いて以下のように記述し、受け取ったパラメータをそのまま画面に出力してください。
 
@@ -254,6 +257,8 @@
 | author | VARCHAR(100) | NOT NULL | 著者名 |
 | price | INT | NOT NULL | 価格 |
 | genre_id | INT | FOREIGN KEY → genre(id) | ジャンルID（外部参照） |
+
+<div style="page-break-before: always;"></div>
 
 **■ `user` テーブル（ユーザ）** ※第4章で使用
 
@@ -430,7 +435,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - 以下のフィールドに対して入力チェックのアノテーション（`jakarta.validation.constraints.*`）と、エラーメッセージ（`message`属性）を付与してください。
      - `title`: 空白不可（`@NotBlank`）。<span style="color: #dc3545;">メッセージ：「書籍名を入力してください」</span>
      - `author`: 空白不可（`@NotBlank`）。<span style="color: #dc3545;">メッセージ：「著者名を入力してください」</span>
-     - `price`: 空白不可（`@NotNull` / メッセージ：「価格を入力してください」）、かつ 0 以上（`@Min(0)` / メッセージ：「価格は0以上で入力してください」）
+     - `price`: 空白不可（`@NotNull` / <span style="color: #dc3545;">メッセージ：「価格を入力してください」</span>）、かつ 0 以上（`@Min(0)` / <span style="color: #dc3545;">メッセージ：「価格は0以上で入力してください」</span>）
      - `genreId`: 空白不可（`@NotNull`）。<span style="color: #dc3545;">メッセージ：「ジャンルIDを入力してください」</span>
 2. **Controllerのエラー処理実装**
    - `BookController` の `/book/register` (POST) と `/book/update/{id}` (POST) メソッドを修正します。
