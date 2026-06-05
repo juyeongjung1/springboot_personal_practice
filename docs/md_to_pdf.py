@@ -358,6 +358,110 @@ def build_default_css() -> str:
     .point-box strong {
         color: #1f7a3a;
     }
+    .screen-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin: 16px 0 22px;
+    }
+    .screen-grid-single {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .screen-card {
+        margin: 0;
+        padding: 11px;
+        background-color: #f7fafc;
+        border: 1px solid #cdd6df;
+        border-radius: 6px;
+        page-break-inside: avoid;
+    }
+    .screen-card figcaption {
+        color: #123a5f;
+        font-weight: 700;
+        font-size: 0.94em;
+        line-height: 1.45;
+        margin-bottom: 8px;
+    }
+    .screen-card img {
+        width: 100%;
+        max-height: 270px;
+        object-fit: contain;
+        margin: 0 auto;
+        border: 1px solid #e0e6ec;
+        border-radius: 4px;
+        background-color: #ffffff;
+    }
+    .flow-diagram {
+        padding: 16px;
+        margin: 14px 0 22px;
+        background-color: #f4f7fb;
+        border: 1px solid #c8d5e3;
+        border-left: 5px solid #2f6f9f;
+        border-radius: 6px;
+        page-break-inside: avoid;
+    }
+    .flow-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 9px 0;
+        flex-wrap: wrap;
+    }
+    .flow-node {
+        min-width: 110px;
+        padding: 8px 12px;
+        background-color: #ffffff;
+        border: 1px solid #b8cad9;
+        border-radius: 5px;
+        color: #123a5f;
+        font-weight: 700;
+        text-align: center;
+        line-height: 1.35;
+    }
+    .flow-note {
+        color: #52616b;
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+    .flow-arrow {
+        color: #2f6f9f;
+        font-weight: 700;
+    }
+    .er-diagram {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin: 14px 0 22px;
+        page-break-inside: avoid;
+    }
+    .er-card {
+        border: 1px solid #c8d5e3;
+        border-radius: 6px;
+        background-color: #f7fafc;
+        overflow: hidden;
+    }
+    .er-card h3 {
+        margin: 0;
+        padding: 8px 10px;
+        background-color: #1f4e79;
+        color: #ffffff;
+        font-size: 1em;
+    }
+    .er-card ul {
+        margin: 0;
+        padding: 10px 12px 12px 24px;
+    }
+    .er-rel {
+        grid-column: 1 / -1;
+        padding: 10px 12px;
+        background-color: #e9f5ff;
+        border-left: 5px solid #007bff;
+        border-radius: 6px;
+        color: #123a5f;
+        font-weight: 700;
+        text-align: center;
+    }
     .toc-section {
         padding: 2px 0 0;
     }

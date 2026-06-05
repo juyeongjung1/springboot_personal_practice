@@ -25,30 +25,28 @@
 </div>
 <div style="page-break-before: always;"></div>
 
-<div style="page-break-before: always;"></div>
-
 ## 目次
 
-- 第2章：Spring Web アプリケーション（画面遷移とデータ通信） ...... p.5
-  - 画面遷移図 ...... p.5
-  - 主要画面 ...... p.6
-- 第3章：Spring Data JPA (DB連携) ...... p.8
-  - 画面遷移図 ...... p.8
-  - 主要画面 ...... p.9
-- 第4章：バリデーションと認証 ...... p.11
+- 第2章：Spring Web アプリケーション（画面遷移とデータ通信） ...... p.4
+  - 画面遷移図 ...... p.4
+  - 主要画面 ...... p.5
+- 第3章：Spring Data JPA (DB連携) ...... p.7
+  - 画面遷移図 ...... p.7
+  - 主要画面 ...... p.8
+- 第4章：バリデーションと認証 ...... p.9
+  - 画面遷移図 ...... p.9
+  - 主要画面 ...... p.10
+- 第5章：共通レイアウトの適用 (Thymeleaf Layout Dialect) ...... p.11
   - 画面遷移図 ...... p.11
   - 主要画面 ...... p.12
-- 第5章：共通レイアウトの適用 (Thymeleaf Layout Dialect) ...... p.13
+- 第6章：高度なデータ連携とユーザー体験の向上 ...... p.13
   - 画面遷移図 ...... p.13
   - 主要画面 ...... p.14
-- 第6章：高度なデータ連携とユーザー体験の向上 ...... p.15
+- 第7章：Bootstrapによるスタイリング（完成形態） ...... p.15
   - 画面遷移図 ...... p.15
   - 主要画面 ...... p.16
-- 第7章：Bootstrapによるスタイリング（完成形態） ...... p.17
-  - 画面遷移図 ...... p.17
-  - 主要画面 ...... p.18
-- データベース構造 (ER図) ...... p.20
-- 初期データ一覧 ...... p.20
+- データベース構造 (ER図) ...... p.18
+- 初期データ一覧 ...... p.18
 
 <div style="page-break-before: always;"></div>
 
@@ -71,31 +69,61 @@
 </div>
 
 ### 画面遷移図
-```mermaid
-graph LR
-    Login[ログイン画面] -- ログイン --> Menu[メニュー画面]
-    Menu -- 全書籍リストの確認 --> List[書籍一覧]
-    Menu -- 検索 --> Search[検索結果]
-    Menu -- 書籍情報の登録 --> Form[書籍登録フォーム]
-    Form -- 登録 --> Confirm[登録確認画面]
-    Confirm -- メニューに戻る --> Menu
-```
+
+<div class="flow-diagram">
+  <div class="flow-row">
+    <div class="flow-node">ログイン画面</div>
+    <div class="flow-arrow">ログイン →</div>
+    <div class="flow-node">メニュー画面</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">メニュー画面</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">書籍一覧</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">検索結果</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">書籍登録フォーム</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">書籍登録フォーム</div>
+    <div class="flow-arrow">登録 →</div>
+    <div class="flow-node">登録確認画面</div>
+    <div class="flow-arrow">メニューに戻る →</div>
+    <div class="flow-node">メニュー画面</div>
+  </div>
+</div>
 
 <div style="page-break-before: always;"></div>
 
 ### 主要画面
 
-| ログイン画面（モック：DB認証なしでの遷移テスト） | メニュー画面（モック：主要機能への導線確認） |
-| :---: | :---: |
-| ![Login](images/ch2_login_page_zoom1_5_1775531127831.png) | ![Menu](images/ch2_menu_page_zoom1_5_1775531151398.png) |
-
-| 登録フォーム（入力値の受け渡しテスト用） | 登録内容の確認画面（入力値と遷移の妥当性確認） |
-| :---: | :---: |
-| ![Registration Form](images/ch2_registration_form_1775532568369.png) | ![Confirm](images/ch2_confirmation_page_zoom1_5_1775531182266.png) |
-
-| 書籍一覧（モックデータによる一覧表示の確認） | 検索結果画面（固定データによる表示レイアウトの確認） |
-| :---: | :---: |
-| ![List](images/ch2_list_page_zoom1_5_1775531152394.png) | ![Search Result Mock](images/ch2_search_result_mock_zoom1_5_1775531187711.png) |
+<div class="screen-grid">
+  <figure class="screen-card">
+    <figcaption>ログイン画面（モック：DB認証なしでの遷移テスト）</figcaption>
+    <img src="images/ch2_login_page_zoom1_5_1775531127831.png" alt="ログイン画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>メニュー画面（モック：主要機能への導線確認）</figcaption>
+    <img src="images/ch2_menu_page_zoom1_5_1775531151398.png" alt="メニュー画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>登録フォーム（入力値の受け渡しテスト用）</figcaption>
+    <img src="images/ch2_registration_form_1775532568369.png" alt="登録フォーム">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>登録内容の確認画面（入力値と遷移の妥当性確認）</figcaption>
+    <img src="images/ch2_confirmation_page_zoom1_5_1775531182266.png" alt="登録内容の確認画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>書籍一覧（モックデータによる一覧表示の確認）</figcaption>
+    <img src="images/ch2_list_page_zoom1_5_1775531152394.png" alt="書籍一覧">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>検索結果画面（固定データによる表示レイアウトの確認）</figcaption>
+    <img src="images/ch2_search_result_mock_zoom1_5_1775531187711.png" alt="検索結果画面">
+  </figure>
+</div>
 
 ---
 
@@ -109,34 +137,69 @@ graph LR
 </div>
 
 ### 画面遷移図
-```mermaid
-graph LR
-    Menu[メニュー画面] --> List[書籍一覧]
-    Menu --> Form[書籍登録フォーム]
-    Menu --> Search[検索結果一覧]
-    List -- 選択 --> Detail[書籍詳細画面]
-    Detail -- 編集 --> Update[書籍更新フォーム]
-    Detail -- 削除 --> List
-    Form -- 登録 --> Confirm[登録・更新完了]
-    Update -- 更新 --> Confirm
-    Confirm -- メニューに戻る --> Menu
-```
+
+<div class="flow-diagram">
+  <div class="flow-row">
+    <div class="flow-node">メニュー画面</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">書籍一覧</div>
+    <div class="flow-arrow">選択 →</div>
+    <div class="flow-node">書籍詳細画面</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">書籍詳細画面</div>
+    <div class="flow-arrow">編集 →</div>
+    <div class="flow-node">書籍更新フォーム</div>
+    <div class="flow-arrow">更新 →</div>
+    <div class="flow-node">登録・更新完了</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">メニュー画面</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">書籍登録フォーム</div>
+    <div class="flow-arrow">登録 →</div>
+    <div class="flow-node">登録・更新完了</div>
+    <div class="flow-arrow">メニューに戻る →</div>
+    <div class="flow-node">メニュー画面</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">書籍詳細画面</div>
+    <div class="flow-arrow">削除 →</div>
+    <div class="flow-node">書籍一覧</div>
+    <span class="flow-note">メニュー画面から検索結果一覧へも遷移します。</span>
+  </div>
+</div>
 
 <div style="page-break-before: always;"></div>
 
 ### 主要画面
 
-| メニュー画面（DBからデータを取得する検索機能の実装） | 書籍一覧（MySQLから取得したデータの表示確認） |
-| :---: | :---: |
-| ![Menu Fixed](images/ch3_menu_screen_fixed_1775532678571.png) | ![List](images/ch3_book_list_plain_1775540092670.png) |
-
-| 個別情報の詳細表示（DBからの特定ID取得の検証） | 登録・更新完了画面（DB書き換えの成功報告） |
-| :---: | :---: |
-| ![Detail](images/ch3_detail_png_1775531308770.png) | ![Confirm](images/ch3_confirm_png_1775531334365.png) |
-
-| 編集フォーム（DB情報の初期表示・変更確認） | タイトル検索結果（DBの部分一致検索の確認） |
-| :---: | :---: |
-| ![Update](images/ch3_update_png_1775531339324.png) | ![Search Results](images/ch3_search_result_plain_1775540104659.png) |
+<div class="screen-grid">
+  <figure class="screen-card">
+    <figcaption>メニュー画面（DBからデータを取得する検索機能の実装）</figcaption>
+    <img src="images/ch3_menu_screen_fixed_1775532678571.png" alt="メニュー画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>書籍一覧（MySQLから取得したデータの表示確認）</figcaption>
+    <img src="images/ch3_book_list_plain_1775540092670.png" alt="書籍一覧">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>個別情報の詳細表示（DBからの特定ID取得の検証）</figcaption>
+    <img src="images/ch3_detail_png_1775531308770.png" alt="個別情報の詳細表示">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>登録・更新完了画面（DB書き換えの成功報告）</figcaption>
+    <img src="images/ch3_confirm_png_1775531334365.png" alt="登録・更新完了画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>編集フォーム（DB情報の初期表示・変更確認）</figcaption>
+    <img src="images/ch3_update_png_1775531339324.png" alt="編集フォーム">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>タイトル検索結果（DBの部分一致検索の確認）</figcaption>
+    <img src="images/ch3_search_result_plain_1775540104659.png" alt="タイトル検索結果">
+  </figure>
+</div>
 
 ---
 
@@ -150,22 +213,47 @@ graph LR
 </div>
 
 ### 画面遷移図
-```mermaid
-graph TD
-    Login[ログイン画面] -- 認証成功 --> Menu[メニュー画面]
-    Login -- 認証失敗 --> LoginErr[ログイン画面（エラー表示）]
-    Menu --> Form[書籍登録フォーム]
-    Form -- 入力不備あり --> FormErr[登録フォーム（バリデーションエラー）]
-    Form -- 正常入力 --> Confirm[登録・更新完了]
-```
+
+<div class="flow-diagram">
+  <div class="flow-row">
+    <div class="flow-node">ログイン画面</div>
+    <div class="flow-arrow">認証成功 →</div>
+    <div class="flow-node">メニュー画面</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">書籍登録フォーム</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">ログイン画面</div>
+    <div class="flow-arrow">認証失敗 →</div>
+    <div class="flow-node">ログイン画面<br>（エラー表示）</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">書籍登録フォーム</div>
+    <div class="flow-arrow">入力不備あり →</div>
+    <div class="flow-node">登録フォーム<br>（エラー表示）</div>
+    <div class="flow-arrow">正常入力 →</div>
+    <div class="flow-node">登録・更新完了</div>
+  </div>
+</div>
 
 <div style="page-break-before: always;"></div>
 
 ### 主要画面
 
-| ログイン認証失敗（意図したエラーメッセージの表出） | 入力チェックエラー（アノテーションによる不備検知） | メニュー画面（セッションから取得したユーザー情報の表示） |
-| :---: | :---: | :---: |
-| ![Login Error](images/ch4_login_error_zoom1_5.png) | ![Validation Error](images/ch4_validation_errors_zoom1_5.png) | ![Ch4 Menu With Session](images/ch4_book_index_zoom1_5.png) |
+<div class="screen-grid">
+  <figure class="screen-card">
+    <figcaption>ログイン認証失敗（意図したエラーメッセージの表出）</figcaption>
+    <img src="images/ch4_login_error_zoom1_5.png" alt="ログイン認証失敗">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>入力チェックエラー（アノテーションによる不備検知）</figcaption>
+    <img src="images/ch4_validation_errors_zoom1_5.png" alt="入力チェックエラー">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>メニュー画面（セッションから取得したユーザー情報の表示）</figcaption>
+    <img src="images/ch4_book_index_zoom1_5.png" alt="メニュー画面">
+  </figure>
+</div>
 
 ---
 
@@ -179,27 +267,42 @@ graph TD
 </div>
 
 ### 画面遷移図
-```mermaid
-graph TD
-    Component[共通レイアウト定義] --> PageA[書籍一覧]
-    Component --> PageB[登録フォーム]
-    subgraph 共通レイアウト
-        Header[ヘッダーパーツ]
-        Footer[フッターパーツ]
-    end
-```
+
+<div class="flow-diagram">
+  <div class="flow-row">
+    <div class="flow-node">共通レイアウト定義</div>
+    <div class="flow-arrow">適用 →</div>
+    <div class="flow-node">書籍一覧</div>
+    <div class="flow-arrow">適用 →</div>
+    <div class="flow-node">登録フォーム</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">ヘッダーパーツ</div>
+    <div class="flow-arrow">＋</div>
+    <div class="flow-node">フッターパーツ</div>
+    <div class="flow-arrow">＝</div>
+    <div class="flow-node">共通レイアウト</div>
+  </div>
+</div>
 
 <div style="page-break-before: always;"></div>
 
 ### 主要画面
 
-| ログイン画面（共通レイアウト適用：未ログイン状態） | 書籍一覧（共通レイアウト適用：ログイン中ヘッダー表示） |
-| :---: | :---: |
-| ![Ch5 Login](images/ch5_login_page_design_check.png) | ![Ch5 List](images/ch5_book_list_design_check.png) |
-
-| 登録・更新画面（共通レイアウトによる画面デザインの統一） |
-| :---: |
-| ![Ch5 Form](images/ch5_book_form_design_check.png) |
+<div class="screen-grid">
+  <figure class="screen-card">
+    <figcaption>ログイン画面（共通レイアウト適用：未ログイン状態）</figcaption>
+    <img src="images/ch5_login_page_design_check.png" alt="ログイン画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>書籍一覧（共通レイアウト適用：ログイン中ヘッダー表示）</figcaption>
+    <img src="images/ch5_book_list_design_check.png" alt="書籍一覧">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>登録・更新画面（共通レイアウトによる画面デザインの統一）</figcaption>
+    <img src="images/ch5_book_form_design_check.png" alt="登録・更新画面">
+  </figure>
+</div>
 
 ---
 
@@ -213,27 +316,53 @@ graph TD
 </div>
 
 ### 画面遷移図
-```mermaid
-graph LR
-    Menu --> SearchTitle[タイトル検索]
-    Menu --> SearchPrice[価格帯検索]
-    Menu --> SearchComplex["複合検索<br/>(ジャンル × 上限価格)"]
-    SearchTitle --> Results[検索結果一覧]
-    SearchPrice --> Results
-    SearchComplex --> Results
-```
+
+<div class="flow-diagram">
+  <div class="flow-row">
+    <div class="flow-node">メニュー画面</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">タイトル検索</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">検索結果一覧</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">メニュー画面</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">価格帯検索</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">検索結果一覧</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">メニュー画面</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">複合検索<br>ジャンル × 上限価格</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">検索結果一覧</div>
+  </div>
+</div>
 
 <div style="page-break-before: always;"></div>
 
 ### 主要画面
 
-| 登録フォーム（DBから動的に抽出したジャンル選択） | 検索結果（該当データなし：UX向上のための0件案内） |
-| :---: | :---: |
-| ![Genre Select](images/ch6_book_form_genre_zoom1_5.png) | ![Search No Results](images/ch6_search_no_hits_zoom1_5.png) |
-
-| 複合検索フォーム（ジャンル名：プログラミング、上限価格：5000を指定） | JPQLによる複合検索結果（ジャンル：プログラミング、上限価格：5000） |
-| :---: | :---: |
-| ![JPQL Search Form](images/ch6_jpql_search_form_zoom1_5.png) | ![JPQL Search Result](images/ch6_jpql_search_result_zoom1_5.png) |
+<div class="screen-grid">
+  <figure class="screen-card">
+    <figcaption>登録フォーム（DBから動的に抽出したジャンル選択）</figcaption>
+    <img src="images/ch6_book_form_genre_zoom1_5.png" alt="登録フォーム">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>検索結果（該当データなし：UX向上のための0件案内）</figcaption>
+    <img src="images/ch6_search_no_hits_zoom1_5.png" alt="検索結果">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>複合検索フォーム（ジャンル名：プログラミング、上限価格：5000を指定）</figcaption>
+    <img src="images/ch6_jpql_search_form_zoom1_5.png" alt="複合検索フォーム">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>JPQLによる複合検索結果（ジャンル：プログラミング、上限価格：5000）</figcaption>
+    <img src="images/ch6_jpql_search_result_zoom1_5.png" alt="JPQLによる複合検索結果">
+  </figure>
+</div>
 
 ---
 
@@ -247,38 +376,73 @@ graph LR
 </div>
 
 ### 画面遷移図
-```mermaid
-graph LR
-    Login[Bootstrapログイン] -- 認証成功 --> Menu[カード型メニュー]
-    Menu -- 全書籍リストの確認 --> List[ストライプテーブル]
-    Menu -- 検索 --> Search[検索結果]
-    Menu -- 新規登録 --> Form[入力カード]
-    List -- 選択 --> Detail[書籍詳細画面]
-    Detail -- 編集 --> Update[編集カード]
-    Form -- 完了 --> Confirm[成功アラート表示]
-    Update -- 完了 --> Confirm
-    Confirm -- 戻る --> Menu
-```
+
+<div class="flow-diagram">
+  <div class="flow-row">
+    <div class="flow-node">Bootstrapログイン</div>
+    <div class="flow-arrow">認証成功 →</div>
+    <div class="flow-node">カード型メニュー</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">カード型メニュー</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">ストライプテーブル</div>
+    <div class="flow-arrow">選択 →</div>
+    <div class="flow-node">書籍詳細画面</div>
+    <div class="flow-arrow">編集 →</div>
+    <div class="flow-node">編集カード</div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-node">カード型メニュー</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">検索結果</div>
+    <div class="flow-arrow">／</div>
+    <div class="flow-node">入力カード</div>
+    <div class="flow-arrow">完了 →</div>
+    <div class="flow-node">成功アラート表示</div>
+    <div class="flow-arrow">戻る →</div>
+    <div class="flow-node">カード型メニュー</div>
+  </div>
+</div>
 
 <div style="page-break-before: always;"></div>
 
 ### 主要画面
 
-| ログイン画面（グリッドシステムによる中央配置とalert表示の統合） | メニュー画面（cardクラスとg-4による機能のカード型レイアウト） |
-| :---: | :---: |
-| ![Final Login](images/ch7_login_standard.png) | ![Final Menu](images/ch7_menu_standard.png) |
-
-| 書籍一覧画面（table-striped、table-hover、table-darkの適用による視認性向上） | 書籍詳細画面（container内での整理されたデータ表示とアクションボタン） |
-| :---: | :---: |
-| ![Final List](images/ch7_list_standard.png) | ![Final Detail](images/ch7_detail_standard.png) |
-
-| 書籍登録フォーム（form-controlとform-selectによるモダンな入力体験） | 書籍更新フォーム（既存データの編集とレイアウトの完全な統一） |
-| :---: | :---: |
-| ![Final Form](images/ch7_form_standard.png) | ![Final Update](images/ch7_update_standard.png) |
-
-| 登録・更新完了画面（操作の成功を知らせる明示的な通知レイアウト） | 検索結果画面（該当なし：alert-warningクラスによる親切な0件案内） |
-| :---: | :---: |
-| ![Final Confirm](images/ch7_confirm_standard.png) | ![Final No Results](images/ch7_search_no_hits_standard.png) |
+<div class="screen-grid">
+  <figure class="screen-card">
+    <figcaption>ログイン画面（グリッドシステムによる中央配置とalert表示の統合）</figcaption>
+    <img src="images/ch7_login_standard.png" alt="ログイン画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>メニュー画面（cardクラスとg-4による機能のカード型レイアウト）</figcaption>
+    <img src="images/ch7_menu_standard.png" alt="メニュー画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>書籍一覧画面（table-striped、table-hover、table-darkの適用による視認性向上）</figcaption>
+    <img src="images/ch7_list_standard.png" alt="書籍一覧画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>書籍詳細画面（container内での整理されたデータ表示とアクションボタン）</figcaption>
+    <img src="images/ch7_detail_standard.png" alt="書籍詳細画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>書籍登録フォーム（form-controlとform-selectによるモダンな入力体験）</figcaption>
+    <img src="images/ch7_form_standard.png" alt="書籍登録フォーム">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>書籍更新フォーム（既存データの編集とレイアウトの完全な統一）</figcaption>
+    <img src="images/ch7_update_standard.png" alt="書籍更新フォーム">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>登録・更新完了画面（操作の成功を知らせる明示的な通知レイアウト）</figcaption>
+    <img src="images/ch7_confirm_standard.png" alt="登録・更新完了画面">
+  </figure>
+  <figure class="screen-card">
+    <figcaption>検索結果画面（該当なし：alert-warningクラスによる親切な0件案内）</figcaption>
+    <img src="images/ch7_search_no_hits_standard.png" alt="検索結果画面">
+  </figure>
+</div>
 
 ---
 
@@ -287,26 +451,34 @@ graph LR
 ## データベース構造 (ER図)
 システム全体で管理するデータの構造です。
 
-```mermaid
-erDiagram
-    book ||--o{ genre : "belongs to"
-    book {
-        int id PK
-        string title
-        string author
-        int price
-        int genre_id FK
-    }
-    genre {
-        int id PK
-        string name
-    }
-    user {
-        int user_id PK
-        string password
-        string user_name
-    }
-```
+<div class="er-diagram">
+  <div class="er-card">
+    <h3>book</h3>
+    <ul>
+      <li>id: INT / PK</li>
+      <li>title: VARCHAR</li>
+      <li>author: VARCHAR</li>
+      <li>price: INT</li>
+      <li>genre_id: INT / FK</li>
+    </ul>
+  </div>
+  <div class="er-card">
+    <h3>genre</h3>
+    <ul>
+      <li>id: INT / PK</li>
+      <li>name: VARCHAR</li>
+    </ul>
+  </div>
+  <div class="er-card">
+    <h3>user</h3>
+    <ul>
+      <li>user_id: INT / PK</li>
+      <li>password: VARCHAR</li>
+      <li>user_name: VARCHAR</li>
+    </ul>
+  </div>
+  <div class="er-rel">book.genre_id は genre.id を参照します。user はログイン認証用の独立テーブルです。</div>
+</div>
 
 ### 初期データ一覧
 データベースセットアップ時（`dbsetup`実行時）に登録される初期データ一覧です。テストや動作確認の際に活用してください。
