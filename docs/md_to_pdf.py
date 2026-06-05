@@ -391,6 +391,19 @@ def build_default_css() -> str:
         border-radius: 4px;
         background-color: #ffffff;
     }
+    .diagram-card {
+        margin: 14px 0 22px;
+        padding: 0;
+        page-break-inside: avoid;
+    }
+    .diagram-card img {
+        width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+        margin: 0 auto;
+        border: none;
+        border-radius: 8px;
+    }
     .flow-diagram {
         padding: 16px;
         margin: 14px 0 22px;

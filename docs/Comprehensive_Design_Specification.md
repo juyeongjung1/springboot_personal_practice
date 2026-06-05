@@ -70,29 +70,9 @@
 
 ### 画面遷移図
 
-<div class="flow-diagram">
-  <div class="flow-row">
-    <div class="flow-node">ログイン画面</div>
-    <div class="flow-arrow">ログイン →</div>
-    <div class="flow-node">メニュー画面</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">メニュー画面</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">書籍一覧</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">検索結果</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">書籍登録フォーム</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">書籍登録フォーム</div>
-    <div class="flow-arrow">登録 →</div>
-    <div class="flow-node">登録確認画面</div>
-    <div class="flow-arrow">メニューに戻る →</div>
-    <div class="flow-node">メニュー画面</div>
-  </div>
-</div>
+<figure class="diagram-card">
+  <img src="images/flows/flow_ch2.png" alt="第2章 画面遷移図">
+</figure>
 
 <div style="page-break-before: always;"></div>
 
@@ -138,37 +118,9 @@
 
 ### 画面遷移図
 
-<div class="flow-diagram">
-  <div class="flow-row">
-    <div class="flow-node">メニュー画面</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">書籍一覧</div>
-    <div class="flow-arrow">選択 →</div>
-    <div class="flow-node">書籍詳細画面</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">書籍詳細画面</div>
-    <div class="flow-arrow">編集 →</div>
-    <div class="flow-node">書籍更新フォーム</div>
-    <div class="flow-arrow">更新 →</div>
-    <div class="flow-node">登録・更新完了</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">メニュー画面</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">書籍登録フォーム</div>
-    <div class="flow-arrow">登録 →</div>
-    <div class="flow-node">登録・更新完了</div>
-    <div class="flow-arrow">メニューに戻る →</div>
-    <div class="flow-node">メニュー画面</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">書籍詳細画面</div>
-    <div class="flow-arrow">削除 →</div>
-    <div class="flow-node">書籍一覧</div>
-    <span class="flow-note">メニュー画面から検索結果一覧へも遷移します。</span>
-  </div>
-</div>
+<figure class="diagram-card">
+  <img src="images/flows/flow_ch3.png" alt="第3章 画面遷移図">
+</figure>
 
 <div style="page-break-before: always;"></div>
 
@@ -214,27 +166,9 @@
 
 ### 画面遷移図
 
-<div class="flow-diagram">
-  <div class="flow-row">
-    <div class="flow-node">ログイン画面</div>
-    <div class="flow-arrow">認証成功 →</div>
-    <div class="flow-node">メニュー画面</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">書籍登録フォーム</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">ログイン画面</div>
-    <div class="flow-arrow">認証失敗 →</div>
-    <div class="flow-node">ログイン画面<br>（エラー表示）</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">書籍登録フォーム</div>
-    <div class="flow-arrow">入力不備あり →</div>
-    <div class="flow-node">登録フォーム<br>（エラー表示）</div>
-    <div class="flow-arrow">正常入力 →</div>
-    <div class="flow-node">登録・更新完了</div>
-  </div>
-</div>
+<figure class="diagram-card">
+  <img src="images/flows/flow_ch4.png" alt="第4章 画面遷移図">
+</figure>
 
 <div style="page-break-before: always;"></div>
 
@@ -268,22 +202,9 @@
 
 ### 画面遷移図
 
-<div class="flow-diagram">
-  <div class="flow-row">
-    <div class="flow-node">共通レイアウト定義</div>
-    <div class="flow-arrow">適用 →</div>
-    <div class="flow-node">書籍一覧</div>
-    <div class="flow-arrow">適用 →</div>
-    <div class="flow-node">登録フォーム</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">ヘッダーパーツ</div>
-    <div class="flow-arrow">＋</div>
-    <div class="flow-node">フッターパーツ</div>
-    <div class="flow-arrow">＝</div>
-    <div class="flow-node">共通レイアウト</div>
-  </div>
-</div>
+<figure class="diagram-card">
+  <img src="images/flows/flow_ch5.png" alt="第5章 画面遷移図">
+</figure>
 
 <div style="page-break-before: always;"></div>
 
@@ -317,29 +238,9 @@
 
 ### 画面遷移図
 
-<div class="flow-diagram">
-  <div class="flow-row">
-    <div class="flow-node">メニュー画面</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">タイトル検索</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">検索結果一覧</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">メニュー画面</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">価格帯検索</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">検索結果一覧</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">メニュー画面</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">複合検索<br>ジャンル × 上限価格</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">検索結果一覧</div>
-  </div>
-</div>
+<figure class="diagram-card">
+  <img src="images/flows/flow_ch6.png" alt="第6章 画面遷移図">
+</figure>
 
 <div style="page-break-before: always;"></div>
 
@@ -377,33 +278,9 @@
 
 ### 画面遷移図
 
-<div class="flow-diagram">
-  <div class="flow-row">
-    <div class="flow-node">Bootstrapログイン</div>
-    <div class="flow-arrow">認証成功 →</div>
-    <div class="flow-node">カード型メニュー</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">カード型メニュー</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">ストライプテーブル</div>
-    <div class="flow-arrow">選択 →</div>
-    <div class="flow-node">書籍詳細画面</div>
-    <div class="flow-arrow">編集 →</div>
-    <div class="flow-node">編集カード</div>
-  </div>
-  <div class="flow-row">
-    <div class="flow-node">カード型メニュー</div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-node">検索結果</div>
-    <div class="flow-arrow">／</div>
-    <div class="flow-node">入力カード</div>
-    <div class="flow-arrow">完了 →</div>
-    <div class="flow-node">成功アラート表示</div>
-    <div class="flow-arrow">戻る →</div>
-    <div class="flow-node">カード型メニュー</div>
-  </div>
-</div>
+<figure class="diagram-card">
+  <img src="images/flows/flow_ch7.png" alt="第7章 画面遷移図">
+</figure>
 
 <div style="page-break-before: always;"></div>
 
