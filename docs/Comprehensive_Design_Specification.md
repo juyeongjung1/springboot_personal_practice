@@ -46,7 +46,7 @@
   - 画面遷移図 ...... p.15
   - 主要画面 ...... p.16
 - データベース構造 (ER図) ...... p.18
-- 初期データ一覧 ...... p.18
+- 初期データ一覧 ...... p.19
 
 <div style="page-break-before: always;"></div>
 
@@ -333,6 +333,8 @@
 <figure class="diagram-card">
   <img src="images/flows/er_diagram.png" alt="ER図">
 </figure>
+
+<div style="page-break-before: always;"></div>
 
 ### 初期データ一覧
 データベースセットアップ時（`dbsetup`実行時）に登録される初期データ一覧です。テストや動作確認の際に活用してください。
