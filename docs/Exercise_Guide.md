@@ -199,10 +199,12 @@
    そのため、今回は極めて単純な形で構いませんので、HTML内に `th:text` 属性を用いて以下のように記述し、受け取ったパラメータをそのまま画面に出力してください。
 
    - **HTMLの記述例**:
-     ```html
-     タイトルキーワード『<span th:text="${keyword}"></span>』 / 
-     価格帯『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円
-     ```
+
+```html
+タイトルキーワード『<span th:text="${keyword}"></span>』 / 
+価格帯『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円
+```
+
    - **画面での出力例（例：「Java」で検索し、価格は指定しなかった場合）**:
      「タイトルキーワード『Java』 / 価格帯『』円〜『』円」
      のように、入力した値が画面にそのまま表示されればOKです（Thymeleafの仕様により、未指定（`null`）の価格は自動的に空文字となり、例外エラーは発生しません）。
@@ -496,13 +498,15 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 ### 課題5.1：ライブラリの導入
 レイアウト機能を利用するために、`pom.xml` に依存関係を追加しましょう。
 
-1. `pom.xml` の `<dependencies>` セクション内に、以下の依存関係を追加してください。追加後は Maven プロジェクトの更新（Reload）を忘れずに行ってください。
-   ```xml
-   <dependency>
-       <groupId>nz.net.ultraq.thymeleaf</groupId>
-       <artifactId>thymeleaf-layout-dialect</artifactId>
-   </dependency>
-   ```
+1. `pom.xml` の `<dependencies>` セクション内に、以下の依存関係を追加してください。
+   追加後は Maven プロジェクトの更新（Reload）を忘れずに行ってください。
+
+```xml
+<dependency>
+    <groupId>nz.net.ultraq.thymeleaf</groupId>
+    <artifactId>thymeleaf-layout-dialect</artifactId>
+</dependency>
+```
 
 #### 共通レイアウトの配置確認
 開発の効率化とデザイン統一のため、配布されたレイアウト部品がプロジェクト内に正しく配置されているか確認します。
@@ -521,20 +525,24 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 1. **テンプレートの宣言修正**
    - 各HTMLの `<html>` タグを、以下のように修正してください。
+
 ```html
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 ```
+
    - `layout:decorate` は、「このファイルは `layout/layout.html` を親（型紙）として使います」という宣言です。
 
 2. **コンテンツの埋め込み**
    - 各画面の `<body>` 内にあった具体的なコンテンツ（`<h1>`や`<form>`、`<table>`など）を、一つのタグで囲い、以下のアノテーションを付与してください。
-     ```html
-     <main layout:fragment="content">
-         <!-- ここに元のコンテンツを入れる -->
-     </main>
-     ```
+
+```html
+<main layout:fragment="content">
+    <!-- ここに元のコンテンツを入れる -->
+</main>
+```
+
    - これにより、このタグの中身だけが `layout.html` の `<main>` 部分に自動的に流し込まれます。
 
 3. **重複コードの削除**
@@ -592,11 +600,12 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 3. **HTML の改修**
    - `book_form.html` の `genreId` 入力欄（input）を、セレクトボックス（`<select>`）に変更します。
    - `th:each` を使って、取得したジャンルリストから `<option>` タグを動的に生成してください。
-     ```html
-     <select th:field="*{genreId}">
-         <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"></option>
-     </select>
-     ```
+
+```html
+<select th:field="*{genreId}">
+    <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"></option>
+</select>
+```
 
 ---
 
@@ -637,6 +646,8 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 </div>
 
 ---
+
+<div style="page-break-before: always;"></div>
 
 ### 第7章でよく使う Bootstrap クラス早見表
 これから各課題で使用する主なクラスの役割です。この表を参考に、デザインの変化を「体験」してみましょう。
@@ -684,9 +695,10 @@ Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の
 2. <span style="color: #dc3545; font-weight: bold;">【重要】</span> これまでデザインを担当していた `style.css` の読み込み（`<link rel="stylesheet" th:href="@{/css/style.css}">`）を <span style="color: #dc3545;">削除</span> してください。
    - **【解説】** これにより、独自CSSの設定（第5章で作成したもの）との干渉がなくなり、Bootstrap 本来の挙動とデザインを純粋に体験できるようになります。
 3. `<body>` タグの末尾（`</body>` の直前）に、Bootstrap の JavaScript を読み込む記述を追加してください。
-   ```html
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-   ```
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+```
 
 ### 課題7.2： ボタンのデザイン統一
 画面内のリンクや送信ボタンに Bootstrap のボタンクラスを適用します。
@@ -724,27 +736,28 @@ Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の
 
 1. **共通レイアウト（layout.html）の修正**
    ヘッダー、ナビゲーション、フッターを Bootstrap のクラスで書き換え、メインコンテンツを `container` で包みます。
-   ```html
-   <body class="bg-light">
-       <header>
-           <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-               <div class="container">
-                   <a class="navbar-brand fw-bold" th:href="@{/book/index}">TrainoBook</a>
-                   <!-- ここに「ようこそ、〇〇さん」やログアウトボタンを配置 -->
-               </div>
-           </nav>
-       </header>
-       <div class="container my-5">
-           <!-- mainタグ自体に背景色や余白のクラスを付与 -->
-           <main layout:fragment="content" class="p-4 bg-white rounded shadow-sm">
-               <!-- 各画面の中身がここに挿入される -->
-           </main>
-       </div>
-       <footer class="py-4 bg-white border-top text-center text-secondary">
-           <p class="mb-0">&copy; 2026 Trainocate Book Management System</p>
-       </footer>
-   </body>
-   ```
+
+```html
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" th:href="@{/book/index}">TrainoBook</a>
+                <!-- ここに「ようこそ、〇〇さん」やログアウトボタンを配置 -->
+            </div>
+        </nav>
+    </header>
+    <div class="container my-5">
+        <!-- mainタグ自体に背景色や余白のクラスを付与 -->
+        <main layout:fragment="content" class="p-4 bg-white rounded shadow-sm">
+            <!-- 各画面の中身がここに挿入される -->
+        </main>
+    </div>
+    <footer class="py-4 bg-white border-top text-center text-secondary">
+        <p class="mb-0">&copy; 2026 Trainocate Book Management System</p>
+    </footer>
+</body>
+```
 
 2. **グリッドシステム（配置制御）による画面の整形**
    `row` と `col` クラスを使い、ログインフォームを中央に寄せたり、検索フォームを横並びに配置したりして、バランスを整えましょう（ログイン画面、登録・更新画面、メニュー画面等）。
