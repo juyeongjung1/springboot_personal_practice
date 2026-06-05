@@ -61,13 +61,44 @@ def process_github_alerts(md_text: str) -> str:
         
     return '\n'.join(new_lines)
 
+def normalize_tables(md_text: str) -> str:
+    lines = md_text.split('\n')
+    new_lines = []
+    in_table = False
+
+    def is_table_line(line: str) -> bool:
+        stripped = line.strip()
+        return stripped.startswith('|') and stripped.endswith('|') and stripped.count('|') >= 2
+
+    for line in lines:
+        table_line = is_table_line(line)
+
+        if table_line and not in_table and new_lines and new_lines[-1].strip():
+            new_lines.append('')
+
+        if not table_line and in_table and line.strip():
+            new_lines.append('')
+
+        new_lines.append(line)
+        in_table = table_line
+
+    return '\n'.join(new_lines)
+
+def remove_css_page_footer(css: str) -> str:
+    return re.sub(r'@bottom-center\s*\{[^{}]*\}', '', css, flags=re.DOTALL)
+
+def apply_page_break_hints(md_text: str) -> str:
+    marker = '   - `<form>` 要素に `th:object="${bookForm}"` を設定し、各入力欄'
+    replacement = '<div style="page-break-before: always;"></div>\n\n' + marker
+    return md_text.replace(marker, replacement, 1)
+
 def build_default_css() -> str:
     """PDF出力用の基本CSSスタイル。"""
     return """
     body {
         font-family: "BIZ UDGothic", "Meiryo", "MS Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
-        font-size: 10.5pt;
-        line-height: 1.7;
+        font-size: 11pt;
+        line-height: 1.8;
         color: #333;
         margin: 0;
         padding: 0;
@@ -213,13 +244,15 @@ def convert_md_to_pdf(md_path: str) -> None:
     embedded_styles = ""
     style_match = re.search(r'<style>(.*?)</style>', md_content, flags=re.DOTALL)
     if style_match:
-        embedded_styles = style_match.group(1)
+        embedded_styles = remove_css_page_footer(style_match.group(1))
 
     # Markdownコンテンツから <style> タグを除去する
     md_content = re.sub(r'<style>.*?</style>', '', md_content, flags=re.DOTALL)
 
     # GitHubアラートを置換
     md_content = process_github_alerts(md_content)
+    md_content = normalize_tables(md_content)
+    md_content = apply_page_break_hints(md_content)
 
     # Mermaidコードブロックを <pre class="mermaid"> に置換
     def replace_mermaid(match):
