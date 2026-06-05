@@ -84,7 +84,7 @@
 
 > [!TIP]
 > **【学習のヒント：全体像の確認】**
-> 実装を始める前に、各章のステップでシステムがどのように進化していくかを書籍管理システム 補足資料（画面遷移・イメージ図・ER図）で確認できます。スクリーンショットを通して、最終的なゴールのイメージを掴みましょう。
+> 実装を始める前に、各章のステップでシステムがどのように進化していくかを「補足資料（画面遷移・イメージ図・ER図）」で確認できます。スクリーンショットを通して、最終的なゴールのイメージを掴みましょう。
 
 ---
 
@@ -117,7 +117,7 @@
 
 **■ 初期登録データ（書籍・ジャンル）**
 
-書籍データ9件とジャンルデータ5件が登録済みです。詳細な一覧は、[補足資料（画面遷移・イメージ図・ER図）](Comprehensive_Design_Specification.md) の巻末を参照してください。
+書籍データ9件とジャンルデータ5件が登録済みです。詳細な一覧は、補足資料（画面遷移・イメージ図・ER図）の巻末を参照してください。
 
 ---
 
@@ -160,7 +160,7 @@
 
    **②「書籍情報の登録」への遷移リンク**
 
-   <div style="background-color: #fff3cd; border-left: 5px solid #ffecb5; padding: 10px; margin-top: 10px; margin-bottom: 10px;">
+   <div class="hint-box">
      <strong>【ヒント】</strong> Thymeleafを用いたリンクの作成方法は、5章を参照してください。書き方は以下のようになります。<br>
      <code>&lt;a th:href="@{/book/list}"&gt;全書籍リストの確認&lt;/a&gt;</code>
    </div>
@@ -171,21 +171,23 @@
 
 4. 再び `book_index.html` の中に戻り、以下の2つの検索用の `<form>` を作成してください。すべて `GET` メソッドで送信します。
 
-   **① 書籍名検索フォーム**
+   <div style="margin-left: 2.8em; padding-left: 1.2em; border-left: 3px solid #d6dde3;">
+   <p><strong>① 書籍名検索フォーム</strong></p>
 
-   入力項目：テキストボックス（`name`属性を `keyword` にする）
+   <p>入力項目：テキストボックス（<code>name</code>属性を <code>keyword</code> にする）</p>
 
-   送信先（action）：`/book/search/title`
+   <p>送信先（action）：<code>/book/search/title</code></p>
 
-   送信ボタン：「タイトルで検索」
+   <p>送信ボタン：「タイトルで検索」</p>
 
-   **② 価格検索フォーム**
+   <p><strong>② 価格検索フォーム</strong></p>
 
-   入力項目：最低価格の数値（`name`属性を `minPrice` にする）、最高価格の数値（`name`属性を `maxPrice` にする）
+   <p>入力項目：最低価格の数値（<code>name</code>属性を <code>minPrice</code> にする）、最高価格の数値（<code>name</code>属性を <code>maxPrice</code> にする）</p>
 
-   送信先（action）：`/book/search/price`
+   <p>送信先（action）：<code>/book/search/price</code></p>
 
-   送信ボタン：「価格帯で検索」
+   <p>送信ボタン：「価格帯で検索」</p>
+   </div>
 
 5. `BookController` に上記の検索用送信先（`/book/search/title`、`/book/search/price`）に対応するメソッドを作成してください。
 6. Controllerの引数でそれぞれ送信されたパラメータを受け取り、`Model` に格納してください。
@@ -200,10 +202,8 @@
 
    - **HTMLの記述例**:
 
-```html
-タイトルキーワード『<span th:text="${keyword}"></span>』 / 
-価格帯『<span th:text="${minPrice}"></span>』円〜『<span th:text="${maxPrice}"></span>』円
-```
+<pre><code>タイトルキーワード『&lt;span th:text="${keyword}"&gt;&lt;/span&gt;』 /
+価格帯『&lt;span th:text="${minPrice}"&gt;&lt;/span&gt;』円〜『&lt;span th:text="${maxPrice}"&gt;&lt;/span&gt;』円</code></pre>
 
    - **画面での出力例（例：「Java」で検索し、価格は指定しなかった場合）**:
      「タイトルキーワード『Java』 / 価格帯『』円〜『』円」
@@ -311,7 +311,9 @@
 3. 以下の検索に必要なメソッドを、**メソッド命名規則**（テキスト第3章）に従って定義してください。
    - タイトルに特定の文字列を含む書籍を検索するメソッド（`findByTitleContaining`）
    - 価格が指定範囲内の書籍を検索するメソッド（`findByPriceBetween`）
+
    *(※全件取得(findAll)、IDでの1件取得(findById)、保存(save)、削除(deleteById)はJpaRepositoryに標準で存在するため自作不要です)*
+
 4. `GenreRepository` インターフェース（`JpaRepository<Genre, Integer>`を継承）を作成してください。
 
 ---
@@ -345,7 +347,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 2. `/book/list` メソッドを修正し、`BookService.findAllBooks()` を呼び出して全件リストを取得し、`Model` に渡します。
 3. `/book/search/title` および `/book/search/price` メソッドを修正し、それぞれServiceから検索結果リストを取得して `Model` に渡します。
 4. `book_list.html` と `book_search_result.html` を改修し、Thymeleaf の `th:each` を用いて、書籍を一覧表（ID、書籍名、著者名、価格、ジャンル名）で表示するようにしてください。
-   - **【ヒント（外部参照の表示）】** `Book` エンティティが `Genre` エンティティを保持している場合、ジャンル名は `${book.genre.name}` のようにドット記法で階層を辿って表示できます。
+   <div class="hint-box">
+     <strong>【ヒント（外部参照の表示）】</strong>
+     <code>Book</code> エンティティが <code>Genre</code> エンティティを保持している場合、ジャンル名は <code>${book.genre.name}</code> のようにドット記法で階層を辿って表示できます。
+   </div>
    - **【重要（動的URL）】** 一覧の「書籍名」部分をリンクにし、クリックすると「詳細画面」へ飛ぶようにします。テキスト第5章のサンプルを参考に、以下のような**動的URL**にしてください。
      `<a th:href="@{/book/detail/} + ${book.id}" th:text="${book.title}"></a>`
 
@@ -360,8 +365,16 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 2. Serviceの `findBookById(id)` を使って対象の書籍を1件取得し、`Model` に格納してください。
 3. 詳細画面 `book_detail.html` を作成し、ID、書籍名、著者名、価格、ジャンル名を表示してください。
 4. この画面内に以下の2つのリンク（フォームのボタン）を配置してください。
-   - **更新** （遷移先: `/book/update/{id}` へ遷移するフォーム `<form th:action="@{/book/update/} + ${book.id}">`）
-   - **削除** （遷移先: `/book/delete/{id}` へ遷移するフォーム `<form th:action="@{/book/delete/} + ${book.id}">`）
+
+   - **更新**
+     遷移先：`/book/update/{id}` へ遷移するフォーム
+
+<pre><code>&lt;form th:action="@{/book/update/} + ${book.id}"&gt;</code></pre>
+
+   - **削除**
+     遷移先：`/book/delete/{id}` へ遷移するフォーム
+
+<pre><code>&lt;form th:action="@{/book/delete/} + ${book.id}"&gt;</code></pre>
 
 ---
 
@@ -374,7 +387,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - 登録処理は、メニュー画面（`book_index.html`）の「書籍情報の登録」リンクから、入力画面（`book_form.html`）へ遷移することで開始します。
    - `BookForm` クラスに `Integer genreId` フィールドを追加してください。
    - `book_form.html` のフォーム（ action: `/book/register`, method: POST ）に入力項目を追加し、送信データを受け取る準備をします。
-   <div style="background-color: #fff3cd; border-left: 5px solid #ffecb5; padding: 10px; margin-top: 10px; margin-bottom: 10px;">
+   <div class="hint-box">
      <strong>【ヒント】</strong> 外部参照しているジャンルデータについて、DBから一覧を取得してプルダウン（select要素）で選ばせる方法は、<strong>第6章</strong>で学習します。今回は簡易的に <code>genreId</code> を手入力する数値入力欄（<code>&lt;input type="number" name="genreId"&gt;</code> など）として作成しておきましょう。
    </div>
    - 数値入力欄のそばには、以下のようなテキストを固定値で表示して、受講者が「どの数値を入力すればよいか」迷わないように工夫してください。<br>
@@ -383,7 +396,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 2. **登録処理の実行**
    - `BookController` の `/book/register` (POST) メソッドの中身を修正します。
    - フォームから受け取った `BookForm` をそのまま引数に渡して `BookService.saveBook(bookForm)` を呼び出し、DBに登録してください。
-   - **【ポイント】** ControllerからServiceへはFormをそのまま渡し、エンティティへの移し替えはService側で行います。また、登録完了後に保存後の新しいEntityが返り値として返されます。
+   <div class="point-box">
+     <strong>【ポイント】</strong>
+     ControllerからServiceへはFormをそのまま渡し、エンティティへの移し替えはService側で行います。また、登録完了後に保存後の新しいEntityが返り値として返されます。
+   </div>
    - 登録処理が完了したら、結果を表示するために `book_confirm.html` へ画面遷移させます。その際、Serviceの返り値である登録済みの書籍情報を `Model` に格納してください。
 
 3. **登録完了画面の表示**
@@ -391,8 +407,6 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - 画面の下部に「メニューへ戻る」リンク（遷移先: `/book/index`）が配置されていることを確認してください。
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 ### 課題3.7：更新機能と削除機能の実装
 詳細画面から呼び出される更新と削除の処理を実装します。
@@ -407,7 +421,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `BookForm` に `id` フィールドを追加してください。
    - 更新用フォームの送信先（action）について、今回は `@PathVariable` を用いてIDをURLに含めて送信します。テキスト第5章にならい、`<form th:action="@{/book/update/} + ${bookForm.id}" method="post">` のように記述してください。
    - `BookController` に `/book/update/{id}` を受け取る POST マッピングを追加します。引数で `@PathVariable` を使ってIDを受け取り、フォームからの値（`BookForm`）にIDをセットした上で `BookService.saveBook(bookForm)` を呼び出します。
-   - **【ポイント】** 新規登録と同様に、エンティティへの移し替えはService側で行われ、IDが存在するためUPDATEとして処理された新しいEntityが返り値として返されます。
+   <div class="point-box">
+     <strong>【ポイント】</strong>
+     新規登録と同様に、エンティティへの移し替えはService側で行われ、IDが存在するためUPDATEとして処理された新しいEntityが返り値として返されます。
+   </div>
    - 処理完了後は、詳細画面や結果画面へ遷移させてください。
 
 3. **削除の実行**
@@ -471,8 +488,12 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 1. **HTMLでのセッション情報表示とログアウトリンク**
    - `book_index.html` や `book_list.html` などの主要な画面上部に、「ようこそ、〇〇さん」と表示する領域を追加してください。
    - そのすぐ横に、ログアウト画面（`/logout`）へのリンクを配置してください。
-   - **【ヒント1】** Thymeleaf では、セッションの属性に `${session.userName}` のようにアクセスできます。
-   - **【ヒント2】** ログインしていない状態でも「ようこそ、 さん」と表示されたり、ログアウトリンクが見えたりしても問題ありません。
+   <div class="hint-box">
+     <strong>【ヒント1】</strong>
+     Thymeleaf では、セッションの属性に <code>${session.userName}</code> のようにアクセスできます。<br>
+     <strong>【ヒント2】</strong>
+     ログインしていない状態でも「ようこそ、 さん」と表示されたり、ログアウトリンクが見えたりしても問題ありません。
+   </div>
 
 2. **LoginController の改修（認証とログアウトの実装）**
    - `/login` に対するPOSTメソッドを変更し、`UserRepository` を使ってDB認証を行います。ログイン成功時は `session.setAttribute("userName", user.getUserName())` でセッションに値を保持してください。
@@ -491,7 +512,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 <div style="background-color: #e9f5ff; border-left: 5px solid #007bff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
   <strong>【学習のねらい】</strong><br>
-  これまで各HTMLファイルにバラバラに記述していた共通部分（ヘッダー、フッター、ログイン情報の表示など）を、「共通レイアウト」として1箇所にまとめます。これにより、デザイン変更が容易になり、各画面のコードもスッキリと管理できるようになります（<strong>DRY原則</strong>の実践）。<br>
+  これまで各HTMLファイルにバラバラに記述していた共通部分（ヘッダー、フッター、ログイン情報の表示など）を、「共通レイアウト」として1箇所にまとめます。これにより、デザイン変更が容易になり、各画面のコードもスッキリと管理できるようになります。<br>
   本章では、外部ライブラリの <strong>Thymeleaf Layout Dialect</strong> を使用して、テンプレートの継承構造を構築します。
 </div>
 
@@ -499,14 +520,13 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 レイアウト機能を利用するために、`pom.xml` に依存関係を追加しましょう。
 
 1. `pom.xml` の `<dependencies>` セクション内に、以下の依存関係を追加してください。
+
    追加後は Maven プロジェクトの更新（Reload）を忘れずに行ってください。
 
-```xml
-<dependency>
-    <groupId>nz.net.ultraq.thymeleaf</groupId>
-    <artifactId>thymeleaf-layout-dialect</artifactId>
-</dependency>
-```
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;nz.net.ultraq.thymeleaf&lt;/groupId&gt;
+    &lt;artifactId&gt;thymeleaf-layout-dialect&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
 
 #### 共通レイアウトの配置確認
 開発の効率化とデザイン統一のため、配布されたレイアウト部品がプロジェクト内に正しく配置されているか確認します。
@@ -514,7 +534,7 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 1. **CSSの確認**: `src/main/resources/static/css/` に `style.css` が配置されていることを確認してください。
 2. **レイアウトの確認**: `src/main/resources/templates/layout/` に `layout.html` が配置されていることを確認してください。
    - **【解説】** `layout.html` はシステム全体の「枠組み」です。ヘッダーには「ようこそ、〇〇さん」といったセッション情報の表示も含まれています。
-   - **【確認】** `layout.html` 内に、各画面の中身が挿入されるための領域 `<main layout:fragment="content">` が定義されていることを確認してください。
+   - **【確認】** `layout.html` 内に、各画面の中身が挿入されるための領域（`main layout:fragment="content"`）が定義されていることを確認してください。
 
 ---
 
@@ -526,22 +546,18 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 1. **テンプレートの宣言修正**
    - 各HTMLの `<html>` タグを、以下のように修正してください。
 
-```html
-<html xmlns:th="http://www.thymeleaf.org"
+<pre><code>&lt;html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
-```
+      layout:decorate="~{layout/layout}"&gt;</code></pre>
 
    - `layout:decorate` は、「このファイルは `layout/layout.html` を親（型紙）として使います」という宣言です。
 
 2. **コンテンツの埋め込み**
    - 各画面の `<body>` 内にあった具体的なコンテンツ（`<h1>`や`<form>`、`<table>`など）を、一つのタグで囲い、以下のアノテーションを付与してください。
 
-```html
-<main layout:fragment="content">
-    <!-- ここに元のコンテンツを入れる -->
-</main>
-```
+<pre><code>&lt;main layout:fragment="content"&gt;
+    &lt;!-- ここに元のコンテンツを入れる --&gt;
+&lt;/main&gt;</code></pre>
 
    - これにより、このタグの中身だけが `layout.html` の `<main>` 部分に自動的に流し込まれます。
 
@@ -581,7 +597,10 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
 
 1. `book_list.html` および `book_search_result.html` を修正してください。
 2. リスト（`books`）が空の場合にのみ表示されるメッセージ領域を追加します。
-   - **【ヒント】** Thymeleaf の `th:if="${#lists.isEmpty(books)}"` を使用すると、リストが空の時だけ要素を表示できます。
+   <div class="hint-box">
+     <strong>【ヒント】</strong>
+     Thymeleaf の <code>th:if="${#lists.isEmpty(books)}"</code> を使用すると、リストが空の時だけ要素を表示できます。
+   </div>
    - **【表示例】** 第5章で用意された CSS のスタイルなどを利用して、ユーザーに分かりやすく表示しましょう。
 
 ---
@@ -601,11 +620,9 @@ RepositoryをControllerから直接呼ばず、Service層を介してアクセ�
    - `book_form.html` の `genreId` 入力欄（input）を、セレクトボックス（`<select>`）に変更します。
    - `th:each` を使って、取得したジャンルリストから `<option>` タグを動的に生成してください。
 
-```html
-<select th:field="*{genreId}">
-    <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"></option>
-</select>
-```
+<pre><code>&lt;select th:field="*{genreId}"&gt;
+    &lt;option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"&gt;&lt;/option&gt;
+&lt;/select&gt;</code></pre>
 
 ---
 
@@ -696,9 +713,7 @@ Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の
    - **【解説】** これにより、独自CSSの設定（第5章で作成したもの）との干渉がなくなり、Bootstrap 本来の挙動とデザインを純粋に体験できるようになります。
 3. `<body>` タグの末尾（`</body>` の直前）に、Bootstrap の JavaScript を読み込む記述を追加してください。
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-```
+<pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;</code></pre>
 
 ### 課題7.2： ボタンのデザイン統一
 画面内のリンクや送信ボタンに Bootstrap のボタンクラスを適用します。
@@ -737,27 +752,25 @@ Spring Boot プロジェクトに Bootstrap を導入し、デザイン刷新の
 1. **共通レイアウト（layout.html）の修正**
    ヘッダー、ナビゲーション、フッターを Bootstrap のクラスで書き換え、メインコンテンツを `container` で包みます。
 
-```html
-<body class="bg-light">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-            <div class="container">
-                <a class="navbar-brand fw-bold" th:href="@{/book/index}">TrainoBook</a>
-                <!-- ここに「ようこそ、〇〇さん」やログアウトボタンを配置 -->
-            </div>
-        </nav>
-    </header>
-    <div class="container my-5">
-        <!-- mainタグ自体に背景色や余白のクラスを付与 -->
-        <main layout:fragment="content" class="p-4 bg-white rounded shadow-sm">
-            <!-- 各画面の中身がここに挿入される -->
-        </main>
-    </div>
-    <footer class="py-4 bg-white border-top text-center text-secondary">
-        <p class="mb-0">&copy; 2026 Trainocate Book Management System</p>
-    </footer>
-</body>
-```
+<pre><code>&lt;body class="bg-light"&gt;
+    &lt;header&gt;
+        &lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm"&gt;
+            &lt;div class="container"&gt;
+                &lt;a class="navbar-brand fw-bold" th:href="@{/book/index}"&gt;TrainoBook&lt;/a&gt;
+                &lt;!-- ここに「ようこそ、〇〇さん」やログアウトボタンを配置 --&gt;
+            &lt;/div&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+    &lt;div class="container my-5"&gt;
+        &lt;!-- mainタグ自体に背景色や余白のクラスを付与 --&gt;
+        &lt;main layout:fragment="content" class="p-4 bg-white rounded shadow-sm"&gt;
+            &lt;!-- 各画面の中身がここに挿入される --&gt;
+        &lt;/main&gt;
+    &lt;/div&gt;
+    &lt;footer class="py-4 bg-white border-top text-center text-secondary"&gt;
+        &lt;p class="mb-0"&gt;&amp;copy; 2026 Trainocate Book Management System&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
 
 2. **グリッドシステム（配置制御）による画面の整形**
    `row` と `col` クラスを使い、ログインフォームを中央に寄せたり、検索フォームを横並びに配置したりして、バランスを整えましょう（ログイン画面、登録・更新画面、メニュー画面等）。

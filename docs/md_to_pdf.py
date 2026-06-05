@@ -331,6 +331,33 @@ def build_default_css() -> str:
         margin-bottom: 7px;
         font-size: 0.98em;
     }
+    .hint-box,
+    .point-box {
+        padding: 13px 16px;
+        margin: 16px 0 20px;
+        border-left: 5px solid;
+        border-radius: 6px;
+        page-break-inside: avoid;
+    }
+    .hint-box {
+        background-color: #fff8e1;
+        border-left-color: #ffc107;
+    }
+    .point-box {
+        background-color: #f0fcf4;
+        border-left-color: #28a745;
+    }
+    .hint-box strong,
+    .point-box strong {
+        display: block;
+        margin-bottom: 6px;
+    }
+    .hint-box strong {
+        color: #856404;
+    }
+    .point-box strong {
+        color: #1f7a3a;
+    }
     .toc-section {
         padding: 2px 0 0;
     }
@@ -445,6 +472,7 @@ def convert_md_to_pdf(md_path: str) -> None:
         '<div style="page-break-before: always;"></div>',
         '<div class="page-break"></div>'
     )
+    html_body = re.sub(r'<hr\s*/?>\s*<div class="page-break"></div>', '<div class="page-break"></div>', html_body)
 
     # 基本CSS
     default_css = build_default_css()
