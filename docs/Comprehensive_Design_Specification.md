@@ -267,13 +267,15 @@
 
 ---
 
+---
+
 <div style="page-break-before: always;"></div>
 
 ## 第7章：Bootstrapによるスタイリング（完成形態）
 
 <div style="background-color: #e9f5ff; border-left: 5px solid #007bff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
   <strong>【テーマ】モダンなUIデザインの導入とUXの完成</strong><br><br>
-  人気フレームワーク「Bootstrap 5」を導入し、デザインをプロフェッショナルな外観へ刷新しました。共通レイアウト（NavbarやContainer）の適用により、一貫性のあるレスポンシブなユーザー体験を提供します。
+  Bootstrap 5 を導入し、画面デザインを整えます。Navbar や Container などの共通レイアウトを適用することで、レスポンシブで一貫性のあるUIを構築する方法を学びます。
 </div>
 
 ### 画面遷移図
@@ -328,34 +330,9 @@
 ## データベース構造 (ER図)
 システム全体で管理するデータの構造です。
 
-<div class="er-diagram">
-  <div class="er-card">
-    <h3>book</h3>
-    <ul>
-      <li>id: INT / PK</li>
-      <li>title: VARCHAR</li>
-      <li>author: VARCHAR</li>
-      <li>price: INT</li>
-      <li>genre_id: INT / FK</li>
-    </ul>
-  </div>
-  <div class="er-card">
-    <h3>genre</h3>
-    <ul>
-      <li>id: INT / PK</li>
-      <li>name: VARCHAR</li>
-    </ul>
-  </div>
-  <div class="er-card">
-    <h3>user</h3>
-    <ul>
-      <li>user_id: INT / PK</li>
-      <li>password: VARCHAR</li>
-      <li>user_name: VARCHAR</li>
-    </ul>
-  </div>
-  <div class="er-rel">book.genre_id は genre.id を参照します。user はログイン認証用の独立テーブルです。</div>
-</div>
+<figure class="diagram-card">
+  <img src="images/flows/er_diagram.png" alt="ER図">
+</figure>
 
 ### 初期データ一覧
 データベースセットアップ時（`dbsetup`実行時）に登録される初期データ一覧です。テストや動作確認の際に活用してください。

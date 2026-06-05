@@ -69,6 +69,26 @@ graph TD
     Update -- 完了 --> Confirm
     Confirm -- 戻る --> Menu
 """,
+    "er_diagram.png": """
+erDiagram
+    book {
+        int id PK
+        varchar title
+        varchar author
+        int price
+        int genre_id FK
+    }
+    genre {
+        int id PK
+        varchar name
+    }
+    user {
+        int user_id PK
+        varchar password
+        varchar user_name
+    }
+    genre ||--o{ book : "1:N"
+""",
 }
 
 
