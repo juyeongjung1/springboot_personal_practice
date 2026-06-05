@@ -44,7 +44,14 @@ def process_github_alerts(md_text: str) -> str:
                 alert_body = '\n'.join(alert_content)
                 # markdown="1" を指定して内部のMarkdownもパースさせる
                 box_html = f'<div class="markdown-alert markdown-alert-{alert_type.lower()}" markdown="1">\n'
-                box_html += f'<p class="markdown-alert-title">{alert_type}</p>\n'
+                title_map = {
+                    'NOTE': '補足',
+                    'TIP': 'ヒント',
+                    'IMPORTANT': '重要',
+                    'WARNING': '注意',
+                    'CAUTION': '警告',
+                }
+                box_html += f'<p class="markdown-alert-title">{title_map.get(alert_type, alert_type)}</p>\n'
                 box_html += alert_body + "\n</div>\n"
                 new_lines.append(box_html)
                 in_quote = False
@@ -55,7 +62,14 @@ def process_github_alerts(md_text: str) -> str:
     if in_quote and alert_type:
         alert_body = '\n'.join(alert_content)
         box_html = f'<div class="markdown-alert markdown-alert-{alert_type.lower()}" markdown="1">\n'
-        box_html += f'<p class="markdown-alert-title">{alert_type}</p>\n'
+        title_map = {
+            'NOTE': '補足',
+            'TIP': 'ヒント',
+            'IMPORTANT': '重要',
+            'WARNING': '注意',
+            'CAUTION': '警告',
+        }
+        box_html += f'<p class="markdown-alert-title">{title_map.get(alert_type, alert_type)}</p>\n'
         box_html += alert_body + "\n</div>\n"
         new_lines.append(box_html)
         
@@ -87,73 +101,156 @@ def normalize_tables(md_text: str) -> str:
 def remove_css_page_footer(css: str) -> str:
     return re.sub(r'@bottom-center\s*\{[^{}]*\}', '', css, flags=re.DOTALL)
 
-def apply_page_break_hints(md_text: str) -> str:
-    marker = '   - `<form>` 要素に `th:object="${bookForm}"` を設定し、各入力欄'
-    replacement = '<div style="page-break-before: always;"></div>\n\n' + marker
-    return md_text.replace(marker, replacement, 1)
+def render_toc_section(md_text: str) -> str:
+    def replace_toc(match):
+        toc_lines = match.group(1).splitlines()
+        items = []
+        for line in toc_lines:
+            stripped = line.strip()
+            if not stripped.startswith('- '):
+                continue
+
+            level = 2 if line.startswith('  ') else 1
+            content = stripped[2:].strip()
+            page = ''
+            title = content
+            page_match = re.match(r'(.+?)\s*\.{3,}\s*(p\.\d+)\s*$', content)
+            if page_match:
+                title = page_match.group(1).strip()
+                page = page_match.group(2).strip()
+
+            page_html = f'<span class="toc-page">{html.escape(page)}</span>' if page else ''
+            items.append(
+                f'<li class="toc-item toc-level-{level}">'
+                f'<span class="toc-title">{html.escape(title)}</span>'
+                f'{page_html}</li>'
+            )
+
+        toc_html = '\n'.join(items)
+        return f'## 目次\n\n<section class="toc-section">\n<ul class="toc-list">\n{toc_html}\n</ul>\n</section>\n'
+
+    return re.sub(
+        r'## 目次\s*\n(.*?)(?=\n<div style="page-break-before: always;"></div>)',
+        replace_toc,
+        md_text,
+        count=1,
+        flags=re.DOTALL
+    )
 
 def build_default_css() -> str:
     """PDF出力用の基本CSSスタイル。"""
     return """
     body {
         font-family: "BIZ UDGothic", "Meiryo", "MS Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
-        font-size: 11pt;
-        line-height: 1.8;
-        color: #333;
+        font-size: 10.8pt;
+        line-height: 1.82;
+        color: #263238;
         margin: 0;
         padding: 0;
     }
+    p {
+        margin: 0 0 12px;
+    }
     h1 {
-        font-size: 1.8em;
-        color: #1a365d;
-        border-bottom: 2px solid #1a365d;
-        padding-bottom: 5px;
-        margin-top: 25px;
-        margin-bottom: 15px;
+        font-size: 1.85em;
+        color: #123a5f;
+        border-bottom: 2px solid #123a5f;
+        padding-bottom: 7px;
+        margin-top: 28px;
+        margin-bottom: 18px;
         page-break-after: avoid;
     }
     h2 {
-        font-size: 1.4em;
-        color: #1a365d;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 4px;
-        margin-top: 20px;
-        margin-bottom: 12px;
+        font-size: 1.42em;
+        color: #123a5f;
+        border-bottom: 1px solid #cfd8dc;
+        padding-bottom: 6px;
+        margin-top: 24px;
+        margin-bottom: 14px;
         page-break-after: avoid;
     }
     h3 {
-        font-size: 1.1em;
-        color: #2c3e50;
-        margin-top: 15px;
-        margin-bottom: 8px;
+        font-size: 1.14em;
+        color: #1f4e79;
+        margin-top: 20px;
+        margin-bottom: 10px;
         page-break-after: avoid;
     }
+    ul, ol {
+        margin-top: 8px;
+        margin-bottom: 14px;
+        padding-left: 1.7em;
+    }
+    li {
+        margin-bottom: 7px;
+        line-height: 1.75;
+    }
+    li > ul, li > ol {
+        margin-top: 6px;
+        margin-bottom: 8px;
+    }
+    strong {
+        color: #123a5f;
+        font-weight: 700;
+    }
+    em {
+        color: #52616b;
+        font-style: normal;
+    }
+    a {
+        color: #0b65c2;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    hr {
+        border: none;
+        border-top: 2px solid #d6dde3;
+        margin: 22px 0;
+    }
     pre {
-        background-color: #f5f5f5;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 8px 10px;
-        font-size: 9pt;
-        line-height: 1.4;
-        overflow: auto;
+        background-color: #f4f7fb;
+        border: 1px solid #c8d5e3;
+        border-left: 5px solid #2f6f9f;
+        border-radius: 6px;
+        padding: 12px 14px;
+        margin: 12px 0 18px;
+        font-size: 9.2pt;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        page-break-inside: avoid;
     }
     code {
         font-family: "Consolas", Courier, monospace;
-        font-size: 9pt;
+        font-size: 0.9em;
+        background-color: #eef3f8;
+        border: 1px solid #d4dee8;
+        border-radius: 4px;
+        color: #263f5e;
+        padding: 1px 4px;
+    }
+    pre code {
+        background: transparent;
+        border: none;
+        color: #263238;
+        padding: 0;
+        font-size: inherit;
     }
     table {
         border-collapse: collapse;
         width: 100%;
-        margin: 15px 0;
-        font-size: 9.5pt;
+        margin: 16px 0 20px;
+        font-size: 9.6pt;
+        page-break-inside: avoid;
     }
     th, td {
-        border: 1px solid #ccc;
-        padding: 6px 10px;
+        border: 1px solid #cdd6df;
+        padding: 7px 10px;
         text-align: left;
     }
     th {
-        background-color: #f0f0f0;
+        background-color: #edf3f8;
+        color: #123a5f;
         font-weight: bold;
     }
     img {
@@ -165,10 +262,11 @@ def build_default_css() -> str:
     
     /* GitHub アラートのスタイル */
     .markdown-alert {
-        padding: 10px 15px;
-        margin-bottom: 15px;
-        border-left: 0.25em solid;
-        border-radius: 4px;
+        padding: 13px 16px;
+        margin: 16px 0 20px;
+        border-left: 5px solid;
+        border-radius: 6px;
+        page-break-inside: avoid;
     }
     .markdown-alert-note {
         border-left-color: #007bff;
@@ -208,24 +306,66 @@ def build_default_css() -> str:
     .markdown-alert-title {
         font-weight: bold;
         margin-top: 0;
-        margin-bottom: 5px;
-        font-size: 0.95em;
+        margin-bottom: 7px;
+        font-size: 0.98em;
+    }
+    .toc-section {
+        padding: 2px 0 0;
+    }
+    .toc-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+    .toc-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 8px 0;
+        padding: 7px 10px;
+        border-left: 4px solid #1f6aa5;
+        background-color: #f6f9fc;
+        color: #123a5f;
+        font-weight: 700;
+        line-height: 1.45;
+        page-break-inside: avoid;
+    }
+    .toc-level-2 {
+        margin-left: 26px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-left: 2px solid #c5d3df;
+        background-color: #ffffff;
+        color: #3d4f5c;
+        font-weight: 500;
+        font-size: 0.93em;
+    }
+    .toc-title {
+        flex: 1;
+    }
+    .toc-page {
+        flex: 0 0 auto;
+        color: #1f4e79;
+        font-weight: 700;
     }
     
     /* カスタムボックス */
     div[style*="background-color: #e9f5ff"] {
         background-color: #e9f5ff !important;
         border-left: 5px solid #007bff !important;
-        padding: 15px !important;
-        margin-bottom: 20px !important;
-        border-radius: 5px !important;
+        padding: 14px 16px !important;
+        margin: 16px 0 20px !important;
+        border-radius: 6px !important;
+        page-break-inside: avoid;
     }
     div[style*="background-color: #fff3cd"] {
         background-color: #fff3cd !important;
         border-left: 5px solid #ffecb5 !important;
-        padding: 10px !important;
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
+        padding: 12px 14px !important;
+        margin-top: 12px !important;
+        margin-bottom: 14px !important;
+        border-radius: 6px !important;
+        page-break-inside: avoid;
     }
     """
 
@@ -248,11 +388,11 @@ def convert_md_to_pdf(md_path: str) -> None:
 
     # Markdownコンテンツから <style> タグを除去する
     md_content = re.sub(r'<style>.*?</style>', '', md_content, flags=re.DOTALL)
+    md_content = render_toc_section(md_content)
 
     # GitHubアラートを置換
     md_content = process_github_alerts(md_content)
     md_content = normalize_tables(md_content)
-    md_content = apply_page_break_hints(md_content)
 
     # Mermaidコードブロックを <pre class="mermaid"> に置換
     def replace_mermaid(match):
